@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rover.Arduino;
+using MilkShake;
 
 public class TankController : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class TankController : MonoBehaviour
     public float maxSpeed = 1f;
 
     public static float TankVelocity;
+
+    Shaker m_mainShaker => GetComponent<Shaker>();
+    ShakeInstance m_offroadShakeInstance;
+    public ShakePreset offRoadShakePreset;
+    float m_shakeStrength = 0.15f;
 
 
     void OnEnable()
@@ -43,11 +49,23 @@ public class TankController : MonoBehaviour
 
         if(Mathf.Abs(m_horizontalAxis) < 0.05)
             m_horizontalAxis = 0;
+
+        
+        
     }
 
     void OnThrottleAxis(float value, int pin)
     {
         m_throttleAxis = (value - 512)/512;
+
+        if(m_offroadShakeInstance == null)
+        {
+            m_offroadShakeInstance = m_mainShaker.Shake(offRoadShakePreset);
+            return;
+        }
+
+        m_offroadShakeInstance.StrengthScale = Mathf.Abs(m_throttleAxis);
+
     }
 
     void OnBrakeSwitchFlipped(int pin)
@@ -79,5 +97,7 @@ public class TankController : MonoBehaviour
         m_rigidbody.MovePosition(wantedPosition);
 
         TankVelocity = m_rigidbody.velocity.magnitude;
+
+
     }
 }

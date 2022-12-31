@@ -1,5 +1,46 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7647909885510402517
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aca6b5f0da8ca64cb69109b860c1891, type: 3}
+  m_Name: LightStreaks
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  quality:
+    overrideState: 0
+    value: 1
+  debug:
+    overrideState: 0
+    value: 0
+  intensity:
+    overrideState: 1
+    value: 1
+  luminanceThreshold:
+    overrideState: 0
+    value: 1
+  direction:
+    overrideState: 0
+    value: -1
+  blur:
+    overrideState: 0
+    value: 1
+  iterations:
+    overrideState: 0
+    value: 2
+  downscaling:
+    overrideState: 0
+    value: 2
+  shader: {fileID: 4800000, guid: 3a6e979eb82e4e7489c2c1e2c49f79e0, type: 3}
 --- !u!114 &-2768919007538576205
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -12,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6e299dc3638154bbc6de09e3382285, type: 3}
   m_Name: Blur
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1370,6 +1411,9 @@ MonoBehaviour:
   - {fileID: 4972861932077044}
   - {fileID: 4864486953856386584}
   - {fileID: -190157676897325496}
+  - {fileID: 5405416309015136587}
+  - {fileID: -7647909885510402517}
+  - {fileID: 7936758774668626200}
 --- !u!114 &4972861932077044
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1442,6 +1486,152 @@ MonoBehaviour:
   lumContrib:
     overrideState: 1
     value: 0.363
+--- !u!114 &5405416309015136587
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74483714bbf784b45b0c9c7c76035dd8, type: 3}
+  m_Name: Fog
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  useSceneSettings:
+    overrideState: 0
+    value: 0
+  fogMode:
+    overrideState: 1
+    value: 3
+  globalDensity:
+    overrideState: 1
+    value: 1
+  fogStartDistance:
+    overrideState: 1
+    value: 0
+  fogEndDistance:
+    overrideState: 1
+    value: 600
+  colorSource:
+    overrideState: 1
+    value: 2
+  skyboxMipLevel:
+    overrideState: 0
+    value: 0
+  fogColor:
+    overrideState: 0
+    value: {r: 0.76, g: 0.94, b: 1, a: 1}
+  fogColorGradient:
+    overrideState: 0
+    value: {fileID: 0}
+    defaultState: 1
+  gradientDistance:
+    overrideState: 0
+    value: 1000
+  gradientUseFarClipPlane:
+    overrideState: 0
+    value: 1
+  distanceFog:
+    overrideState: 0
+    value: 1
+  distanceDensity:
+    overrideState: 1
+    value: 1
+  useRadialDistance:
+    overrideState: 0
+    value: 1
+  skyboxInfluence:
+    overrideState: 0
+    value: 1
+  enableDirectionalLight:
+    overrideState: 1
+    value: 1
+  useLightDirection:
+    overrideState: 0
+    value: 1
+  useLightColor:
+    overrideState: 0
+    value: 1
+  useLightIntensity:
+    overrideState: 1
+    value: 0
+  lightColor:
+    overrideState: 0
+    value: {r: 1, g: 0.89, b: 0.55, a: 1}
+  lightDirection:
+    overrideState: 0
+    value: {x: 0, y: 0.5, z: -1}
+  lightIntensity:
+    overrideState: 1
+    value: 0.8
+  heightFog:
+    overrideState: 0
+    value: 1
+  height:
+    overrideState: 0
+    value: 10
+  heightDensity:
+    overrideState: 0
+    value: 0.75
+  heightFogNoise:
+    overrideState: 0
+    value: 0
+  heightNoiseTex:
+    overrideState: 1
+    value: {fileID: 2800000, guid: 82a8d5f38e2ccf44c86362214b2d3e5e, type: 3}
+    defaultState: 1
+  heightNoiseSize:
+    overrideState: 0
+    value: 0.25
+  heightNoiseStrength:
+    overrideState: 0
+    value: 1
+  heightNoiseSpeed:
+    overrideState: 0
+    value: 2
+  lightScattering:
+    overrideState: 0
+    value: 0
+  scatterIntensity:
+    overrideState: 0
+    value: 10
+  scatterThreshold:
+    overrideState: 0
+    value: 1
+  scatterDiffusion:
+    overrideState: 0
+    value: 10
+  scatterSoftKnee:
+    overrideState: 0
+    value: 0.5
+  shader: {fileID: 4800000, guid: fd6092137f2e92140aac060040cc91f6, type: 3}
+--- !u!114 &7936758774668626200
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
+  m_Name: MotionBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  shutterAngle:
+    overrideState: 1
+    value: 270
+  sampleCount:
+    overrideState: 1
+    value: 16
 --- !u!114 &7983280327542571365
 MonoBehaviour:
   m_ObjectHideFlags: 3

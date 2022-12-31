@@ -743,7 +743,7 @@ MonoBehaviour:
   maxSpeed: 0.05
   mainShaker: {fileID: 4167300033667649884}
   offRoadShakePreset: {fileID: 11400000, guid: eff7813850af08d4881df78d4443f520, type: 2}
-  navCamera: {fileID: 0}
+  navCamera: {fileID: 4739139102780659220}
 --- !u!1 &4739139102677297136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,6 +1074,7 @@ MonoBehaviour:
   - {fileID: 7369824495984498690}
   - {fileID: 3589416748998479145}
   - {fileID: 4812408238496025840}
+  mainPhotoCamera: {fileID: 4667543099983639360}
   xAxisParent: {fileID: 4739139102677297139}
   turnSpeed: 1
 --- !u!1 &4739139103321433800

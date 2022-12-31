@@ -46,9 +46,6 @@ namespace Rover.Arduino
             if (applicationQuitting)
                 return;
 
-            Debug.LogError(pinIndex);
-            Debug.LogError(m_ledPinStates.Length);
-
             m_ledPinStates[pinIndex] = value;
 
             m_pinStatesUpdated = true;

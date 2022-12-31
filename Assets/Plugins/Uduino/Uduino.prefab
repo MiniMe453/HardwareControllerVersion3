@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -69,7 +70,7 @@ MonoBehaviour:
   sendRateDelay: 20
   discoverTries: 100
   autoDiscover: 1
-  delayBeforeDiscover: 1.5
+  delayBeforeDiscover: 2
   readLineCharByChar: 0
   stopAllOnQuit: 1
   stopAllOnPause: 0
@@ -79,6 +80,7 @@ MonoBehaviour:
   blackListedPorts:
   - COM7
   - COM6
+  - COM1
   OnDataReceivedEvent:
     m_PersistentCalls:
       m_Calls: []

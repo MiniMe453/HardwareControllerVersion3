@@ -16,9 +16,9 @@ public class TankController : MonoBehaviour
     public float speed;
     public float maxSpeed = 1f;
 
-    public static float TankVelocity;
+    public static float RoverVelocity;
 
-    Shaker m_mainShaker => GetComponent<Shaker>();
+    public Shaker mainShaker;
     ShakeInstance m_offroadShakeInstance;
     public ShakePreset offRoadShakePreset;
     float m_shakeStrength = 0.15f;
@@ -58,14 +58,6 @@ public class TankController : MonoBehaviour
     {
         m_throttleAxis = (value - 512)/512;
 
-        if(m_offroadShakeInstance == null)
-        {
-            m_offroadShakeInstance = m_mainShaker.Shake(offRoadShakePreset);
-            return;
-        }
-
-        m_offroadShakeInstance.StrengthScale = Mathf.Abs(m_throttleAxis);
-
     }
 
     void OnBrakeSwitchFlipped(int pin)
@@ -87,6 +79,7 @@ public class TankController : MonoBehaviour
 
     void Update()
     {
+        Debug.LogError(RoverOperatingSystem.roverControlMode);
         Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis);
             m_rigidbody.MoveRotation(wantedRotation);
         
@@ -96,8 +89,15 @@ public class TankController : MonoBehaviour
         Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f));
         m_rigidbody.MovePosition(wantedPosition);
 
-        TankVelocity = m_rigidbody.velocity.magnitude;
+        RoverVelocity = maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f);
 
+        if(m_offroadShakeInstance == null)
+        {
+            m_offroadShakeInstance = mainShaker.Shake(offRoadShakePreset);
+            return;
+        }
 
+        m_offroadShakeInstance.StrengthScale = RoverVelocity / maxSpeed;
+        Debug.LogError(RoverVelocity / maxSpeed);
     }
 }

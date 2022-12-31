@@ -12,12 +12,6 @@ TM1637 tm1(18, 19);
 TM1637 tm2(16, 17);
 Adafruit_Thermal printer(&Serial3);
 
-// int buttonInputPins[] = {53, 51, 49, 47, 45, 11, 41, 39, 37, 43};
-// int numOfDigitalInputs = 10;
-
-// int analogInputPins[] = {A7, A1, A3};
-// int numOfAnalogInputs = 3;
-
 int* digitalInputArray = 0;
 int digitalInputArraySize;
 

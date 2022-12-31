@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OffroadMovement
   m_EditorClassIdentifier: 
   shakeType: 1
-  strength: 0.15
+  strength: 2
   roughness: 7
   fadeIn: 0.1
   fadeOut: 0.25

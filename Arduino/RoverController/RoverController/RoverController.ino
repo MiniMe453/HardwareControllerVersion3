@@ -57,7 +57,7 @@ void setup() {
   uduino.addCommand("initO", InitOutput);
   uduino.addCommand("writeTM1", WriteTM1Display);
   uduino.addCommand("writeTM2", WriteTM2Display);
-  uduino.addCommand("doNth", DoNothing);
+  uduino.addCommand("pobj", PrintObjectScan);
 
   lcd.setCursor(0, 0);
   lcd.print("Hello world!");
@@ -160,11 +160,6 @@ void UpdateLCD() {
   // lcd.print("Hello world!");
   // lcd.setCursor(0, 1);
   // lcd.print(10);
-}
-
-void DoNothing()
-{
-  return;
 }
 
 void WriteTM1Display()
@@ -294,6 +289,31 @@ void InitOutput() {
       arg = uduino.next();
     }
   }
+}
+
+void PrintObjectScan()
+{
+  char* arg;
+  arg = uduino.next();
+
+  printer.justify('C');
+  printer.doubleHeightOn();
+  printer.println("SCAN RESULTS");
+  printer.doubleHeightOff();
+
+  printer.println("This is a test");
+
+  printer.println(" ");
+
+  printer.println("Hello World!");
+
+  printer.println(" ");
+
+  printer.println(arg);
+
+  printer.println(" ");
+  printer.println(" ");
+  printer.println(" ");
 }
 
 void ReadEncoders()  //bool readAState, bool secondPin

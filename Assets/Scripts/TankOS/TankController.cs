@@ -22,6 +22,9 @@ public class TankController : MonoBehaviour
     {
         RoverOperatingSystem.InitOS();
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
+
+        QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        Application.targetFrameRate = 30;
     }
 
     void OnDatabaseInit()
@@ -66,14 +69,14 @@ public class TankController : MonoBehaviour
 
     void Update()
     {
+        Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis);
+            m_rigidbody.MoveRotation(wantedRotation);
+        
         if(RoverOperatingSystem.roverControlMode != RoverControlMode.RVR)
             return;
 
         Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f));
         m_rigidbody.MovePosition(wantedPosition);
-
-        Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis);
-        m_rigidbody.MoveRotation(wantedRotation);
 
         TankVelocity = m_rigidbody.velocity.magnitude;
     }

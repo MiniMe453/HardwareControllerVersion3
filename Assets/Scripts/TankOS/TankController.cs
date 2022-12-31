@@ -15,8 +15,12 @@ public class TankController : MonoBehaviour
     public float speed;
     public float maxSpeed = 1f;
 
+    public static float TankVelocity;
+
+
     void OnEnable()
     {
+        RoverOperatingSystem.InitOS();
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
     }
 
@@ -26,6 +30,7 @@ public class TankController : MonoBehaviour
         ArduinoInputDatabase.GetInputFromName("Push Potentiometer").EOnValueChanged += OnThrottleAxis;
         ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonPressed += OnBrakeSwitchFlipped;
         ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonReleased += OnBrakeSwitchFlipped;
+        RoverOperatingSystem.EOnRoverControlModeChanged += OnRoverControlModeChanged;
         m_brakeLEDpin = ArduinoInputDatabase.GetOutputIndexFromName("brake light led");
     }
 
@@ -40,8 +45,6 @@ public class TankController : MonoBehaviour
     void OnThrottleAxis(float value, int pin)
     {
         m_throttleAxis = (value - 512)/512;
-        // m_rigidbody.MovePosition(transform.position + (transform.forward * maxSpeed * value));
-        // Debug.LogError(m_rigidbody.velocity.magnitude + " " + value);
     }
 
     void OnBrakeSwitchFlipped(int pin)
@@ -50,13 +53,28 @@ public class TankController : MonoBehaviour
         LEDManager.SetLEDMode(m_brakeLEDpin, m_brakeActive? 1 : 0);
     }
 
+    void OnRoverControlModeChanged(RoverControlMode newMode)
+    {
+        switch(newMode)
+        {
+            case RoverControlMode.CAM:
+                break;
+            case RoverControlMode.RVR:
+                break;
+        }
+    }
+
     void Update()
     {
+        if(RoverOperatingSystem.roverControlMode != RoverControlMode.RVR)
+            return;
+
         Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f));
         m_rigidbody.MovePosition(wantedPosition);
 
         Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis);
         m_rigidbody.MoveRotation(wantedRotation);
 
+        TankVelocity = m_rigidbody.velocity.magnitude;
     }
 }

@@ -30,7 +30,7 @@ MonoBehaviour:
   - inputType: 0
     pinMode: 2
     pinNumber: 39
-    inputName: CAM Mode Button
+    inputName: CAM Button
     inputIndex: 2
     canHoldButton: 0
     dataIndex: 2

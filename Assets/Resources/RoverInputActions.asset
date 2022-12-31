@@ -1,0 +1,202 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79b11c9f549d4724f965fd0ad7e9e553, type: 3}
+  m_Name: RoverInputActions
+  m_EditorClassIdentifier: 
+  m_InputData:
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 53
+    inputName: CAM 1 Button
+    inputIndex: 0
+    canHoldButton: 0
+    dataIndex: 0
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 41
+    inputName: RVR Button
+    inputIndex: 1
+    canHoldButton: 0
+    dataIndex: 1
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 39
+    inputName: CAM Mode Button
+    inputIndex: 2
+    canHoldButton: 0
+    dataIndex: 2
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 51
+    inputName: CAM 2 Button
+    inputIndex: 3
+    canHoldButton: 0
+    dataIndex: 3
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 49
+    inputName: CAM 3 Button
+    inputIndex: 4
+    canHoldButton: 0
+    dataIndex: 4
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 47
+    inputName: CAM 4 Button
+    inputIndex: 5
+    canHoldButton: 0
+    dataIndex: 5
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 45
+    inputName: CAM Take Photo Button
+    inputIndex: 6
+    canHoldButton: 0
+    dataIndex: 6
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 43
+    inputName: LIDAR Button
+    inputIndex: 7
+    canHoldButton: 0
+    dataIndex: 7
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 37
+    inputName: Brake Switch
+    inputIndex: 8
+    canHoldButton: 0
+    dataIndex: 8
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 11
+    inputName: Rotary Encoder Button
+    inputIndex: 9
+    canHoldButton: 0
+    dataIndex: 9
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 35
+    inputName: Print Button 01
+    inputIndex: 10
+    canHoldButton: 0
+    dataIndex: 16
+  - inputType: 0
+    pinMode: 0
+    pinNumber: 13
+    inputName: Rotary Encoder A
+    inputIndex: -1
+    canHoldButton: 0
+    dataIndex: 10
+  - inputType: 0
+    pinMode: 0
+    pinNumber: 12
+    inputName: Rotary Encoder B
+    inputIndex: -1
+    canHoldButton: 0
+    dataIndex: 11
+  - inputType: 1
+    pinMode: 0
+    pinNumber: 0
+    inputName: Joystick X
+    inputIndex: 1
+    canHoldButton: 0
+    dataIndex: 12
+  - inputType: 1
+    pinMode: 0
+    pinNumber: 1
+    inputName: Joystick Y
+    inputIndex: 2
+    canHoldButton: 0
+    dataIndex: 13
+  - inputType: 1
+    pinMode: 0
+    pinNumber: 2
+    inputName: Push Potentiometer
+    inputIndex: 3
+    canHoldButton: 0
+    dataIndex: 14
+  - inputType: 1
+    pinMode: 0
+    pinNumber: -1
+    inputName: Rotary Encoder Counter
+    inputIndex: 4
+    canHoldButton: 0
+    dataIndex: 15
+  - inputType: 0
+    pinMode: 2
+    pinNumber: 33
+    inputName: Print Button 02
+    inputIndex: 11
+    canHoldButton: 0
+    dataIndex: 15
+  m_OutputData:
+  - pinMode: 1
+    outputName: Proximity Sensor front LED
+    pinNumber: 22
+    dataIndex: 0
+  - pinMode: 1
+    outputName: Radio Station LED 1
+    pinNumber: 32
+    dataIndex: 1
+  - pinMode: 1
+    outputName: ProximitySensor right LED
+    pinNumber: 24
+    dataIndex: 2
+  - pinMode: 1
+    outputName: ProximitySensor back LED
+    pinNumber: 26
+    dataIndex: 3
+  - pinMode: 1
+    outputName: print led button
+    pinNumber: 30
+    dataIndex: 4
+  - pinMode: 1
+    outputName: print stop led button
+    pinNumber: 28
+    dataIndex: 5
+  - pinMode: 1
+    outputName: radio station 2 led
+    pinNumber: 34
+    dataIndex: 6
+  - pinMode: 1
+    outputName: radio station 3 led
+    pinNumber: 36
+    dataIndex: 7
+  - pinMode: 1
+    outputName: cam led button
+    pinNumber: 38
+    dataIndex: 8
+  - pinMode: 1
+    outputName: rvr button led
+    pinNumber: 40
+    dataIndex: 9
+  - pinMode: 1
+    outputName: brake light led
+    pinNumber: 44
+    dataIndex: 10
+  - pinMode: 1
+    outputName: cam 4 led pin
+    pinNumber: 46
+    dataIndex: 11
+  - pinMode: 1
+    outputName: cam 3 led pin
+    pinNumber: 48
+    dataIndex: 12
+  - pinMode: 1
+    outputName: cam 2 led pin
+    pinNumber: 50
+    dataIndex: 13
+  - pinMode: 1
+    outputName: CAM 1 led pin
+    pinNumber: 52
+    dataIndex: 14

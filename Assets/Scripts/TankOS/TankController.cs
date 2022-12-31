@@ -22,6 +22,7 @@ public class TankController : MonoBehaviour
     ShakeInstance m_offroadShakeInstance;
     public ShakePreset offRoadShakePreset;
     float m_shakeStrength = 0.15f;
+    public GameObject navCamera;
 
 
     void OnEnable()
@@ -71,8 +72,10 @@ public class TankController : MonoBehaviour
         switch(newMode)
         {
             case RoverControlMode.CAM:
+                navCamera.SetActive(false);
                 break;
             case RoverControlMode.RVR:
+                navCamera.SetActive(true);
                 break;
         }
     }
@@ -91,13 +94,13 @@ public class TankController : MonoBehaviour
 
         RoverVelocity = maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f);
 
-        if(m_offroadShakeInstance == null)
-        {
-            m_offroadShakeInstance = mainShaker.Shake(offRoadShakePreset);
-            return;
-        }
+        // if(m_offroadShakeInstance == null)
+        // {
+        //     m_offroadShakeInstance = mainShaker.Shake(offRoadShakePreset);
+        //     return;
+        // }
 
-        m_offroadShakeInstance.StrengthScale = RoverVelocity / maxSpeed;
-        Debug.LogError(RoverVelocity / maxSpeed);
+        // m_offroadShakeInstance.StrengthScale = RoverVelocity / maxSpeed;
+        // Debug.LogError(RoverVelocity / maxSpeed);
     }
 }

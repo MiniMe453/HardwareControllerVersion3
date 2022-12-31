@@ -155,7 +155,7 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 		if (unity_OrthoParams.w) edge = 1 - edge;
 
 		//Edges only
-		original = lerp(original, float4(0, 0, 1, 1), _BackgroundFade);
+		original = lerp(original, float4(1, 1, 1, 1), _BackgroundFade);
 
 		//Opacity
 		float3 edgeColor = lerp(original.rgb, _EdgeColor.rgb, _EdgeOpacity * LinearDepthFade(centerDepth, _FadeParams.x, _FadeParams.y, _FadeParams.z, _FadeParams.w));

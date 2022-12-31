@@ -134,11 +134,11 @@ MonoBehaviour:
     overrideState: 0
     value: 1
   temperature:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -100
   tint:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 100
   colorFilter:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -152,8 +152,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 0.92
   contrast:
     overrideState: 1
     value: 28
@@ -1507,7 +1507,7 @@ MonoBehaviour:
     value: 0
   fogMode:
     overrideState: 1
-    value: 3
+    value: 1
   globalDensity:
     overrideState: 1
     value: 1
@@ -1516,7 +1516,7 @@ MonoBehaviour:
     value: 0
   fogEndDistance:
     overrideState: 1
-    value: 600
+    value: 78.44
   colorSource:
     overrideState: 1
     value: 2

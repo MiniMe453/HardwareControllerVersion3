@@ -55,6 +55,7 @@ namespace Rover.Systems
             ArduinoInputDatabase.GetInputFromName("CAM 2 Button").EOnButtonPressed += OnCam2ButtonPressed;
             ArduinoInputDatabase.GetInputFromName("CAM 3 Button").EOnButtonPressed += OnCam3ButtonPressed;
             ArduinoInputDatabase.GetInputFromName("CAM 4 Button").EOnButtonPressed += OnCam4ButtonPressed;
+            ArduinoInputDatabase.GetInputFromName("Joystick Y").EOnValueChanged += OnVerticalAxis;
             
             SelectNewCameraMode(CameraMode.Cam1);
         }
@@ -131,6 +132,8 @@ namespace Rover.Systems
 
             if(Mathf.Abs(m_verticalAxis) < GameSettings.JOYSTICK_DEADZONE)
                 m_verticalAxis = 0;
+
+            Debug.LogError(m_verticalAxis);
         }
 
         void TakeCameraPhoto(Camera selectedCamera)

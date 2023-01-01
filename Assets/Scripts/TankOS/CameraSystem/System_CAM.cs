@@ -175,11 +175,13 @@ namespace Rover.Systems
         {
             Vector3 newRot = Vector3.up * turnSpeed * m_verticalAxis;
 
-            newRot.x = Mathf.Clamp(newRot.x, 0, 70);
-            newRot.y = Mathf.Clamp(newRot.y, 0, 70);
-            newRot.z = Mathf.Clamp(newRot.z, 0, 70);
-
             xAxisParent.rotation *= Quaternion.Euler(newRot);
+
+            Vector3 rotation = xAxisParent.rotation.eulerAngles;
+
+            rotation.x = Mathf.Clamp(rotation.x, 0, 70);
+            rotation.y = Mathf.Clamp(rotation.y, 0, 70);
+            rotation.z = Mathf.Clamp(rotation.z, 0, 70);
 
             m_heading = Vector3.SignedAngle(transform.forward, new Vector3(0,0,1), Vector3.up);
             float sign = Mathf.Sign(m_heading);

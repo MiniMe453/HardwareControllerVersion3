@@ -22,7 +22,7 @@ namespace Rover.Settings
         public const float PHOTO_VIEWER_FPS = 5f;
         public const int HORIZONTAL_CENTER_VAL = 508;
         public const int VERTICAL_CENTER_VAL = 460;
-        public const float JOYSTICK_DEADZONE = 0.05f;
+        public const float JOYSTICK_DEADZONE = 0.1f;
     }
 }
 

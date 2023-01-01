@@ -132,8 +132,6 @@ namespace Rover.Systems
 
             if(Mathf.Abs(m_verticalAxis) < GameSettings.JOYSTICK_DEADZONE)
                 m_verticalAxis = 0;
-
-            Debug.LogError(m_verticalAxis);
         }
 
         void TakeCameraPhoto(Camera selectedCamera)
@@ -175,7 +173,13 @@ namespace Rover.Systems
 
         void Update()
         {
-            xAxisParent.rotation = xAxisParent.rotation * Quaternion.Euler(Vector3.right * turnSpeed * m_verticalAxis);
+            Vector3 newRot = Vector3.up * turnSpeed * m_verticalAxis;
+
+            newRot.x = Mathf.Clamp(newRot.x, 0, 70);
+            newRot.y = Mathf.Clamp(newRot.y, 0, 70);
+            newRot.z = Mathf.Clamp(newRot.z, 0, 70);
+
+            xAxisParent.rotation *= Quaternion.Euler(newRot);
 
             m_heading = Vector3.SignedAngle(transform.forward, new Vector3(0,0,1), Vector3.up);
             float sign = Mathf.Sign(m_heading);

@@ -156,7 +156,8 @@ namespace Rover.Arduino
 
     public class ThreeWaySwitch
     {
-        private int m_currentSelection = 0;
+        private static int m_currentSelection = 0;
+        public static int CurrentValue {get {return m_currentSelection;}}
         public static event Action<int> EOnCurrentSelectionChanged;
         
 

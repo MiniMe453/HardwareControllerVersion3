@@ -5,10 +5,16 @@ using Rover.Arduino;
 using System;
 
 public enum RoverControlMode {CAM, RVR};
+public enum OSMode {Rover, Computer, Map};
 
 public static class RoverOperatingSystem
 {
-    public static RoverControlMode roverControlMode = RoverControlMode.RVR;
+    private static RoverControlMode m_roverControlMode = RoverControlMode.RVR;
+    public static RoverControlMode RoverControlMode {get {return m_roverControlMode;}}
+    private static OSMode m_osMode = OSMode.Rover;
+    public static OSMode OSMode {get{return m_osMode;}}
+    public static event Action<OSMode> EOnOSModeChanged;
+
     public static event Action<RoverControlMode> EOnRoverControlModeChanged;
 
     //LED Pins
@@ -21,14 +27,17 @@ public static class RoverOperatingSystem
     {
         ArduinoInputDatabase.GetInputFromName("RVR Button").EOnButtonPressed += OnRVRButtonPressed;
         ArduinoInputDatabase.GetInputFromName("CAM Button").EOnButtonPressed += OnCAMButtonPressed;
+        ThreeWaySwitch.EOnCurrentSelectionChanged += OnNewControlModeSelected;
+
+        OnNewControlModeSelected(ThreeWaySwitch.CurrentValue);
     }
 
     public static void SetRoverControlMode(RoverControlMode newMode)
     {
-        if(newMode == roverControlMode)
+        if(newMode == m_roverControlMode)
             return;
 
-        roverControlMode = newMode;
+        m_roverControlMode = newMode;
 
         EOnRoverControlModeChanged?.Invoke(newMode);
     }
@@ -49,5 +58,15 @@ public static class RoverOperatingSystem
         int[] ledPinIndex = new int[] {ArduinoInputDatabase.GetOutputIndexFromName("rvr button led"), ArduinoInputDatabase.GetOutputIndexFromName("cam led button")};
         int[] ledPinValues = new int[] {0,1};
         LEDManager.SetLEDMode(ledPinIndex, ledPinValues);
+    }
+
+    static void OnNewControlModeSelected(int newSelection)
+    {
+        if(m_osMode == (OSMode)newSelection)
+            return;
+
+        m_osMode = (OSMode)newSelection;
+
+        EOnOSModeChanged?.Invoke(m_osMode);
     }
 }

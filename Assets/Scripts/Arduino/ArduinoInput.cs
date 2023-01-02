@@ -374,7 +374,8 @@ namespace Rover.Arduino
 
             foreach(ArduinoInput input in m_arduinoInputs)
             {
-                input.CheckInputValue();
+                if(RoverOperatingSystem.AllowUserControl || input.InputName == "3Way Switch")
+                    input.CheckInputValue();
             }
         }
 

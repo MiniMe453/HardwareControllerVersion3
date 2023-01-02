@@ -41,6 +41,8 @@ public class TankController : MonoBehaviour
         ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonPressed += OnBrakeSwitchFlipped;
         ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonReleased += OnBrakeSwitchFlipped;
         RoverOperatingSystem.EOnRoverControlModeChanged += OnRoverControlModeChanged;
+        RoverOperatingSystem.EOnOSModeChanged += OnOSModeChanged;
+
         m_brakeLEDpin = ArduinoInputDatabase.GetOutputIndexFromName("brake light led");
     }
 
@@ -50,9 +52,6 @@ public class TankController : MonoBehaviour
 
         if(Mathf.Abs(m_horizontalAxis) < 0.05)
             m_horizontalAxis = 0;
-
-        
-        
     }
 
     void OnThrottleAxis(float value, int pin)
@@ -80,8 +79,17 @@ public class TankController : MonoBehaviour
         }
     }
 
+    void OnOSModeChanged(OSMode newMode)
+    {
+        if(newMode == OSMode.Rover)
+            RoverOperatingSystem.SetUserControl(true);
+    }
+
     void Update()
     {
+        if(RoverOperatingSystem.OSMode != OSMode.Rover)
+            return;
+
         Debug.LogError(RoverOperatingSystem.RoverControlMode);
         Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis);
             m_rigidbody.MoveRotation(wantedRotation);

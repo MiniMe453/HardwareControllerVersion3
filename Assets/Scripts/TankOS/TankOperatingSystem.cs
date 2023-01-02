@@ -14,8 +14,9 @@ public static class RoverOperatingSystem
     private static OSMode m_osMode = OSMode.Rover;
     public static OSMode OSMode {get{return m_osMode;}}
     public static event Action<OSMode> EOnOSModeChanged;
-
     public static event Action<RoverControlMode> EOnRoverControlModeChanged;
+    private static bool m_allowUserControl;
+    public static bool AllowUserControl {get {return m_allowUserControl;}}
 
     //LED Pins
     public static void InitOS()
@@ -68,5 +69,10 @@ public static class RoverOperatingSystem
         m_osMode = (OSMode)newSelection;
 
         EOnOSModeChanged?.Invoke(m_osMode);
+    }
+
+    public static void SetUserControl(bool userControl)
+    {
+
     }
 }

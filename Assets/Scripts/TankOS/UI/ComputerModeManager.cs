@@ -23,6 +23,7 @@ public class ComputerModeManager : MonoBehaviour
                 break;
             case OSMode.Computer:
                 computerModeGameObject.SetActive(true);
+                RoverOperatingSystem.SetUserControl(false);
                 break;
             case OSMode.Map:
                 computerModeGameObject.SetActive(false);

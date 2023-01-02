@@ -26,6 +26,7 @@ public class MapModeManager : MonoBehaviour
                 break;
             case OSMode.Map:
                 mapModeGameObject.SetActive(true);
+                RoverOperatingSystem.SetUserControl(false);
                 break;
         }
     }

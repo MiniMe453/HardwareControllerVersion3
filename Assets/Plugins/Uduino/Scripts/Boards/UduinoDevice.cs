@@ -213,7 +213,7 @@ namespace Uduino
                 Log.Error("The message length and parameters are too long. Reduce the length of the parameters or increase the value RECEIVE_MAX_BUFFER from the Uduino.h script ( Arduino/libraries/Uduino.h)");
 
             AddToArduinoWriteQueue(message);
-            Debug.LogError("Message Length: " + message.Length + " | Message: " + message);
+            Debug.LogWarning("Message Length: " + message.Length + " | Message: " + message);
 
             if (instant && !WriteToArduinoLoop()) // If the message is set up to instant and the writing is not working
                 return false;

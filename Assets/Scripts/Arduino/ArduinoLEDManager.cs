@@ -18,9 +18,10 @@ namespace Rover.Arduino
 
         }
 
-        public static void InitializeLEDManager(object[] outputPinList)
+        public static void InitializeLEDManager(int outputPinArrayLength)
         {   
-            m_ledPinStates = new object[(int)outputPinList[0]];
+            m_ledPinStates = new object[outputPinArrayLength];
+            Debug.LogError(outputPinArrayLength);
             //Starting from 1 because the first value in the array is the length of the array.
             for(int i = 0; i < m_ledPinStates.Length; i++)
             {

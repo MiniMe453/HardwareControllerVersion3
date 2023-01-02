@@ -22,6 +22,7 @@ public class InputTester : MonoBehaviour
     public TextMeshProUGUI JoystickX;
     public TextMeshProUGUI JoystickY;
     public TextMeshProUGUI printStopButton;
+    public TextMeshProUGUI threeWaySwitchText;
     int cam1ledPin;
     int cam2ledPin;
     int cam3ledPin;
@@ -31,6 +32,8 @@ public class InputTester : MonoBehaviour
     int CAMModeLedPin;
     int LCDCounter;
     int PrintStartLedPin;
+    int[] warningLightIndexes;
+    int warningLightIndex = 0;
     void OnEnable()
     {
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
@@ -54,10 +57,11 @@ public class InputTester : MonoBehaviour
         ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonPressed += BrakeSwitchOn;
         ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonReleased += BrakeSwitchOff;
         ArduinoInputDatabase.GetInputFromName("RVR Button").EOnButtonPressed += OnRVRButtonPressed;
-        ArduinoInputDatabase.GetInputFromName("CAM Mode Button").EOnButtonPressed += OnCamButtonPressed;
+        ArduinoInputDatabase.GetInputFromName("CAM Button").EOnButtonPressed += OnCamButtonPressed;
         ArduinoInputDatabase.GetInputFromName("Print Button 01").EOnButtonPressed += OnPrintStartButtonPressed;
         ArduinoInputDatabase.GetInputFromName("Print Button 02").EOnButtonPressed += OnPrintStopButtonPressed;
         ArduinoInputDatabase.GetInputFromName("Print Button 02").EOnButtonReleased += OnPrintStopButtonReleased;
+        ThreeWaySwitch.EOnCurrentSelectionChanged += OnThreeWaySwitchChanged;
 
         station1LightPin = ArduinoInputDatabase.GetOutputIndexFromName("Radio Station LED 1");
         station2LightPin = ArduinoInputDatabase.GetOutputIndexFromName("radio station 2 led");
@@ -71,10 +75,61 @@ public class InputTester : MonoBehaviour
         CAMModeLedPin = ArduinoInputDatabase.GetOutputIndexFromName("cam led button");
         PrintStartLedPin = ArduinoInputDatabase.GetOutputIndexFromName("print led button");
 
+        warningLightIndexes = new int[]
+        {
+            ArduinoInputDatabase.GetOutputIndexFromName("Temp Warning Light"),
+            ArduinoInputDatabase.GetOutputIndexFromName("Radio Warning Light"),
+            ArduinoInputDatabase.GetOutputIndexFromName("Angle Warning Light"),
+            ArduinoInputDatabase.GetOutputIndexFromName("Proximity Sensor Back"),
+            ArduinoInputDatabase.GetOutputIndexFromName("Proximity Sensor Left"),
+            ArduinoInputDatabase.GetOutputIndexFromName("Radiation Warning Light"),
+            ArduinoInputDatabase.GetOutputIndexFromName("ProximitySensor right LED"),
+            ArduinoInputDatabase.GetOutputIndexFromName("Proximity Sensor front LED"),
+            ArduinoInputDatabase.GetOutputIndexFromName("ReadyTransmit LED"),
+            ArduinoInputDatabase.GetOutputIndexFromName("Transmit LED")
+        };
+
         Timer.Register(1f, () => SendTestLCDCommand(), isLooped: true);
-        Timer.Register(1f, () => SendTestWriteTM(), isLooped: true);
+        Timer.Register(0.9f, () => SendTestWriteTM(), isLooped: true);
+        Timer.Register(0.8f, () => CycleWarningLights(), isLooped: true);
 
 //        Debug.LogError(PrintStartLedPin);
+    }
+
+    void OnThreeWaySwitchChanged(int newSelection)
+    {
+        string text = "";
+
+        switch(newSelection)
+        {
+            case 0:
+                text = $"{newSelection}: MODE 1";
+                break;
+            case 1:
+                text = $"{newSelection}: MODE 2";
+                break;
+            case 2:
+                text = $"{newSelection}: MODE 3";
+                break;
+        }
+
+        threeWaySwitchText.text = text;
+    }
+
+    void CycleWarningLights()
+    {
+        warningLightIndex++;
+
+        if(warningLightIndex == warningLightIndexes.Length)
+            warningLightIndex = 0;
+
+        int[] values = new int[warningLightIndexes.Length];
+        values[warningLightIndex] = 1;
+
+        values[warningLightIndexes.Length - 1] = warningLightIndex % 2 == 0? 0 : 1;
+        values[warningLightIndexes.Length - 2] = warningLightIndex % 2 == 0? 1 : 0;
+
+        LEDManager.SetLEDMode(warningLightIndexes, values);
     }
 
     void SendTestWriteTM()
@@ -96,15 +151,6 @@ public class InputTester : MonoBehaviour
         }
 
         UduinoManager.Instance.sendCommand("writeTM2", displayData);
-
-        displayData[4] = "0";
-
-        for(int i = 0; i< 4; i++)
-        {
-            displayData[i] = rotaryCountInt.ToString("0000")[i];
-        }
-
-        UduinoManager.Instance.sendCommand("writeTM1", displayData);
     }
 
     void OnPrintStartButtonPressed(int pin)
@@ -158,6 +204,17 @@ public class InputTester : MonoBehaviour
         rotaryCounter.text = value.ToString("000");
 
         rotaryCountInt = Mathf.FloorToInt(value);
+
+        object[] displayData = new object[5];
+
+        displayData[4] = "0";
+
+        for(int i = 0; i< 4; i++)
+        {
+            displayData[i] = rotaryCountInt.ToString("0000")[i];
+        }
+
+        UduinoManager.Instance.sendCommand("writeTM1", displayData);
     }
 
     void OnCam1Pressed(int pin)

@@ -190,7 +190,7 @@ MonoBehaviour:
     value: 1
   lumThreshold:
     overrideState: 1
-    value: 0.035
+    value: 0.213
   edgeColor:
     overrideState: 1
     value: {r: 0.15566039, g: 0.72158945, b: 1, a: 1}

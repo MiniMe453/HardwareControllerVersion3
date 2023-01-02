@@ -27,8 +27,8 @@ RenderSettings:
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 05ae4e4ef40122f4bbda4c5c593215a4, type: 2}
-  m_HaloStrength: 0.5
-  m_FlareStrength: 1
+  m_HaloStrength: 0.292
+  m_FlareStrength: 0.409
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1359428900}
-  m_IndirectSpecularColor: {r: 0.91670775, g: 0.77198905, b: 0.6349953, a: 1}
+  m_IndirectSpecularColor: {r: 0.91665107, g: 0.7719947, b: 0.6352431, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -230,7 +230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4667543099983639360, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4739139102495531448, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_RootOrder
@@ -284,9 +284,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4739139102780659219, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: isGlobal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4739139102780659219, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4739139102780659220, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4739139103795322589, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_IsActive

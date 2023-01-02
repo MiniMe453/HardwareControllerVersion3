@@ -154,6 +154,37 @@ namespace Rover.Arduino
         }
     }
 
+    public class ThreeWaySwitch
+    {
+        private int m_currentSelection = 0;
+        public static event Action<int> EOnCurrentSelectionChanged;
+        
+
+        public ThreeWaySwitch()
+        {
+            ArduinoInputDatabase.GetInputFromName("3Way Switch").EOnValueChanged += OnValueChanged;
+        }
+
+        void OnValueChanged(float value, int pin)
+        {
+            if(value < 30 && m_currentSelection != 2)
+            {
+                m_currentSelection = 2;
+                EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
+            }
+            else if (value > 630 && value < 700 && m_currentSelection != 1)
+            {
+                m_currentSelection = 1;
+                EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
+            }
+            else if(value > 975 && m_currentSelection != 0)
+            {
+                m_currentSelection = 0;
+                EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
+            }
+        }
+    }
+
     public static class ArduinoInputDatabase
     {
         private static List<ArduinoInput> m_arduinoInputs = new List<ArduinoInput>();
@@ -162,6 +193,19 @@ namespace Rover.Arduino
         private static Timer inputUpdateTimer;
         public static event Action EOnDatabasedInitialized;
         public const float INPUT_TIMER_DELAY = 0.05f;
+        public static ThreeWaySwitch threeWaySwitch;
+        
+        #region Arduino Setup Variables
+        private static int setupMessagesSendCount;
+        private static int setupMessagesEndCount;
+        private static Timer sendSetupMessagesTimer;
+        static List<object> digitalPinData = new List<object>();
+        static List<object> analogPinData = new List<object>();
+        static List<object[]> outputPinData = new List<object[]>();
+        static int outputArrayIndexToSend = 0;
+        #endregion
+
+
 
         static ArduinoInputDatabase()
         {
@@ -182,12 +226,10 @@ namespace Rover.Arduino
 
         private static void InitializeArduinoData()
         {
-            List<object> digitalPinData = new List<object>();
-            List<object> analogPinData = new List<object>();
-            List<object> outputPinData = new List<object>();
+
+            int outputDataListArrayIndex = 0;
             int digitalPinCount = 0;
             int analogPinCount = 0;
-            int outputPinCount = 0;
 
             m_arduinoInputs.Clear();
 
@@ -218,45 +260,83 @@ namespace Rover.Arduino
                 }
             }
 
+            //Create the arrays inside the list and set their initial values so we know how much we have in each array.
+            for(int i = 0; i < Mathf.CeilToInt(m_InputActionMap.OutputDataList.Count/12f); i++)
+            {
+                outputPinData.Add(new object[((i + 1) * 12 < m_InputActionMap.OutputDataList.Count? 12 : m_InputActionMap.OutputDataList.Count % 12) + 3]);
+
+                outputPinData[i][0] = i == 0? m_InputActionMap.OutputDataList.Count : -1;
+                outputPinData[i][1] = i * 12;
+                outputPinData[i][2] = outputPinData[i].Length - 3;
+
+                Debug.LogError(outputPinData[i].Length);
+
+            }
+
+            for(int i = 0; i < m_InputActionMap.OutputDataList.Count; i++)
+            {
+                ArduinoOutputData outputData = m_InputActionMap.OutputDataList[i];
+
+                outputPinData[Mathf.FloorToInt(i/12)][(i % 12) + 3] = outputData.pinNumber;
+            }
+
             foreach(ArduinoOutputData data in m_InputActionMap.OutputDataList)
             {
-                outputPinCount++;
-                outputPinData.Add(data.pinNumber);
+                if(outputPinData[outputDataListArrayIndex].Length == 15)
+                {                    
+                    outputDataListArrayIndex++;
+                }
+
+                
             }
             
             digitalPinData.Insert(0, digitalPinCount);
             analogPinData.Insert(0, analogPinCount);
-            outputPinData.Insert(0, outputPinCount);
 
-            UduinoManager.Instance.sendCommand("initD", digitalPinData.ToArray());
+            sendSetupMessagesTimer = Timer.Register(0.1f, () => SendSetupMessages(), isLooped: true);
+            setupMessagesEndCount = outputPinData.Count + 2;
+        }
+
+        static void SendSetupMessages()
+        {   
+            bool stopSendingSetupMessages = false;
             
-            //We need a timer here to prevent sending too much data to the arduino in the same frame. 
-            //If we do that, it will overflow the timer and we won't be able to read the data properly.
-            Timer.Register(0.1f, () => { 
+            switch(setupMessagesSendCount)
+            {
+                case 0:
+                    UduinoManager.Instance.sendCommand("initD", digitalPinData.ToArray());
+                    setupMessagesSendCount++;
+                    break;
+                case 1:
                     UduinoManager.Instance.sendCommand("initA", analogPinData.ToArray());
+                    setupMessagesSendCount++;
+                    break;
+                case 2: 
+                    if(outputArrayIndexToSend == outputPinData.Count)
+                    {
+                        stopSendingSetupMessages = true;
+                        break;
+                    }
                     
-                    Timer.Register(0.1f, () => {
-                        UduinoManager.Instance.sendCommand("initO", outputPinData.ToArray());
-                        
-                        ArduinoInputDecoder.InitializedInputDecoder(analogPinCount + 1);
-                        LEDManager.InitializeLEDManager(outputPinData.ToArray());
+                    UduinoManager.Instance.sendCommand("initO", outputPinData[outputArrayIndexToSend]);
+                    outputArrayIndexToSend++;
+                    break;
+            }
 
-                        EOnDatabasedInitialized?.Invoke();
-                        Debug.Log("Database initd");
+            if(!stopSendingSetupMessages)
+                return;
 
+            ArduinoInputDecoder.InitializedInputDecoder((int)analogPinData[0] + 2);
+            LEDManager.InitializeLEDManager((int)outputPinData[0][0]);
 
-                        // string disp = "";
-                        // for(int i = 0; i< digitalPinData.Count; i++)
-                        // {
-                        //     disp += digitalPinData[i];
-                        //     disp += " ";
-                        // }
-                        // Debug.LogError(disp + " | Count: " + disp.Length);
+            Debug.Log("Database initd");
 
-                        inputUpdateTimer = Timer.Register(INPUT_TIMER_DELAY, () => {OnInputReadTimerUpdate();}, isLooped: true);
-                    });
-                } );
+            inputUpdateTimer = Timer.Register(INPUT_TIMER_DELAY, () => {OnInputReadTimerUpdate();}, isLooped: true);
 
+            threeWaySwitch = new ThreeWaySwitch();
+            sendSetupMessagesTimer.Cancel();
+
+            EOnDatabasedInitialized?.Invoke();
         }
 
 
@@ -341,7 +421,7 @@ namespace Rover.Arduino
 
             string[] split = data.Split(' ');
 
-            for(int i = 0; i<split.Length;i++)
+            for(int i = 0; i < split.Length;i++)
             {
                 m_lastMessage[i] = split[i];
             }

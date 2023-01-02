@@ -149,18 +149,43 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 
 		Sobel = 1.0 - pow(saturate(Sobel), _Exponent);
 
-		float edge = 1 - Sobel;
+		float edgeSobel = 1 - Sobel;
 
 		//Orthographic camera: Still not correct, but value should be flipped
-		if (unity_OrthoParams.w) edge = 1 - edge;
+		if (unity_OrthoParams.w) edgeSobel = 1 - edgeSobel;
 
 		//Edges only
-		original = lerp(original, float4(0, 0, 0, 1), _BackgroundFade);
+		half4 originalSobel = lerp(original, float4(0, 0, 0, 1), _BackgroundFade);
 
 		//Opacity
-		float3 edgeColor = lerp(original.rgb, _EdgeColor.rgb, _EdgeOpacity * LinearDepthFade(centerDepth, _FadeParams.x, _FadeParams.y, _FadeParams.z, _FadeParams.w));
+		float3 edgeColor = lerp(originalSobel.rgb, _EdgeColor.rgb, _EdgeOpacity * LinearDepthFade(centerDepth, _FadeParams.x, _FadeParams.y, _FadeParams.z, _FadeParams.w));
 
-		return float4(lerp(original.rgb, edgeColor.rgb, edge).rgb, original.a);
+		//End of Sobel stuff
+
+		//Luminance edge detection
+		half3 p1 = original.rgb;
+		half3 p2 = ScreenColor(UV + float2(-_MainTex_TexelSize.x, -_MainTex_TexelSize.y) * _EdgeSize).rgb;
+		half3 p3 = ScreenColor(UV + float2(+_MainTex_TexelSize.x, -_MainTex_TexelSize.y) * _EdgeSize).rgb;
+
+		half3 diff = p1 * 2 - p2 - p3;
+		half edgeLum = dot(diff, diff);
+		edgeLum = step(edgeLum, 0.2);
+
+		edgeLum = 1 - edgeLum;
+
+		//Edges only
+		half4 originalLum = lerp(original, float4(0, 0, 0, 1), _BackgroundFade);
+
+		//Opacity
+		float3 edgeColorLum = lerp(originalLum.rgb, _EdgeColor.rgb, _EdgeOpacity * LinearDepthFade(centerDepth, _FadeParams.x, _FadeParams.y, _FadeParams.z, _FadeParams.w));
+		edgeColorLum = saturate(edgeColorLum);
+
+		//Combining sobel and luminance edge detections
+
+		float edgeFinal = max(edgeSobel + 0.15, edgeLum / 1.5);
+
+		//return float4(lerp(original.rgb, edgeColor.rgb, edge).rgb, original.a);
+		return float4(lerp(originalLum.rgb, edgeColorLum.rgb, edgeFinal).rgb, originalLum.a);
 	}
 
 	float4 fragLum(Varyings input) : SV_Target
@@ -176,20 +201,20 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 		half3 p3 = ScreenColor(UV + float2(+_MainTex_TexelSize.x, -_MainTex_TexelSize.y) * _EdgeSize).rgb;
 
 		half3 diff = p1 * 2 - p2 - p3;
-		half edge = dot(diff, diff);
-		edge = step(edge, _Threshold);
+		half edgeLum = dot(diff, diff);
+		edgeLum = step(edgeLum, _Threshold);
 
-		edge = 1 - edge;
+		edgeLum = 1 - edgeLum;
 
 		//Edges only
-		original = lerp(original, float4(1, 1, 1, 1), _BackgroundFade);
+		float4 originalLum = lerp(original, float4(0, 0, 0, 1), _BackgroundFade);
 
 		//Opacity
-		float3 edgeColor = lerp(original.rgb, _EdgeColor.rgb, _EdgeOpacity * LinearDepthFade(centerDepth, _FadeParams.x, _FadeParams.y, _FadeParams.z, _FadeParams.w));
-		edgeColor = saturate(edgeColor);
+		float3 edgeColorLum = lerp(originalLum.rgb, _EdgeColor.rgb, _EdgeOpacity * LinearDepthFade(centerDepth, _FadeParams.x, _FadeParams.y, _FadeParams.z, _FadeParams.w));
+		edgeColorLum = saturate(edgeColorLum);
 
 		//return original;
-		return float4(lerp(original.rgb, edgeColor.rgb, edge).rgb, original.a);
+		return float4(lerp(originalLum.rgb, edgeColorLum.rgb, edgeLum).rgb, originalLum.a);
 	}
 
 	ENDHLSL

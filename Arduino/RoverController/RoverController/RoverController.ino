@@ -3,7 +3,7 @@
 #include <LiquidCrystal.h>
 #include <TM1637.h>
 
-#define PRINTER_TX 
+int SPDT_3WAY_SWITCH_PIN = A10;
 
 
 Uduino uduino("RoverController");
@@ -47,6 +47,8 @@ void setup() {
   Serial.begin(9600);
   Serial3.begin(19200);
   printer.begin();
+
+  pinMode(A3, INPUT);
 
   lcd.begin(16, 2);
 
@@ -100,6 +102,9 @@ void loop() {
   serialLine += " ";
   serialLine += String(counter);
 
+  serialLine += " ";
+  serialLine += String(analogRead(A3));
+
   //Serial data structure
   /**
 0 - testpin1
@@ -116,7 +121,21 @@ void loop() {
   }
 
   if (millis() - timeSinceLastMessage > messageDelay) {
+    //Unity Actual Input
     uduino.println(serialLine);
+
+    //Serial.println(analogRead(A3));
+
+    //Debug lines for testing the values set inside the arduino
+    // String ledPinLine = "LED Pins: ";
+
+    // for(int i = 0; i < ledOutputArraySize; i++)
+    // {
+    //   ledPinLine += String(ledOutputArray[i]);
+    //   ledPinLine += " ";
+    // }
+
+    // uduino.println(ledPinLine);
 
     timeSinceLastMessage = millis();
   }
@@ -265,20 +284,24 @@ void InitOutput() {
   char* arg;
   arg = uduino.next();
   int arrLength = uduino.charToInt(arg);
+  arg = uduino.next();
+  int startingIndex= uduino.charToInt(arg);
+  arg = uduino.next();
+  int numOfPinsInMessage = uduino.charToInt(arg);
 
   //Input Array: [Array Size, Pin, PinMode, Pin, PinMode, etc.]
   //Init a new array with the size of our input parameters
-  if (ledOutputArray != 0)
-    return;
-
-  ledOutputArray = new int[arrLength];
-  ledOutputArraySize = arrLength;
+  if (arrLength != -1)
+  {
+    ledOutputArray = new int[arrLength];
+    ledOutputArraySize = arrLength;
+  }
 
   //Move to the first value inside the parameter array
   arg = uduino.next();
 
-  if (arrLength > 0) {
-    for (int i = 0; i < arrLength; i++) {
+  if (ledOutputArraySize > 0) {
+    for (int i = startingIndex; i < startingIndex + numOfPinsInMessage; i++) {
       if (arg != NULL) {
         int pin = uduino.charToInt(arg);
 

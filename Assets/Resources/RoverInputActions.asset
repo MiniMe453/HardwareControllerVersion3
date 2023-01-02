@@ -139,6 +139,13 @@ MonoBehaviour:
     inputIndex: 11
     canHoldButton: 0
     dataIndex: 15
+  - inputType: 1
+    pinMode: 0
+    pinNumber: -1
+    inputName: 3Way Switch
+    inputIndex: 5
+    canHoldButton: 0
+    dataIndex: 18
   m_OutputData:
   - pinMode: 1
     outputName: Proximity Sensor front LED
@@ -153,7 +160,7 @@ MonoBehaviour:
     pinNumber: 24
     dataIndex: 2
   - pinMode: 1
-    outputName: ProximitySensor back LED
+    outputName: ReadyTransmit LED
     pinNumber: 26
     dataIndex: 3
   - pinMode: 1
@@ -161,7 +168,7 @@ MonoBehaviour:
     pinNumber: 30
     dataIndex: 4
   - pinMode: 1
-    outputName: print stop led button
+    outputName: Transmit LED
     pinNumber: 28
     dataIndex: 5
   - pinMode: 1
@@ -200,3 +207,27 @@ MonoBehaviour:
     outputName: CAM 1 led pin
     pinNumber: 52
     dataIndex: 14
+  - pinMode: 1
+    outputName: Radiation Warning Light
+    pinNumber: 20
+    dataIndex: 15
+  - pinMode: 1
+    outputName: Proximity Sensor Left
+    pinNumber: 23
+    dataIndex: 16
+  - pinMode: 1
+    outputName: Proximity Sensor Back
+    pinNumber: 25
+    dataIndex: 17
+  - pinMode: 1
+    outputName: Angle Warning Light
+    pinNumber: 27
+    dataIndex: 18
+  - pinMode: 1
+    outputName: Radio Warning Light
+    pinNumber: 29
+    dataIndex: 19
+  - pinMode: 1
+    outputName: Temp Warning Light
+    pinNumber: 31
+    dataIndex: 20

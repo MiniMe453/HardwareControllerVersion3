@@ -77,14 +77,14 @@ void loop() {
 
   //This makes it accurate. DO NOT DELETE
   ReadEncoders();
-  SoftwareDebouncer(rotaryAPin, aPinReading, aPinCurrentState, aPinCounter);
-  SoftwareDebouncer(rotaryBPin, bPinReading, bPinCurrentState, bPinCounter);
+  // SoftwareDebouncer(rotaryAPin, aPinReading, aPinCurrentState, aPinCounter);
+  // SoftwareDebouncer(rotaryBPin, bPinReading, bPinCurrentState, bPinCounter);
 
-  if ((aPinCurrentState == 0 || bPinCurrentState == 0) && !interruptCalled) {
-    interruptCalled = true;
-    ReadEncoders();
-    timeSinceLastInterrupt = millis();
-  }
+  // if ((aPinCurrentState == 0 || bPinCurrentState == 0) && !interruptCalled) {
+  //   interruptCalled = true;
+  //   ReadEncoders();
+  //   timeSinceLastInterrupt = millis();
+  // }
 
   //Serial.println(counter);
 

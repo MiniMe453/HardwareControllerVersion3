@@ -92,14 +92,14 @@ MonoBehaviour:
     dataIndex: 16
   - inputType: 0
     pinMode: 0
-    pinNumber: 13
+    pinNumber: 20
     inputName: Rotary Encoder A
     inputIndex: -1
     canHoldButton: 0
     dataIndex: 10
   - inputType: 0
     pinMode: 0
-    pinNumber: 12
+    pinNumber: 21
     inputName: Rotary Encoder B
     inputIndex: -1
     canHoldButton: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
     dataIndex: 14
   - pinMode: 1
     outputName: Radiation Warning Light
-    pinNumber: 20
+    pinNumber: 12
     dataIndex: 15
   - pinMode: 1
     outputName: Proximity Sensor Left

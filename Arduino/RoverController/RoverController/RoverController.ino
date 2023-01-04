@@ -2,6 +2,7 @@
 #include <Uduino.h>
 #include <LiquidCrystal.h>
 #include <TM1637.h>
+#include <Encoder.h>
 
 int SPDT_3WAY_SWITCH_PIN = A10;
 
@@ -11,6 +12,7 @@ LiquidCrystal lcd(3, 4, 5, 6, 7, 8);
 TM1637 tm1(18, 19);
 TM1637 tm2(16, 17);
 Adafruit_Thermal printer(&Serial3);
+Encoder rotaryEnc(20, 21);
 
 int* digitalInputArray = 0;
 int digitalInputArraySize;
@@ -25,6 +27,8 @@ int ledOutputArraySize;
 int rotaryAPin = 12;
 int rotaryBPin = 13;
 int counter = 0;
+long oldPosition  = -999;
+
 bool interruptCalled = false;
 unsigned long timeSinceLastInterrupt;
 unsigned long timeSinceLastMessage;
@@ -75,8 +79,16 @@ void setup() {
 void loop() {
   uduino.update();
 
+  long newPosition = rotaryEnc.read();
+
+  if (newPosition != oldPosition) 
+  {
+    oldPosition = newPosition;
+    counter = newPosition;
+  }
+
   //This makes it accurate. DO NOT DELETE
-  ReadEncoders();
+  // ReadEncoders();
   // SoftwareDebouncer(rotaryAPin, aPinReading, aPinCurrentState, aPinCounter);
   // SoftwareDebouncer(rotaryBPin, bPinReading, bPinCurrentState, bPinCounter);
 

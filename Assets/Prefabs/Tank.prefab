@@ -772,7 +772,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1005,6 +1005,7 @@ GameObject:
   - component: {fileID: 4739139102495531448}
   - component: {fileID: 4739139102495531449}
   - component: {fileID: 4739139102495531451}
+  - component: {fileID: 3576117000424699875}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -1064,6 +1065,18 @@ MonoBehaviour:
   mainShaker: {fileID: 4167300033667649884}
   offRoadShakePreset: {fileID: 11400000, guid: eff7813850af08d4881df78d4443f520, type: 2}
   navCamera: {fileID: 4739139102780659220}
+--- !u!114 &3576117000424699875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4739139102495531454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ef1f0800cf1b04da28317315c4a2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4739139102677297136
 GameObject:
   m_ObjectHideFlags: 0
@@ -2439,6 +2452,10 @@ PrefabInstance:
     - target: {fileID: 5421640350706143956, guid: d878f7b77551f1a4e8026da0bcaee96a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421640350706143958, guid: d878f7b77551f1a4e8026da0bcaee96a, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 55
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d878f7b77551f1a4e8026da0bcaee96a, type: 3}

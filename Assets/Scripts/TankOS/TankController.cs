@@ -27,11 +27,7 @@ public class TankController : MonoBehaviour
 
     void OnEnable()
     {
-        RoverOperatingSystem.InitOS();
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
-
-        QualitySettings.vSyncCount = 0;  // VSync must be disabled
-        Application.targetFrameRate = 30;
     }
 
     void OnDatabaseInit()

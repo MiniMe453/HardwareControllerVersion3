@@ -87,19 +87,6 @@ void loop() {
     counter = newPosition;
   }
 
-  //This makes it accurate. DO NOT DELETE
-  // ReadEncoders();
-  // SoftwareDebouncer(rotaryAPin, aPinReading, aPinCurrentState, aPinCounter);
-  // SoftwareDebouncer(rotaryBPin, bPinReading, bPinCurrentState, bPinCounter);
-
-  // if ((aPinCurrentState == 0 || bPinCurrentState == 0) && !interruptCalled) {
-  //   interruptCalled = true;
-  //   ReadEncoders();
-  //   timeSinceLastInterrupt = millis();
-  // }
-
-  //Serial.println(counter);
-
   String serialLine = "_";
 
   for (int i = 0; i < digitalInputArraySize; i++) {
@@ -349,46 +336,4 @@ void PrintObjectScan()
   printer.println(" ");
   printer.println(" ");
   printer.println(" ");
-}
-
-void ReadEncoders()  //bool readAState, bool secondPin
-{
-  aState = digitalRead(rotaryAPin);
-  // If the previous and the current state of the outputA are different, that means a Pulse has occured
-  if (aState != aLastState) {
-    // If the outputB state is different to the outputA state, that means the encoder is rotating clockwise
-    if (digitalRead(rotaryBPin) != aState) {
-      if (counter + 1 <= 512)
-        counter++;
-    } else {
-      if (counter - 1 >= 0)
-        counter--;
-    }
-  }
-  aLastState = aState;  // Updates the previous state of the outputA with the current state
-}
-
-int SoftwareDebouncer(int pin, int& pinReading, int& pinCurrentState, int& pinCounter) {
-  bool inLoop = true;
-  int loopCounter = 0;
-
-  while (inLoop && loopCounter < 5) {
-    loopCounter++;
-    pinReading = digitalRead(pin);
-    if (pinReading == pinCurrentState && pinCounter > 0) {
-      pinCounter--;
-    }
-
-    if (pinReading != pinCurrentState) {
-      pinCounter++;
-    }
-
-    if (pinCounter >= debounce_count) {
-      pinCounter = 0;
-      pinCurrentState = pinReading;
-      return pinCurrentState;
-    }
-  }
-
-  return -1;
 }

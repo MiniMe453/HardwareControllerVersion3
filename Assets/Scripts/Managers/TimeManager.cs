@@ -80,7 +80,7 @@ namespace Rover.DateTime
             string minute = dateTimeStruct.Minutes.ToString("00");
             string seconds = dateTimeStruct.Seconds.ToString("00");
 
-            return year + "y, " + day + "d, " + hour + ":" + minute + ":" + seconds;
+            return year + "y:" + day + "d:" + hour + ":" + minute + ":" + seconds;
         }
 
         public static string ToStringMissionTimeYearDay(DateTimeStruct dateTimeStruct)

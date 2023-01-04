@@ -15,7 +15,7 @@ public static class RoverOperatingSystem
     public static OSMode OSMode {get{return m_osMode;}}
     public static event Action<OSMode> EOnOSModeChanged;
     public static event Action<RoverControlMode> EOnRoverControlModeChanged;
-    private static bool m_allowUserControl;
+    private static bool m_allowUserControl = true;
     public static bool AllowUserControl {get {return m_allowUserControl;}}
 
     //LED Pins
@@ -73,6 +73,6 @@ public static class RoverOperatingSystem
 
     public static void SetUserControl(bool userControl)
     {
-
+        m_allowUserControl = userControl;
     }
 }

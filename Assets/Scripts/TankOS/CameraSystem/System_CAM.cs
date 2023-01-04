@@ -55,6 +55,7 @@ namespace Rover.Systems
             ArduinoInputDatabase.GetInputFromName("CAM 2 Button").EOnButtonPressed += OnCam2ButtonPressed;
             ArduinoInputDatabase.GetInputFromName("CAM 3 Button").EOnButtonPressed += OnCam3ButtonPressed;
             ArduinoInputDatabase.GetInputFromName("CAM 4 Button").EOnButtonPressed += OnCam4ButtonPressed;
+            ArduinoInputDatabase.GetInputFromName("CAM Take Photo Button").EOnButtonPressed += OnTakePhotoButtonPressed;
             ArduinoInputDatabase.GetInputFromName("Joystick Y").EOnValueChanged += OnVerticalAxis;
             
             SelectNewCameraMode(CameraMode.Cam1);
@@ -124,6 +125,7 @@ namespace Rover.Systems
             // }
 
             TakeCameraPhoto(cameraList[(int)m_cameraMode]);
+            Debug.LogError("Take Photo Button pressed");
         }
 
         void OnVerticalAxis(float value, int pin)
@@ -137,6 +139,7 @@ namespace Rover.Systems
         void TakeCameraPhoto(Camera selectedCamera)
         {
             m_screenshotCount++;
+            mainPhotoCamera.SetActive(false);
             selectedCamera.gameObject.SetActive(true);
 
             RenderTexture rt = new RenderTexture(GameSettings.GAME_RES_X, GameSettings.GAME_RES_Y, 24);
@@ -163,6 +166,7 @@ namespace Rover.Systems
             Destroy(rt);
 
             EOnCameraPhotoTaken?.Invoke(photoMetadata);
+            mainPhotoCamera.SetActive(true);
 
             // CanFrame frame = new CanFrame();
             // frame.data = new object[] {};
@@ -174,8 +178,6 @@ namespace Rover.Systems
         void Update()
         {
             Vector3 newRot = Vector3.up * turnSpeed * m_verticalAxis;
-
-            Debug.LogError((xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.y);
 
             if((xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.y < 70 && (xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.y > 1 )
                 xAxisParent.rotation *= Quaternion.Euler(newRot);

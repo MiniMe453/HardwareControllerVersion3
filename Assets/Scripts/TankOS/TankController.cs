@@ -90,7 +90,6 @@ public class TankController : MonoBehaviour
         if(RoverOperatingSystem.OSMode != OSMode.Rover)
             return;
 
-        Debug.LogError(RoverOperatingSystem.RoverControlMode);
         Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis);
             m_rigidbody.MoveRotation(wantedRotation);
         

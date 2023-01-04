@@ -159,7 +159,8 @@ namespace Rover.Arduino
         private static int m_currentSelection = 0;
         public static int CurrentValue {get {return m_currentSelection;}}
         public static event Action<int> EOnCurrentSelectionChanged;
-        
+        private int[] m_mvgAvgFilter = new int[3];
+        private int m_avgValue = 0;
 
         public ThreeWaySwitch()
         {
@@ -168,17 +169,37 @@ namespace Rover.Arduino
 
         void OnValueChanged(float value, int pin)
         {
-            if(value < 30 && m_currentSelection != 2)
+            int avgMaxCount = 0;
+
+            for(int i = 0; i < m_mvgAvgFilter.Length; i++)
+            {
+                if(i == 0)
+                    continue;
+
+                m_mvgAvgFilter[i - 1] = m_mvgAvgFilter[i];
+                avgMaxCount += m_mvgAvgFilter[i - 1];
+
+                if(i == m_mvgAvgFilter.Length - 1)
+                {
+                    m_mvgAvgFilter[i] = Mathf.CeilToInt(value);
+                    avgMaxCount += m_mvgAvgFilter[i];
+                }
+            }
+
+            m_avgValue = avgMaxCount / 3;
+            Debug.LogError(m_avgValue);
+
+            if(m_avgValue < 30 && m_currentSelection != 2)
             {
                 m_currentSelection = 2;
                 EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
             }
-            else if (value > 630 && value < 700 && m_currentSelection != 1)
+            else if (m_avgValue > 630 && value < 700 && m_currentSelection != 1)
             {
                 m_currentSelection = 1;
                 EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
             }
-            else if(value > 975 && m_currentSelection != 0)
+            else if(m_avgValue > 975 && m_currentSelection != 0)
             {
                 m_currentSelection = 0;
                 EOnCurrentSelectionChanged?.Invoke(m_currentSelection);

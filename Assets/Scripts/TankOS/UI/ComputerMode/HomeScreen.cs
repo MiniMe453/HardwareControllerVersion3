@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using Rover.Systems;
 using System;
+using Rover.OS;
 
-public class HomeScreen : MonoBehaviour
+public class HomeScreen : MonoBehaviourApplication
 {
     [Header("Main UI Variables")]
     public Canvas homeScreenCanvas;
@@ -27,14 +28,12 @@ public class HomeScreen : MonoBehaviour
 
     public void LoadHomeScreen()
     {
-        UIManager.AddToViewport(homeScreenCanvas, 50);
-        EOnHomeScreenLoaded?.Invoke();
+        AppDatabase.LoadApp(AppID);
     }
 
     public void RemoveHomeScreen()
     {
-        UIManager.RemoveFromViewport(homeScreenCanvas);
-        EOnHomeScreenRemoved?.Invoke();
+        AppDatabase.CloseApp(AppID);
     }
 
     void OnNewCameraSelected(CameraMode newMode)

@@ -179,7 +179,7 @@ namespace Rover.OS
             newEntry.SelectEntry();
 
             if(!AppIsLoaded)
-                LoadApp();
+                AppDatabase.LoadApp(AppID);
         }
     }
 }

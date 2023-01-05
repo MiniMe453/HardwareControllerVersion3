@@ -9,7 +9,7 @@ namespace Rover.OS
 {
     public abstract class MonoBehaviourApplication : MonoBehaviour
     {
-       // private DeveloperCommand LOAD_APPLICATION;
+        private Command LOAD_APPLICATION;
         public string appCommand;
         public string appDescription;
         private int m_appID;
@@ -25,12 +25,12 @@ namespace Rover.OS
         {
             m_appID = AppDatabase.RegisterApp(this);
 
-            // LOAD_APPLICATION = new DeveloperCommand(
-            //     appCommand,
-            //     appDescription,
-            //     appCommand,
-            //     () => Command_LoadAppWithID()
-            // );
+            LOAD_APPLICATION = new Command(
+                appCommand,
+                appDescription,
+                appCommand,
+                () => Command_LoadAppWithID()
+            );
 
             applicationInputs.AddAction("quitApp", binding: "<Keyboard>/q");
 
@@ -80,12 +80,12 @@ namespace Rover.OS
 
         private void Command_LoadAppWithID()
         {
-            AppDatabase.GetAppFromID(m_appID).LoadApp();
+            AppDatabase.LoadApp(AppID);
         }
 
         private void Action_Quit(InputAction.CallbackContext context)
         {
-            QuitApp();
+            AppDatabase.CloseApp(AppID);
         }
     }
 
@@ -118,6 +118,11 @@ namespace Rover.OS
 
             GetAppFromID(appID).LoadApp();
             m_currentApplication = GetAppFromID(appID);
+        }
+
+        public static void CloseApp(int appID)
+        {
+            GetAppFromID(appID).QuitApp();
         }
     }
 }

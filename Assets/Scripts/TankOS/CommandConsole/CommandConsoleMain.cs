@@ -9,6 +9,7 @@ using System;
 public class CommandConsoleMain : MonoBehaviourApplication
 {
     public static CommandConsoleMain Instance;
+    public HomeScreen homeScreen;
     public GameObject commandOutputLinePrefab;
     public RectTransform commandOutputTransform;
     public TextMeshProUGUI commandInputText;
@@ -31,8 +32,8 @@ public class CommandConsoleMain : MonoBehaviourApplication
         commandInputField.onSubmit.AddListener(OnCommandInputFieldSubmitted);
         commandInputText.text = "> |";
 
-        HomeScreen.EOnHomeScreenLoaded += OnHomeScreenLoaded;
-        HomeScreen.EOnHomeScreenRemoved += OnHomeScreenRemoved;
+        homeScreen.EOnAppLoaded += OnHomeScreenLoaded;
+        homeScreen.EOnAppUnloaded += OnHomeScreenRemoved;
         //commandInputField.Select();
 
     }

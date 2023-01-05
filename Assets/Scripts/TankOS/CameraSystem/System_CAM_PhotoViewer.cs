@@ -57,7 +57,7 @@ namespace Rover.OS
         {
             m_loadingFromButton = true;
             
-            if(AppIsLoaded)
+            if(AppIsLoaded && m_photoDatabaseEntries.Count > 0)
             {
                 loadingPhoto.texture = m_photoDatabaseEntries[m_currentPhotoCount].PhotoMetadata.photo;
                 m_photoDatabaseEntries[m_currentPhotoCount].DeselectEntry();

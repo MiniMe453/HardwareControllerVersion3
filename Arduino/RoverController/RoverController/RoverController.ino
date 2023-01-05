@@ -37,7 +37,6 @@ unsigned long timeSinceLastInterrupt;
 unsigned long timeSinceLastMessage;
 unsigned long interruptResetDelay = 25;
 unsigned long messageDelay = 10;
-bool uduinoMessageSent = false;
 
 int aState;
 int aLastState;
@@ -100,11 +99,10 @@ void loop() {
 
     if(!skipValueSet)
     {
-      int digitalValue = digitalRead(digitalInputArray[i]);
-      digitalReadArray[i] = digitalValue;
+      digitalReadArray[i] = digitalRead(digitalInputArray[i]);
     }
 
-    serialLine += String(digitalRead(digitalInputArray[i]));
+    serialLine += String(digitalReadArray[i]);
   }
 
   for (int i = 0; i < analogInputArraySize; i++) {
@@ -133,17 +131,12 @@ void loop() {
     interruptCalled = false;
   }
 
-  if(uduinoMessageSent)
-  {
-    uduinoMessageSent = false;
-  }
-
-  if (millis() - timeSinceLastMessage > (1.0/30.0) * 1000.0) {
+  if (millis() - timeSinceLastMessage > (1.0/INPUT_FRAMERATE) * 1000.0) {
     uduino.println(serialLine);
 
     timeSinceLastMessage = millis();
 
-    uduinoMessageSent = true;
+    ResetDigitalReadArray();
   }
 }
 

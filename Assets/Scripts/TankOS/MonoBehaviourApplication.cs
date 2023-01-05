@@ -10,6 +10,7 @@ namespace Rover.OS
     public abstract class MonoBehaviourApplication : MonoBehaviour
     {
         private Command LOAD_APPLICATION;
+        public string applicationName;
         public string appCommand;
         public string appDescription;
         private int m_appID;
@@ -100,6 +101,17 @@ namespace Rover.OS
         private static MonoBehaviourApplication m_currentApplication;
         public static MonoBehaviourApplication CurrentlyLoadedApp {get{return m_currentApplication;}}
 
+        static AppDatabase()
+        {
+            RoverOperatingSystem.EOnOSModeChanged += OnRoverOSModeChanged;
+        }
+
+        static void OnRoverOSModeChanged(OSMode newMode)
+        {
+            if(newMode == OSMode.Rover)
+                CloseApp(CurrentlyLoadedApp.AppID);
+        }
+
         public static int RegisterApp(MonoBehaviourApplication app)
         {
             m_appList.Add(app);
@@ -110,6 +122,19 @@ namespace Rover.OS
         public static MonoBehaviourApplication GetAppFromID(int id)
         {
             return m_appList[id];
+        }
+
+        public static MonoBehaviourApplication GetAppFromName(string name)
+        {
+            int index = m_appList.FindIndex(0, x => x.applicationName == name);
+
+            if(index == -1)
+            {
+                Debug.LogError("Application with name: " + name + " not found in m_appList!");
+                return null;
+            }
+
+            return m_appList[index];
         }
 
         public static void LoadApp(int appID)
@@ -127,7 +152,11 @@ namespace Rover.OS
         public static void CloseApp(int appID)
         {
             GetAppFromID(appID).QuitApp();
-            Debug.LogError(GetAppFromID(appID).gameObject.name);
+            
+            if(RoverOperatingSystem.OSMode == OSMode.Computer && GetAppFromName("Home"))
+            {
+                LoadApp(GetAppFromName("Home").AppID);
+            }
         }
     }
 }

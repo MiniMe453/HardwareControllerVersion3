@@ -1726,6 +1726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 345992e4f4bc4b9488b7d7bf8c5510e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applicationName: 
   appCommand: 
   appDescription: 
   applicationInputs:
@@ -3797,6 +3798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ade34e4fc7a4a9459c5a1f0e26cb057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applicationName: Home
   appCommand: 
   appDescription: 
   applicationInputs:

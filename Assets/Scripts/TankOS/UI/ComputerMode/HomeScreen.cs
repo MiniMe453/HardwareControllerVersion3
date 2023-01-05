@@ -41,12 +41,12 @@ public class HomeScreen : MonoBehaviourApplication
     protected override void OnAppLoaded()
     {
         UIManager.AddToViewport(homeScreenCanvas, 50);
+        applicationInputs.Disable();
     }
 
     protected override void OnAppQuit()
     {
-        if(RoverOperatingSystem.OSMode != OSMode.Computer)
-            UIManager.RemoveFromViewport(homeScreenCanvas);
+        UIManager.RemoveFromViewport(homeScreenCanvas);
     }
 
     void OnNewCameraSelected(CameraMode newMode)

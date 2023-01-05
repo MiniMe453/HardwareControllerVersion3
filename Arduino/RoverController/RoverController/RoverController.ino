@@ -4,6 +4,8 @@
 #include <TM1637.h>
 #include <Encoder.h>
 
+#define INPUT_FRAMERATE 30.0
+
 int SPDT_3WAY_SWITCH_PIN = A10;
 
 
@@ -15,6 +17,7 @@ Adafruit_Thermal printer(&Serial3);
 Encoder rotaryEnc(20, 21);
 
 int* digitalInputArray = 0;
+int* digitalReadArray = 0;
 int digitalInputArraySize;
 
 int* analogInputArray = 0;
@@ -34,6 +37,7 @@ unsigned long timeSinceLastInterrupt;
 unsigned long timeSinceLastMessage;
 unsigned long interruptResetDelay = 25;
 unsigned long messageDelay = 10;
+bool uduinoMessageSent = false;
 
 int aState;
 int aLastState;
@@ -91,6 +95,15 @@ void loop() {
   String serialLine = "_";
 
   for (int i = 0; i < digitalInputArraySize; i++) {
+    int prevReadValue = digitalReadArray[i];
+    bool skipValueSet = prevReadValue == 1;
+
+    if(!skipValueSet)
+    {
+      int digitalValue = digitalRead(digitalInputArray[i]);
+      digitalReadArray[i] = digitalValue;
+    }
+
     serialLine += String(digitalRead(digitalInputArray[i]));
   }
 
@@ -120,31 +133,29 @@ void loop() {
     interruptCalled = false;
   }
 
-  if (millis() - timeSinceLastMessage > messageDelay) {
-    //Unity Actual Input
+  if(uduinoMessageSent)
+  {
+    uduinoMessageSent = false;
+  }
+
+  if (millis() - timeSinceLastMessage > (1.0/30.0) * 1000.0) {
     uduino.println(serialLine);
 
-    //Serial.println(analogRead(A3));
-
-    //Debug lines for testing the values set inside the arduino
-    // String ledPinLine = "LED Pins: ";
-
-    // for(int i = 0; i < ledOutputArraySize; i++)
-    // {
-    //   ledPinLine += String(ledOutputArray[i]);
-    //   ledPinLine += " ";
-    // }
-
-    // uduino.println(ledPinLine);
-
     timeSinceLastMessage = millis();
+
+    uduinoMessageSent = true;
   }
-  //Serial.println(counter);
-  //uduino.delay(5);
+}
 
-  //Serial.println(serialLine);
-
-  //uduino.println(counter);
+void ResetDigitalReadArray()
+{
+  for (int i = 0; i < digitalInputArraySize; i++) {
+    
+    if(digitalRead(digitalInputArray[i]) == 1)
+      continue;
+    
+    digitalReadArray[i] = 0;
+  }
 }
 
 void SetLEDPins() {
@@ -221,6 +232,7 @@ void InitDigital()
     return;
 
   digitalInputArray = new int[arrLength];
+  digitalReadArray = new int[arrLength];
   digitalInputArraySize = arrLength;
 
   //Move to the first value inside the parameter array
@@ -238,6 +250,7 @@ void InitDigital()
 
         pinMode(pin, INPUT_PULLUP);
         digitalInputArray[i] = pin;
+        digitalReadArray[i] = 0;
       }
 
       arg = uduino.next();

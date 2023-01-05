@@ -54,6 +54,12 @@ namespace Rover.OS
 
         void OnPhotoTaken(Struct_CameraPhoto photo)
         {
+            if(AppIsLoaded)
+            {
+                loadingPhoto.texture = m_photoDatabaseEntries[m_currentPhotoCount].PhotoMetadata.photo;
+                m_photoDatabaseEntries[m_currentPhotoCount].DeselectEntry();
+            }
+
             CreateNewDatabaseEntry(photo);
         }
 
@@ -74,7 +80,7 @@ namespace Rover.OS
 
         void OnDatabaseEntrySelected(Struct_CameraPhoto photoMetadata)
         {
-            LoadPhoto(photoMetadata);
+            LoadPhoto(photoMetadata, !AppIsLoaded);
         }
 
         void OnNewCameraSelected(CameraMode newMode)
@@ -97,13 +103,13 @@ namespace Rover.OS
 
             if(loadFirstPhoto)
             {
-                loadingPos.y = -500*percentage;
+                loadingPos.y = -409*percentage;
                 loadingPhoto.transform.localPosition = loadingPos;    
             }
             else
             {
-                loadingMaskPos.y = -500*percentage;
-                loadingPos.y = 500*percentage;
+                loadingMaskPos.y = -409*percentage;
+                loadingPos.y = 409*percentage;
 
                 loadingPhotoMask.localPosition = loadingMaskPos;
                 loadingPhoto.transform.localPosition = loadingPos;
@@ -113,6 +119,7 @@ namespace Rover.OS
         private void LoadPhoto(Struct_CameraPhoto photoToLoad, bool loadFirstPhoto = false)
         {
             overlay.SetActive(false);
+            RoverOperatingSystem.SetArduinoEnabled(false);
 
             loadingPhoto.transform.localPosition = Vector3.zero;
             loadingPhoto.color = loadFirstPhoto? Color.black : Color.white;
@@ -132,6 +139,7 @@ namespace Rover.OS
                             onComplete: () => {
                                 overlay.SetActive(true);
                                 applicationInputs.Enable();
+                                RoverOperatingSystem.SetArduinoEnabled(true);
                             });
         }
 
@@ -167,8 +175,6 @@ namespace Rover.OS
             EOnAppUnloaded += newEntry.DeselectEntry;
             m_currentPhotoCount = newEntry.EntryIndex;
             m_photoDatabaseEntries.Add(newEntry);
-
-            //newEntryGO.transform.SetParent(photoDatabaseTransform);
 
             newEntry.SelectEntry();
 

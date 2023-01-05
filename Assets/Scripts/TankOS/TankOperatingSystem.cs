@@ -17,6 +17,8 @@ public static class RoverOperatingSystem
     public static event Action<RoverControlMode> EOnRoverControlModeChanged;
     private static bool m_allowUserControl = true;
     public static bool AllowUserControl {get {return m_allowUserControl;}}
+    private static bool m_arduinoInputEnabled = true;
+    public static bool ArduinoInputEnabled {get{return m_arduinoInputEnabled;}}
 
     //LED Pins
     public static void InitOS()
@@ -74,5 +76,10 @@ public static class RoverOperatingSystem
     public static void SetUserControl(bool userControl)
     {
         m_allowUserControl = userControl;
+    }
+
+    public static void SetArduinoEnabled(bool newEnabled)
+    {
+        m_arduinoInputEnabled = newEnabled;
     }
 }

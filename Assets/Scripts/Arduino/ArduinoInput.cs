@@ -159,7 +159,8 @@ namespace Rover.Arduino
         private static int m_currentSelection = 0;
         public static int CurrentValue {get {return m_currentSelection;}}
         public static event Action<int> EOnCurrentSelectionChanged;
-        private int[] m_mvgAvgFilter = new int[2];
+        private int[] m_mvgAvgFilter = new int[5];
+        private float[] m_mvgAvgFilterWeights = new float[] {0.4f, 0.3f, 0.2f, 0.05f, 0.05f};
         private int m_avgValue = 0;
 
         public ThreeWaySwitch()
@@ -186,7 +187,7 @@ namespace Rover.Arduino
                 }
             }
 
-            m_avgValue = avgMaxCount / 2;
+            m_avgValue = avgMaxCount / 5;
 
             if(m_avgValue < 30 && m_currentSelection != 2)
             {
@@ -388,6 +389,9 @@ namespace Rover.Arduino
 
         private static void OnInputReadTimerUpdate()
         {
+            if(!RoverOperatingSystem.ArduinoInputEnabled)
+                return;
+
             bool skipInput = false;
 
             foreach(ArduinoInput input in m_arduinoInputs)

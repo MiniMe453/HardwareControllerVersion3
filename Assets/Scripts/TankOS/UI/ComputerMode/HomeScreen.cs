@@ -27,7 +27,7 @@ public class HomeScreen : MonoBehaviour
 
     public void LoadHomeScreen()
     {
-        UIManager.AddToViewport(homeScreenCanvas, 100);
+        UIManager.AddToViewport(homeScreenCanvas, 50);
         EOnHomeScreenLoaded?.Invoke();
     }
 

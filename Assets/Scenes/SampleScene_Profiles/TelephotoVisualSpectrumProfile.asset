@@ -1414,6 +1414,7 @@ MonoBehaviour:
   - {fileID: 5405416309015136587}
   - {fileID: -7647909885510402517}
   - {fileID: 7936758774668626200}
+  - {fileID: 5784931889394649657}
 --- !u!114 &4972861932077044
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1610,6 +1611,38 @@ MonoBehaviour:
     overrideState: 0
     value: 0.5
   shader: {fileID: 4800000, guid: fd6092137f2e92140aac060040cc91f6, type: 3}
+--- !u!114 &5784931889394649657
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e21a9f18817d444b2c00478e04a58e, type: 3}
+  m_Name: Posterize
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  hsvMode:
+    overrideState: 0
+    value: 0
+  levels:
+    overrideState: 1
+    value: 16
+  hue:
+    overrideState: 0
+    value: 256
+  saturation:
+    overrideState: 0
+    value: 256
+  value:
+    overrideState: 0
+    value: 256
+  shader: {fileID: 4800000, guid: 407dc05735867744dbd881f1604f9b4b, type: 3}
 --- !u!114 &7936758774668626200
 MonoBehaviour:
   m_ObjectHideFlags: 3

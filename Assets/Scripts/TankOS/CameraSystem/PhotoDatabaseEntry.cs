@@ -4,6 +4,7 @@ using UnityEngine;
 using Rover.Systems;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class PhotoDatabaseEntry : MonoBehaviour
 {
@@ -11,10 +12,14 @@ public class PhotoDatabaseEntry : MonoBehaviour
     public Struct_CameraPhoto PhotoMetadata {get {return m_photoMetadata;}}
     public TextMeshProUGUI photoNameText;
     public RawImage bgImage;
+    private int m_entryIndex;
+    public int EntryIndex {get{return m_entryIndex;}}
+    public static event Action<Struct_CameraPhoto> EOnEntrySelected;
     
-    public void CreateEntry(Struct_CameraPhoto cameraPhoto)
+    public void CreateEntry(Struct_CameraPhoto cameraPhoto, int _entryIndex)
     {
         m_photoMetadata = cameraPhoto;
+        m_entryIndex = _entryIndex;
 
         photoNameText.text = m_photoMetadata.name;
     }
@@ -23,6 +28,8 @@ public class PhotoDatabaseEntry : MonoBehaviour
     {
         bgImage.color = Color.white;
         photoNameText.color = Color.black;
+
+        EOnEntrySelected?.Invoke(PhotoMetadata);
 
         return PhotoMetadata;
     }

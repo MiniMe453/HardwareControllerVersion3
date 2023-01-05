@@ -16,35 +16,52 @@ namespace Rover.OS
     {
         public Canvas canvas;
         public System_CAM cameraSystem;
+        [Header("Camera Selector")]
+        public TextMeshProUGUI[] selectedCameraNumbers;
+
+        [Header("Photo Display")]
         public RawImage loadingPhoto;
         public RectTransform loadingPhotoMask;
         public RawImage photo;
-        public TextMeshProUGUI photoName;
         public GameObject overlay;
         public Texture2D blackTexture;
+        
+        [Header("Photo Metadata")]
+        public TextMeshProUGUI photoName;
+        public TextMeshProUGUI cameraName;
+        public TextMeshProUGUI gpsCoords;
+
+        [Header("Photo Database")]
+        public GameObject photoDatabaseEntryPrefab;
+        public RectTransform photoDatabaseTransform;
+        private List<PhotoDatabaseEntry> m_photoDatabaseEntries = new List<PhotoDatabaseEntry>();
+
         private int m_currentPhotoCount;
         private Timer m_LoadPhotoTimer;
 
         protected override void Init()
         {
             System_CAM.EOnCameraPhotoTaken += OnPhotoTaken;
+            System_CAM.EOnNewCameraSelected += OnNewCameraSelected;
 
-            applicationInputs.AddAction("goleft", binding:"<Keyboard>/leftArrow");
-            applicationInputs.AddAction("goright", binding:"<Keyboard>/rightArrow");
+            applicationInputs.AddAction("goup", binding:"<Keyboard>/upArrow");
+            applicationInputs.AddAction("godown", binding:"<Keyboard>/downArrow");
 
-            applicationInputs["goleft"].performed += NavigateLeft;
-            applicationInputs["goright"].performed += NavigateRight;
+            applicationInputs["goup"].performed += NavigateUp;
+            applicationInputs["godown"].performed += NavigateDown;
+
+            PhotoDatabaseEntry.EOnEntrySelected += OnDatabaseEntrySelected;
         }
 
         void OnPhotoTaken(Struct_CameraPhoto photo)
         {
-            LoadApp();
+            CreateNewDatabaseEntry(photo);
         }
 
         protected override void OnAppLoaded()
         {
-            LoadPhoto(cameraSystem.m_photos.Count-1, true);
-            m_currentPhotoCount = cameraSystem.m_photos.Count - 1;
+            // LoadPhoto(cameraSystem.m_photos.Count - 1, true);
+            // m_currentPhotoCount = cameraSystem.m_photos.Count - 1;
             UIManager.AddToViewport(canvas, 100);
             RoverOperatingSystem.SetUserControl(false);
             applicationInputs.Disable();
@@ -54,6 +71,25 @@ namespace Rover.OS
         {
             UIManager.RemoveFromViewport(canvas);
             RoverOperatingSystem.SetUserControl(true);
+        }
+
+        void OnDatabaseEntrySelected(Struct_CameraPhoto photoMetadata)
+        {
+            LoadPhoto(photoMetadata);
+        }
+
+        void OnNewCameraSelected(CameraMode newMode)
+        {
+            for(int i = 0; i < selectedCameraNumbers.Length; i++)
+            {
+                if(i == (int)newMode)
+                {
+                    selectedCameraNumbers[i].color = Color.white;
+                    continue;
+                }
+
+                selectedCameraNumbers[i].color = Color.gray;
+            }
         }
 
         private void LoadPhotoUpdate(float secondElapsed, Vector3 loadingPos, Vector3 loadingMaskPos,bool loadFirstPhoto = false)
@@ -75,7 +111,7 @@ namespace Rover.OS
             }
         }
 
-        private void LoadPhoto(int index, bool loadFirstPhoto = false)
+        private void LoadPhoto(Struct_CameraPhoto photoToLoad, bool loadFirstPhoto = false)
         {
             overlay.SetActive(false);
 
@@ -84,8 +120,10 @@ namespace Rover.OS
 
             loadingPhotoMask.transform.localPosition = Vector3.zero;
 
-            photo.texture = cameraSystem.m_photos[index].photo;
-            photoName.text = cameraSystem.m_photos[index].name;
+            photo.texture = photoToLoad.photo;
+            photoName.text = photoToLoad.name;
+            cameraName.text = photoToLoad.camMode.ToString();
+            gpsCoords.text = photoToLoad.gpsCoords;
 
             if(m_LoadPhotoTimer != null)
                 m_LoadPhotoTimer.Cancel();
@@ -98,24 +136,42 @@ namespace Rover.OS
                             });
         }
 
-        private void NavigateLeft(InputAction.CallbackContext callback)
+        private void NavigateUp(InputAction.CallbackContext callback)
         {
-            if(m_currentPhotoCount + 1 > cameraSystem.m_photos.Count - 1)
+            if(m_currentPhotoCount + 1 > m_photoDatabaseEntries.Count - 1)
                 return;
 
-            loadingPhoto.texture = cameraSystem.m_photos[m_currentPhotoCount].photo;
+            loadingPhoto.texture = m_photoDatabaseEntries[m_currentPhotoCount].PhotoMetadata.photo;
             m_currentPhotoCount++;
-            LoadPhoto(m_currentPhotoCount, false);
+            m_photoDatabaseEntries[m_currentPhotoCount].SelectEntry();
+            //LoadPhoto(m_currentPhotoCount, false);
         }
 
-        private void NavigateRight(InputAction.CallbackContext callback)
+        private void NavigateDown(InputAction.CallbackContext callback)
         {
             if(m_currentPhotoCount - 1 < 0 )
                 return;
 
-            loadingPhoto.texture = cameraSystem.m_photos[m_currentPhotoCount].photo;
+            loadingPhoto.texture = m_photoDatabaseEntries[m_currentPhotoCount].PhotoMetadata.photo;
             m_currentPhotoCount--;
-            LoadPhoto(m_currentPhotoCount, false);
+            m_photoDatabaseEntries[m_currentPhotoCount].SelectEntry();
+            //LoadPhoto(m_currentPhotoCount, false);
+        }
+
+        private void CreateNewDatabaseEntry(Struct_CameraPhoto photoMetadata)
+        {
+            GameObject newEntryGO = Instantiate(photoDatabaseEntryPrefab);
+            PhotoDatabaseEntry newEntry = newEntryGO.GetComponent<PhotoDatabaseEntry>();
+            newEntry.CreateEntry(photoMetadata, m_photoDatabaseEntries.Count);
+            m_currentPhotoCount = newEntry.EntryIndex;
+            m_photoDatabaseEntries.Add(newEntry);
+
+            newEntryGO.transform.SetParent(photoDatabaseTransform);
+
+            newEntry.SelectEntry();
+
+            if(!AppIsLoaded)
+                LoadApp();
         }
     }
 }

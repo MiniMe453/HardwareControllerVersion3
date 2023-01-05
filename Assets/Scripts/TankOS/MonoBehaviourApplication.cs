@@ -15,6 +15,8 @@ namespace Rover.OS
         public int AppID { get { return m_appID; } }
         public InputActionMap applicationInputs;
         private OSMode m_prevOSState;
+        private bool m_appIsLoaded = false;
+        public bool AppIsLoaded {get {return m_appIsLoaded;}}
 
         void Awake()
         {
@@ -49,6 +51,7 @@ namespace Rover.OS
             m_prevOSState = RoverOperatingSystem.OSMode;
             //OperatingSystem.SetOSState(OSState.Application);
             applicationInputs.Enable();
+            m_appIsLoaded = true;
             OnAppLoaded();
         }
 
@@ -56,6 +59,7 @@ namespace Rover.OS
         {
             //OperatingSystem.SetOSState(m_prevOSState);
             applicationInputs.Disable();
+            m_appIsLoaded = false;
             OnAppQuit();
         }
 

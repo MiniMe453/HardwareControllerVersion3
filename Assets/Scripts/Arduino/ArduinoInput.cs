@@ -215,6 +215,7 @@ namespace Rover.Arduino
         public static event Action EOnDatabasedInitialized;
         public const float INPUT_TIMER_DELAY = 0.05f;
         public static ThreeWaySwitch threeWaySwitch;
+        private static string[] m_inputsToSkipWhenNoControl = new string[] {"Joystick X", "Joystick Y", "Push Potentiometer"};
         
         #region Arduino Setup Variables
         private static int setupMessagesSendCount;
@@ -225,8 +226,6 @@ namespace Rover.Arduino
         static List<object[]> outputPinData = new List<object[]>();
         static int outputArrayIndexToSend = 0;
         #endregion
-
-
 
         static ArduinoInputDatabase()
         {
@@ -389,12 +388,13 @@ namespace Rover.Arduino
 
         private static void OnInputReadTimerUpdate()
         {
-            // if(!Rover.OS.OperatingSystem.AllowUserControl)
-            //     return;
+            bool skipInput = false;
 
             foreach(ArduinoInput input in m_arduinoInputs)
             {
-                if(RoverOperatingSystem.AllowUserControl || input.InputName == "3Way Switch")
+                skipInput = !RoverOperatingSystem.AllowUserControl && Array.FindIndex(m_inputsToSkipWhenNoControl, 0, x => x == input.InputName) != -1;
+                    
+                if(!skipInput)
                     input.CheckInputValue();
             }
         }

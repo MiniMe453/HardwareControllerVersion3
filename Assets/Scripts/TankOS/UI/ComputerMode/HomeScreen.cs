@@ -29,11 +29,23 @@ public class HomeScreen : MonoBehaviourApplication
     public void LoadHomeScreen()
     {
         AppDatabase.LoadApp(AppID);
+        
     }
 
     public void RemoveHomeScreen()
     {
         AppDatabase.CloseApp(AppID);
+        
+    }
+
+    protected override void OnAppLoaded()
+    {
+        UIManager.AddToViewport(homeScreenCanvas, 50);
+    }
+
+    protected override void OnAppQuit()
+    {
+        UIManager.RemoveFromViewport(homeScreenCanvas);
     }
 
     void OnNewCameraSelected(CameraMode newMode)

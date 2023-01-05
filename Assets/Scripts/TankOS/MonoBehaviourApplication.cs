@@ -118,11 +118,13 @@ namespace Rover.OS
 
             GetAppFromID(appID).LoadApp();
             m_currentApplication = GetAppFromID(appID);
+            Debug.LogError(GetAppFromID(appID).gameObject.name);
         }
 
         public static void CloseApp(int appID)
         {
             GetAppFromID(appID).QuitApp();
+            Debug.LogError(GetAppFromID(appID).gameObject.name);
         }
     }
 }

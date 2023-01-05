@@ -15,6 +15,7 @@ public class HomeScreen : MonoBehaviourApplication
     public TextMeshProUGUI[] selectedCameraArray;
     public TextMeshProUGUI roverSpeedText;
     public TextMeshProUGUI brakeText;
+    public RenderCameraToTexture roverWireframeOverviewCamera;
 
     public static event Action EOnHomeScreenLoaded;
     public static event Action EOnHomeScreenRemoved;
@@ -41,12 +42,14 @@ public class HomeScreen : MonoBehaviourApplication
     protected override void OnAppLoaded()
     {
         UIManager.AddToViewport(homeScreenCanvas, 50);
+        roverWireframeOverviewCamera.enableRendering = true;
         applicationInputs.Disable();
     }
 
     protected override void OnAppQuit()
     {
         UIManager.RemoveFromViewport(homeScreenCanvas);
+        roverWireframeOverviewCamera.enableRendering = false;
     }
 
     void OnNewCameraSelected(CameraMode newMode)

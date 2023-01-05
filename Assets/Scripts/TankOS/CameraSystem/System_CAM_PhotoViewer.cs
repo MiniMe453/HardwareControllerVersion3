@@ -70,7 +70,7 @@ namespace Rover.OS
         {
             // LoadPhoto(cameraSystem.m_photos.Count - 1, true);
             // m_currentPhotoCount = cameraSystem.m_photos.Count - 1;
-            if(!m_loadingFromButton)
+            if(!m_loadingFromButton && m_photoDatabaseEntries.Count > 0)
                 m_photoDatabaseEntries[m_photoDatabaseEntries.Count - 1].SelectEntry();
 
             UIManager.AddToViewport(canvas, 100);

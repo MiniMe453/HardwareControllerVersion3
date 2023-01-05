@@ -9,6 +9,7 @@ public class RenderCameraToTexture : MonoBehaviour
     public Camera lowResCamera;
     public CustomRenderTexture renderTexture;
     private float m_camPhotoFpsCounter;
+    public bool enableRendering = false;
 
     void OnEnable()
     {
@@ -17,6 +18,9 @@ public class RenderCameraToTexture : MonoBehaviour
 
     void Update()
     {
+        if(!enableRendering)
+            return;
+            
         m_camPhotoFpsCounter += Time.deltaTime;
 
         if(!lowResCamera.gameObject.activeSelf)

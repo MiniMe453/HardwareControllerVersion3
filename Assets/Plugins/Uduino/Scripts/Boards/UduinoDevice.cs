@@ -322,6 +322,7 @@ namespace Uduino
         public virtual void ReadingSuccess(string message)
         {
             lastRead = message;
+            
 
             if (UduinoManager.Instance)
             {

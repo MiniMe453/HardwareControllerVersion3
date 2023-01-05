@@ -4,6 +4,7 @@ using UnityEngine;
 using Uduino;
 using System;
 using UnityTimer;
+using System.IO.Ports;
 
 namespace Rover.Arduino
 {
@@ -418,9 +419,17 @@ namespace Rover.Arduino
         private static List<string> m_lastMessage = new List<string>();
         public static List<string> LastMessage { get {return m_lastMessage;} }
         private static bool m_readMessage = false;
+        private static SerialPort m_serial = null;
         static ArduinoInputDecoder()
         {
             UduinoManager.Instance.OnDataReceived += OnMessageReceived;
+            Timer.Register(1f/60f, () => ReadTest(), isLooped: true);
+        }
+
+        private static void ReadTest()
+        {
+            string data = (UduinoManager.Instance.uduinoDevices["RoverController"] as UduinoDevice_DesktopSerial).serial.ReadLine();
+            ParseInputData(data);
         }
 
         public static void InitializedInputDecoder(int numOfInputs)
@@ -436,6 +445,11 @@ namespace Rover.Arduino
         }
 
         private static void OnMessageReceived(string data, UduinoDevice device)
+        {
+            //ParseInputData(data);
+        }
+
+        private static void ParseInputData(string data)
         {
             if(!m_readMessage)
                 return;

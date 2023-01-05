@@ -16,6 +16,8 @@ namespace Rover.Systems
     public struct Struct_CameraPhoto
     {
         public string name;
+        public CameraMode camMode;
+        public string gpsCoords;
         public Texture2D photo;
     }
     public class System_CAM : MonoBehaviour
@@ -157,6 +159,8 @@ namespace Rover.Systems
             Struct_CameraPhoto photoMetadata = new Struct_CameraPhoto();
             photoMetadata.name = photoName;
             photoMetadata.photo = cameraPhoto;
+            photoMetadata.camMode = SelectedCameraMode;
+            photoMetadata.gpsCoords = "Implement me";
 
             m_photos.Add(photoMetadata);
 

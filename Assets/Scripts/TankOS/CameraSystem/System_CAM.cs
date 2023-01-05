@@ -116,18 +116,18 @@ namespace Rover.Systems
 
         void OnTakePhotoButtonPressed(int pin)
         {
-            // if(System_MTR.RoverVelocity > 0.01)
-            // {
-            //     Debug.Log(System_MTR.RoverVelocity);
-            //     UIManager.ShowMessageBox("STOP THE ROVER", Color.red, 1f);
-            // }
-            // else
-            // {
-            //     TakeCameraPhoto(cameraList[(int)m_cameraMode]);
-            // }
+            if(System_MTR.RoverVelocity > 0.01)
+            {
+                Debug.Log(System_MTR.RoverVelocity);
+                UIManager.ShowMessageBox("STOP THE ROVER", Color.red, 1f);
+            }
+            else
+            {
+                TakeCameraPhoto(cameraList[(int)m_cameraMode]);
+            }
 
-            TakeCameraPhoto(cameraList[(int)m_cameraMode]);
-            Debug.LogError("Take Photo Button pressed");
+            // TakeCameraPhoto(cameraList[(int)m_cameraMode]);
+            // Debug.LogError("Take Photo Button pressed");
         }
 
         void OnVerticalAxis(float value, int pin)
@@ -141,7 +141,10 @@ namespace Rover.Systems
         void TakeCameraPhoto(Camera selectedCamera)
         {
             m_screenshotCount++;
-            mainPhotoCamera.SetActive(false);
+            
+            if(RoverOperatingSystem.RoverControlMode == RoverControlMode.CAM)
+                mainPhotoCamera.SetActive(false);
+
             selectedCamera.gameObject.SetActive(true);
 
             RenderTexture rt = new RenderTexture(GameSettings.GAME_RES_X, GameSettings.GAME_RES_Y, 24);
@@ -170,7 +173,9 @@ namespace Rover.Systems
             Destroy(rt);
 
             EOnCameraPhotoTaken?.Invoke(photoMetadata);
-            mainPhotoCamera.SetActive(true);
+            
+            if(RoverOperatingSystem.RoverControlMode == RoverControlMode.CAM)
+                mainPhotoCamera.SetActive(true);    
 
             // CanFrame frame = new CanFrame();
             // frame.data = new object[] {};

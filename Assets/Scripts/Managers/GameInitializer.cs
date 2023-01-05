@@ -9,8 +9,8 @@ public class GameInitializer : MonoBehaviour
     {
         ArduinoInputDatabase.InitializeDatabase();
         
-        QualitySettings.vSyncCount = 0;  // VSync must be disabled
-        Application.targetFrameRate = 30;
+        // QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        // Application.targetFrameRate = 30;
 
         RoverOperatingSystem.InitOS();
     }

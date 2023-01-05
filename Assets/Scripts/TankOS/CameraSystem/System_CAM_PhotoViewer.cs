@@ -15,7 +15,6 @@ namespace Rover.OS
     public class System_CAM_PhotoViewer : MonoBehaviourApplication
     {
         public Canvas canvas;
-        public System_CAM cameraSystem;
         [Header("Camera Selector")]
         public TextMeshProUGUI[] selectedCameraNumbers;
 
@@ -142,6 +141,7 @@ namespace Rover.OS
                 return;
 
             loadingPhoto.texture = m_photoDatabaseEntries[m_currentPhotoCount].PhotoMetadata.photo;
+            m_photoDatabaseEntries[m_currentPhotoCount].DeselectEntry();
             m_currentPhotoCount++;
             m_photoDatabaseEntries[m_currentPhotoCount].SelectEntry();
             //LoadPhoto(m_currentPhotoCount, false);
@@ -153,6 +153,7 @@ namespace Rover.OS
                 return;
 
             loadingPhoto.texture = m_photoDatabaseEntries[m_currentPhotoCount].PhotoMetadata.photo;
+            m_photoDatabaseEntries[m_currentPhotoCount].DeselectEntry();
             m_currentPhotoCount--;
             m_photoDatabaseEntries[m_currentPhotoCount].SelectEntry();
             //LoadPhoto(m_currentPhotoCount, false);
@@ -160,13 +161,14 @@ namespace Rover.OS
 
         private void CreateNewDatabaseEntry(Struct_CameraPhoto photoMetadata)
         {
-            GameObject newEntryGO = Instantiate(photoDatabaseEntryPrefab);
+            GameObject newEntryGO = Instantiate(photoDatabaseEntryPrefab, photoDatabaseTransform);
             PhotoDatabaseEntry newEntry = newEntryGO.GetComponent<PhotoDatabaseEntry>();
             newEntry.CreateEntry(photoMetadata, m_photoDatabaseEntries.Count);
+            EOnAppUnloaded += newEntry.DeselectEntry;
             m_currentPhotoCount = newEntry.EntryIndex;
             m_photoDatabaseEntries.Add(newEntry);
 
-            newEntryGO.transform.SetParent(photoDatabaseTransform);
+            //newEntryGO.transform.SetParent(photoDatabaseTransform);
 
             newEntry.SelectEntry();
 

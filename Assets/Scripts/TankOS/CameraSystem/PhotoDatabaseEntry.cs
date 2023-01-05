@@ -39,5 +39,4 @@ public class PhotoDatabaseEntry : MonoBehaviour
         bgImage.color = Color.black;
         photoNameText.color = Color.white;
     }
-
 }

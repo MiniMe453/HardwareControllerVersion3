@@ -12,7 +12,7 @@ public class RenderCameraToTexture : MonoBehaviour
 
     void OnEnable()
     {
-        lowResCamera.targetTexture = renderTexture;
+        
     }
 
     void Update()
@@ -27,6 +27,7 @@ public class RenderCameraToTexture : MonoBehaviour
             m_camPhotoFpsCounter = 0;
 
             lowResCamera.enabled = true;
+            lowResCamera.targetTexture = renderTexture;
 
             Texture2D cameraPhoto = new Texture2D(GameSettings.GAME_RES_X / 2, GameSettings.GAME_RES_Y / 2, TextureFormat.RGB24, false);
             lowResCamera.Render();
@@ -34,6 +35,8 @@ public class RenderCameraToTexture : MonoBehaviour
             
             cameraPhoto.ReadPixels(new Rect(0,0,GameSettings.GAME_RES_X / 2, GameSettings.GAME_RES_Y / 2),0,0);
             cameraPhoto.Apply();
+
+            lowResCamera.targetTexture = null;
 
             lowResCamera.enabled = false;
         }   

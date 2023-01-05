@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 //using Rover.Interface;
 using UnityEngine.InputSystem;
+using System;
 
 namespace Rover.OS
 {
@@ -17,6 +18,8 @@ namespace Rover.OS
         private OSMode m_prevOSState;
         private bool m_appIsLoaded = false;
         public bool AppIsLoaded {get {return m_appIsLoaded;}}
+        public event Action EOnAppUnloaded;
+        public event Action EOnAppLoaded;
 
         void Awake()
         {
@@ -52,6 +55,7 @@ namespace Rover.OS
             //OperatingSystem.SetOSState(OSState.Application);
             applicationInputs.Enable();
             m_appIsLoaded = true;
+            EOnAppLoaded?.Invoke();
             OnAppLoaded();
         }
 
@@ -60,6 +64,7 @@ namespace Rover.OS
             //OperatingSystem.SetOSState(m_prevOSState);
             applicationInputs.Disable();
             m_appIsLoaded = false;
+            EOnAppUnloaded?.Invoke();
             OnAppQuit();
         }
 

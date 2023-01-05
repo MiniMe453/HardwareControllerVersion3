@@ -165,7 +165,7 @@ Transform:
   m_Children:
   - {fileID: 1133304673057447401}
   m_Father: {fileID: 1669911928824578877}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &663801748374522346
 GameObject:
@@ -468,8 +468,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4978006389933805338}
   - {fileID: 1080510169429378650}
+  - {fileID: 4978006389933805338}
   - {fileID: 5991525215095793492}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2475,7 +2475,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1080510169429378650
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2489,7 +2489,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1669911928824578877}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3050,7 +3050,6 @@ GameObject:
   - component: {fileID: 4235359096632777414}
   - component: {fileID: 6234952060526265870}
   - component: {fileID: 7287576307435784258}
-  - component: {fileID: 4024578973145972675}
   m_Layer: 5
   m_Name: PhotoDatabaseText
   m_TagString: Untagged
@@ -3175,19 +3174,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &4024578973145972675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7963886190501904021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92114d0001b862f40b605adb19c99449, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayType: 0
 --- !u!1 &8365308670948265975
 GameObject:
   m_ObjectHideFlags: 0

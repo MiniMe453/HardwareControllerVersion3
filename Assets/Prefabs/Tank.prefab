@@ -1734,6 +1734,7 @@ MonoBehaviour:
     m_Asset: {fileID: 0}
     m_Actions: []
     m_Bindings: []
+  homeScreen: {fileID: 7399850159902527694}
   commandOutputLinePrefab: {fileID: 8690721940174060155, guid: f4d0fc634856b2b4c90c2f8f7dd7d039, type: 3}
   commandOutputTransform: {fileID: 8547563653336314932}
   commandInputText: {fileID: 4540039463018497823}
@@ -3693,6 +3694,7 @@ GameObject:
   - component: {fileID: 225372827601210576}
   - component: {fileID: 6641616114276269140}
   - component: {fileID: 955925810}
+  - component: {fileID: 7399850159902527694}
   m_Layer: 5
   m_Name: ComputerModeMainCanvas
   m_TagString: Untagged
@@ -3783,6 +3785,34 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7399850159902527694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255559926019718210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ade34e4fc7a4a9459c5a1f0e26cb057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appCommand: 
+  appDescription: 
+  applicationInputs:
+    m_Name: Application Inputs
+    m_Id: 67a0c305-7e41-4b8f-b5f7-1cdd9364b7bb
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  homeScreenCanvas: {fileID: 225372827601210576}
+  selectedCameraArray:
+  - {fileID: 1059983417062025952}
+  - {fileID: 8233232057152394317}
+  - {fileID: 6324069018947357554}
+  - {fileID: 3978894019331603623}
+  roverSpeedText: {fileID: 3891387690990012185}
+  brakeText: {fileID: 9081304083095743575}
 --- !u!1 &3392655133911355372
 GameObject:
   m_ObjectHideFlags: 0
@@ -6796,7 +6826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbebf3da7869a9d41b6089aedefc546f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  homeScreen: {fileID: 0}
+  homeScreen: {fileID: 7399850159902527694}
 --- !u!1 &7575105983421430017
 GameObject:
   m_ObjectHideFlags: 0

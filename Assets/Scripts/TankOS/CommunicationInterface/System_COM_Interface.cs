@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rover.OS;
+using Unity.UI;
 
 public class System_COM_Interface : MonoBehaviourApplication
 {
-    // Start is called before the first frame update
-    void Start()
+    public Canvas canvas;
+    public RenderCameraToTexture planetWireframeCamera;
+    protected override void OnAppLoaded()
     {
-        
+        planetWireframeCamera.enableRendering = true;
+        UIManager.AddToViewport(canvas, 100);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnAppQuit()
     {
-        
+        planetWireframeCamera.enableRendering = false;
+        UIManager.RemoveFromViewport(canvas);
     }
 }

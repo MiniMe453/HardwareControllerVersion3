@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MapModeManager : MonoBehaviour
 {
 
-    public GameObject mapModeGameObject;
+    public Canvas mapModeCanvas;
 
     void OnEnable()
     {
@@ -19,13 +19,13 @@ public class MapModeManager : MonoBehaviour
         switch(newMode)
         {
             case OSMode.Rover:
-                mapModeGameObject.SetActive(false);
+                UIManager.RemoveFromViewport(mapModeCanvas);
                 break;
             case OSMode.Computer:
-                mapModeGameObject.SetActive(false);
+                UIManager.RemoveFromViewport(mapModeCanvas);
                 break;
             case OSMode.Map:
-                mapModeGameObject.SetActive(true);
+                UIManager.AddToViewport(mapModeCanvas, 100);
                 RoverOperatingSystem.SetUserControl(false);
                 break;
         }

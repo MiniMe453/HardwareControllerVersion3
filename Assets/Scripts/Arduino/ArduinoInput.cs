@@ -159,7 +159,7 @@ namespace Rover.Arduino
         private static int m_currentSelection = 0;
         public static int CurrentValue {get {return m_currentSelection;}}
         public static event Action<int> EOnCurrentSelectionChanged;
-        private int[] m_mvgAvgFilter = new int[3];
+        private int[] m_mvgAvgFilter = new int[2];
         private int m_avgValue = 0;
 
         public ThreeWaySwitch()
@@ -186,8 +186,7 @@ namespace Rover.Arduino
                 }
             }
 
-            m_avgValue = avgMaxCount / 3;
-            Debug.LogError(m_avgValue);
+            m_avgValue = avgMaxCount / 2;
 
             if(m_avgValue < 30 && m_currentSelection != 2)
             {

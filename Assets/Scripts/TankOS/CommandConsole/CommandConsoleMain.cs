@@ -20,10 +20,14 @@ public class CommandConsoleMain : MonoBehaviourApplication
         ClearConsoleOutput
     );
     
+    void Awake()
+    {
+        Instance = this;
+        RoverOperatingSystem.EOnOSModeChanged += OnOSModeChanged;
+    }
     
     void OnEnable()
     {
-        Instance = this;
         commandInputField.onValueChanged.AddListener(OnCommandInputFieldUpdated);
         commandInputField.onSubmit.AddListener(OnCommandInputFieldSubmitted);
         commandInputText.text = "> |";
@@ -43,6 +47,23 @@ public class CommandConsoleMain : MonoBehaviourApplication
     
     //Have override functions here
 
+    void OnOSModeChanged(OSMode newMode)
+    {
+        Debug.LogError("Command mode changed");
+        if(newMode == OSMode.Computer)
+        {
+            commandInputField.enabled = true;
+            commandInputField.text = "";
+            commandInputField.ActivateInputField();
+        }
+        else
+        {
+            // commandInputField.DeactivateInputField();
+            commandInputField.enabled = false;
+        }
+
+    }
+
     void OnCommandInputFieldUpdated(string newValue)
     {
         commandInputText.text = "> " + newValue.ToUpper() + "|";
@@ -50,12 +71,16 @@ public class CommandConsoleMain : MonoBehaviourApplication
 
     void OnCommandInputFieldSubmitted(string value)
     {
+        if(value == "")
+            return;
+
         UpdateConsoleOutput(value.ToUpper());
         commandInputText.text = "> |";
 
         if(!CommandDatabase.InvokeCommand(value))
             UpdateConsoleOutput("ERR: UNRECOGNIZED COMMAND");
 
+        commandInputField.text = "";
         commandInputField.ActivateInputField();
     }
 
@@ -67,7 +92,7 @@ public class CommandConsoleMain : MonoBehaviourApplication
        newCmdLine.transform.SetParent(commandOutputTransform);
        newCmdLine.transform.SetAsFirstSibling();
 
-       if(commandOutputTransform.childCount > 25)
+       if(commandOutputTransform.childCount > 23)
        {
             Destroy(commandOutputTransform.GetChild(commandOutputTransform.childCount - 1).gameObject);
        }

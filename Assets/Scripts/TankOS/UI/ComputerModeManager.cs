@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ComputerModeManager : MonoBehaviour
 {
 
-    public GameObject computerModeGameObject;
+    public Canvas computerModeMainCanvas;
 
     void OnEnable()
     {
@@ -19,14 +19,14 @@ public class ComputerModeManager : MonoBehaviour
         switch(newMode)
         {
             case OSMode.Rover:
-                computerModeGameObject.SetActive(false);
+                UIManager.RemoveFromViewport(computerModeMainCanvas);
                 break;
             case OSMode.Computer:
-                computerModeGameObject.SetActive(true);
+                UIManager.AddToViewport(computerModeMainCanvas, 100);
                 RoverOperatingSystem.SetUserControl(false);
                 break;
             case OSMode.Map:
-                computerModeGameObject.SetActive(false);
+                UIManager.RemoveFromViewport(computerModeMainCanvas);
                 break;
         }
     }

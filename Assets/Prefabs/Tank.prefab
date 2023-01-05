@@ -3505,7 +3505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6340672005919621125
 Transform:
   m_ObjectHideFlags: 0
@@ -3644,7 +3644,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3148153572017232585}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -3729,7 +3729,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3255559926019718210}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -3828,7 +3828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b9972537e6b9b44ab9292edec2ccbef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapModeGameObject: {fileID: 2814273025844581125}
+  mapModeCanvas: {fileID: 8967245909548843660}
 --- !u!1 &3628463711647457196
 GameObject:
   m_ObjectHideFlags: 0
@@ -6796,7 +6796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbebf3da7869a9d41b6089aedefc546f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  computerModeGameObject: {fileID: 8122742894398919840}
+  computerModeMainCanvas: {fileID: 225372827601210576}
 --- !u!1 &7575105983421430017
 GameObject:
   m_ObjectHideFlags: 0

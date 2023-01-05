@@ -64,6 +64,7 @@ void setup() {
   uduino.addCommand("writeTM1", WriteTM1Display);
   uduino.addCommand("writeTM2", WriteTM2Display);
   uduino.addCommand("pobj", PrintObjectScan);
+  uduino.addCommand("prt", SimplePrint);
 
   lcd.setCursor(0, 0);
   lcd.print("Hello world!");
@@ -335,5 +336,15 @@ void PrintObjectScan()
 
   printer.println(" ");
   printer.println(" ");
+  printer.println(" ");
+}
+
+void SimplePrint()
+{
+  char* arg;
+  arg = uduino.next();
+
+  printer.justify('L');
+  printer.println(arg);
   printer.println(" ");
 }

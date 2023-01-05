@@ -82,4 +82,10 @@ public static class RoverOperatingSystem
     {
         m_arduinoInputEnabled = newEnabled;
     }
+
+    public static void SetOSMode(OSMode newMode)
+    {
+        m_osMode = newMode;
+        EOnOSModeChanged?.Invoke(m_osMode);
+    }
 }

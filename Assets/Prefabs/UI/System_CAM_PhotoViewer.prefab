@@ -535,8 +535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37c573e2f9b42446a0f4119ba05b5e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appCommand: 
-  appDescription: 
+  appCommand: SYS.CAM
+  appDescription: View photos
   applicationInputs:
     m_Name: Application Inputs
     m_Id: 613527e1-99e4-4301-9e05-99f437c9e145

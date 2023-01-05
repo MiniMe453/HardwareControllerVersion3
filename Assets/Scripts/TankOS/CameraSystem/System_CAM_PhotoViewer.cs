@@ -69,7 +69,6 @@ namespace Rover.OS
             // m_currentPhotoCount = cameraSystem.m_photos.Count - 1;
             UIManager.AddToViewport(canvas, 100);
             RoverOperatingSystem.SetUserControl(false);
-            applicationInputs.Disable();
         }
 
         protected override void OnAppQuit()
@@ -120,6 +119,7 @@ namespace Rover.OS
         {
             overlay.SetActive(false);
             RoverOperatingSystem.SetArduinoEnabled(false);
+            applicationInputs.Disable();
 
             loadingPhoto.transform.localPosition = Vector3.zero;
             loadingPhoto.color = loadFirstPhoto? Color.black : Color.white;

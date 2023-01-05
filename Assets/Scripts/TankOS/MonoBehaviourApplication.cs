@@ -25,12 +25,15 @@ namespace Rover.OS
         {
             m_appID = AppDatabase.RegisterApp(this);
 
-            LOAD_APPLICATION = new Command(
-                appCommand,
-                appDescription,
-                appCommand,
-                () => Command_LoadAppWithID()
-            );
+            if(appCommand != "")
+            {
+                LOAD_APPLICATION = new Command(
+                    appCommand,
+                    appDescription,
+                    appCommand,
+                    () => Command_LoadAppWithID()
+                    );
+            }
 
             applicationInputs.AddAction("quitApp", binding: "<Keyboard>/q");
 
@@ -61,7 +64,7 @@ namespace Rover.OS
 
         public void QuitApp()
         {
-            //OperatingSystem.SetOSState(m_prevOSState);
+            //RoverOperatingSystem.SetOSMode(m_prevOSState);
             applicationInputs.Disable();
             m_appIsLoaded = false;
             EOnAppUnloaded?.Invoke();

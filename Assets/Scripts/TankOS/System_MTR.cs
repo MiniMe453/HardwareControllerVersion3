@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rover.Arduino;
 using MilkShake;
+using System;
+using UnityTimer;
 
-public class TankController : MonoBehaviour
+public class System_MTR : MonoBehaviour
 {
     Rigidbody m_rigidbody => GetComponent<Rigidbody>();
     float m_horizontalAxis;
     float m_throttleAxis;
     bool m_brakeActive = true;
+    public static event Action<bool> EOnBrakeModeChanged;
     int m_brakeLEDpin;
 
     public float turnSpeed;
     public float speed;
     public float maxSpeed = 1f;
 
+//Public variables for other scripts
     public static float RoverVelocity;
+    public static event Action<float> EOnRoverVelocityUpdate;
 
     public Shaker mainShaker;
     ShakeInstance m_offroadShakeInstance;
@@ -28,14 +33,16 @@ public class TankController : MonoBehaviour
     void OnEnable()
     {
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
+
+        Timer.Register(0.25f, () => OnRoverVelocityUpdate());
     }
 
     void OnDatabaseInit()
     {
         ArduinoInputDatabase.GetInputFromName("Joystick X").EOnValueChanged += OnHorizontalAxis;
         ArduinoInputDatabase.GetInputFromName("Push Potentiometer").EOnValueChanged += OnThrottleAxis;
-        ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonPressed += OnBrakeSwitchFlipped;
-        ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonReleased += OnBrakeSwitchFlipped;
+        ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonPressed += OnBrakeSwitchPressed;
+        ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonReleased += OnBrakeSwitchReleased;
         RoverOperatingSystem.EOnRoverControlModeChanged += OnRoverControlModeChanged;
         RoverOperatingSystem.EOnOSModeChanged += OnOSModeChanged;
 
@@ -56,10 +63,20 @@ public class TankController : MonoBehaviour
 
     }
 
-    void OnBrakeSwitchFlipped(int pin)
+    void OnBrakeSwitchPressed(int pin)
     {
-        m_brakeActive = !m_brakeActive;
-        LEDManager.SetLEDMode(m_brakeLEDpin, m_brakeActive? 1 : 0);
+        m_brakeActive = true;
+        LEDManager.SetLEDMode(m_brakeLEDpin, 1);
+
+        EOnBrakeModeChanged?.Invoke(m_brakeActive);
+    }
+
+    void OnBrakeSwitchReleased(int pin)
+    {
+        m_brakeActive = false;
+        LEDManager.SetLEDMode(m_brakeLEDpin, 0);
+
+        EOnBrakeModeChanged?.Invoke(m_brakeActive);
     }
 
     void OnRoverControlModeChanged(RoverControlMode newMode)
@@ -95,8 +112,6 @@ public class TankController : MonoBehaviour
         Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f));
         m_rigidbody.MovePosition(wantedPosition);
 
-        RoverVelocity = maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f);
-
         // if(m_offroadShakeInstance == null)
         // {
         //     m_offroadShakeInstance = mainShaker.Shake(offRoadShakePreset);
@@ -105,5 +120,11 @@ public class TankController : MonoBehaviour
 
         // m_offroadShakeInstance.StrengthScale = RoverVelocity / maxSpeed;
         // Debug.LogError(RoverVelocity / maxSpeed);
+    }
+
+    void OnRoverVelocityUpdate()
+    {
+        RoverVelocity = maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f);
+        EOnRoverVelocityUpdate?.Invoke(RoverVelocity);
     }
 }

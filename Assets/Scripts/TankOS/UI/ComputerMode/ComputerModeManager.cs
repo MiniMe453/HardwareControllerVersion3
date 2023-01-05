@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ComputerModeManager : MonoBehaviour
 {
 
-    public Canvas computerModeMainCanvas;
+    public HomeScreen homeScreen;
 
     void OnEnable()
     {
@@ -19,14 +19,14 @@ public class ComputerModeManager : MonoBehaviour
         switch(newMode)
         {
             case OSMode.Rover:
-                UIManager.RemoveFromViewport(computerModeMainCanvas);
+                homeScreen.RemoveHomeScreen();
                 break;
             case OSMode.Computer:
-                UIManager.AddToViewport(computerModeMainCanvas, 100);
+                homeScreen.LoadHomeScreen();
                 RoverOperatingSystem.SetUserControl(false);
                 break;
             case OSMode.Map:
-                UIManager.RemoveFromViewport(computerModeMainCanvas);
+                homeScreen.RemoveHomeScreen();
                 break;
         }
     }

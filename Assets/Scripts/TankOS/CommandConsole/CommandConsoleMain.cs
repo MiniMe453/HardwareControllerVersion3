@@ -23,7 +23,6 @@ public class CommandConsoleMain : MonoBehaviourApplication
     void Awake()
     {
         Instance = this;
-        RoverOperatingSystem.EOnOSModeChanged += OnOSModeChanged;
     }
     
     void OnEnable()
@@ -31,6 +30,9 @@ public class CommandConsoleMain : MonoBehaviourApplication
         commandInputField.onValueChanged.AddListener(OnCommandInputFieldUpdated);
         commandInputField.onSubmit.AddListener(OnCommandInputFieldSubmitted);
         commandInputText.text = "> |";
+
+        HomeScreen.EOnHomeScreenLoaded += OnHomeScreenLoaded;
+        HomeScreen.EOnHomeScreenRemoved += OnHomeScreenRemoved;
         //commandInputField.Select();
 
     }
@@ -44,25 +46,36 @@ public class CommandConsoleMain : MonoBehaviourApplication
     {
         commandInputField.DeactivateInputField();
     }
-    
+
     //Have override functions here
-
-    void OnOSModeChanged(OSMode newMode)
+    void OnHomeScreenLoaded()
     {
-        Debug.LogError("Command mode changed");
-        if(newMode == OSMode.Computer)
-        {
-            commandInputField.enabled = true;
-            commandInputField.text = "";
-            commandInputField.ActivateInputField();
-        }
-        else
-        {
-            // commandInputField.DeactivateInputField();
-            commandInputField.enabled = false;
-        }
-
+        commandInputField.enabled = true;
+        commandInputField.text = "";
+        commandInputField.ActivateInputField();
     }
+
+    void OnHomeScreenRemoved()
+    {
+        commandInputField.enabled = false;
+    }
+
+    // void OnOSModeChanged(OSMode newMode)
+    // {
+    //     Debug.LogError("Command mode changed");
+    //     if(newMode == OSMode.Computer)
+    //     {
+    //         commandInputField.enabled = true;
+    //         commandInputField.text = "";
+    //         commandInputField.ActivateInputField();
+    //     }
+    //     else
+    //     {
+    //         // commandInputField.DeactivateInputField();
+    //         commandInputField.enabled = false;
+    //     }
+
+    // }
 
     void OnCommandInputFieldUpdated(string newValue)
     {
@@ -72,7 +85,10 @@ public class CommandConsoleMain : MonoBehaviourApplication
     void OnCommandInputFieldSubmitted(string value)
     {
         if(value == "")
+        {
+            commandInputField.ActivateInputField();
             return;
+        }
 
         UpdateConsoleOutput(value.ToUpper());
         commandInputText.text = "> |";
@@ -86,16 +102,16 @@ public class CommandConsoleMain : MonoBehaviourApplication
 
     public void UpdateConsoleOutput(string newLine)
     {
-       GameObject newCmdLine = Instantiate(commandOutputLinePrefab);
-       newCmdLine.GetComponent<TextMeshProUGUI>().text = "  " + newLine;
+        if(commandOutputTransform.childCount + 1 > 25)
+        {
+            DestroyImmediate(commandOutputTransform.GetChild(commandOutputTransform.childCount - 1).gameObject);
+        }   
 
-       newCmdLine.transform.SetParent(commandOutputTransform);
-       newCmdLine.transform.SetAsFirstSibling();
+        GameObject newCmdLine = Instantiate(commandOutputLinePrefab);
+        newCmdLine.GetComponent<TextMeshProUGUI>().text = "  " + newLine;
 
-       if(commandOutputTransform.childCount > 23)
-       {
-            Destroy(commandOutputTransform.GetChild(commandOutputTransform.childCount - 1).gameObject);
-       }
+        newCmdLine.transform.SetParent(commandOutputTransform);
+        newCmdLine.transform.SetAsFirstSibling();
     }
 
     public static void ClearConsoleOutput()

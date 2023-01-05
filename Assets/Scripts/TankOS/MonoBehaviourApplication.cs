@@ -85,6 +85,8 @@ namespace Rover.OS
         private static List<MonoBehaviourApplication> m_appList = new List<MonoBehaviourApplication>();
 
         public static List<MonoBehaviourApplication> Applications { get { return m_appList; } }
+        private static MonoBehaviourApplication m_currentApplication;
+        public static MonoBehaviourApplication CurrentlyLoadedApp {get{return m_currentApplication;}}
 
         public static int RegisterApp(MonoBehaviourApplication app)
         {
@@ -96,6 +98,17 @@ namespace Rover.OS
         public static MonoBehaviourApplication GetAppFromID(int id)
         {
             return m_appList[id];
+        }
+
+        public static void LoadApp(int appID)
+        {
+            if(CurrentlyLoadedApp)
+            {
+                CurrentlyLoadedApp.QuitApp();
+            }
+
+            GetAppFromID(appID).LoadApp();
+            m_currentApplication = GetAppFromID(appID);
         }
     }
 }

@@ -5,7 +5,7 @@ using Rover.Arduino;
 using Uduino;
 using Rover.Settings;
 using Rover.Can;
-// using Rover.DateTime;
+using Rover.DateTime;
 // using Rover.Interface;
 using UnityEngine.UI;
 
@@ -156,8 +156,7 @@ namespace Rover.Systems
             cameraPhoto.ReadPixels(new Rect(0,0,GameSettings.GAME_RES_X, GameSettings.GAME_RES_Y),0,0);
             cameraPhoto.Apply();
 
-            //string photoName = $"{m_cameraMode.ToString()}_{TimeManager.TimeToStringTime(TimeManager.GetCurrentDateTime(), "_")}_{m_screenshotCount.ToString("000")}";
-            string photoName = System.DateTime.Now.ToLongTimeString();
+            string photoName = $"{m_cameraMode.ToString()}_{TimeManager.ToStringMissionTimeClk(TimeManager.GetCurrentDateTime(), "_")}_{m_screenshotCount.ToString("000")}.bmp";
 
             Struct_CameraPhoto photoMetadata = new Struct_CameraPhoto();
             photoMetadata.name = photoName;
@@ -176,12 +175,6 @@ namespace Rover.Systems
             
             if(RoverOperatingSystem.RoverControlMode == RoverControlMode.CAM)
                 mainPhotoCamera.SetActive(true);    
-
-            // CanFrame frame = new CanFrame();
-            // frame.data = new object[] {};
-            // frame.nodeID = CanIDs.SYSTEM_CAM;
-            // frame.timestamp = TimeManager.GetCurrentDateTime();
-            // CanNetwork.Can0.SendCANFrame(frame);
         }
 
         void Update()

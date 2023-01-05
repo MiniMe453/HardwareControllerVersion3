@@ -19,14 +19,14 @@ public class ComputerModeManager : MonoBehaviour
         switch(newMode)
         {
             case OSMode.Rover:
-                homeScreen.RemoveHomeScreen();
+                //homeScreen.RemoveHomeScreen();
                 break;
             case OSMode.Computer:
                 homeScreen.LoadHomeScreen();
                 RoverOperatingSystem.SetUserControl(false);
                 break;
             case OSMode.Map:
-                homeScreen.RemoveHomeScreen();
+                //homeScreen.RemoveHomeScreen();
                 break;
         }
     }

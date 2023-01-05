@@ -34,6 +34,7 @@ namespace Rover.OS
         public GameObject photoDatabaseEntryPrefab;
         public RectTransform photoDatabaseTransform;
         private List<PhotoDatabaseEntry> m_photoDatabaseEntries = new List<PhotoDatabaseEntry>();
+        bool m_loadingFromButton = false;
 
         private int m_currentPhotoCount;
         private Timer m_LoadPhotoTimer;
@@ -54,6 +55,8 @@ namespace Rover.OS
 
         void OnPhotoTaken(Struct_CameraPhoto photo)
         {
+            m_loadingFromButton = true;
+            
             if(AppIsLoaded)
             {
                 loadingPhoto.texture = m_photoDatabaseEntries[m_currentPhotoCount].PhotoMetadata.photo;
@@ -67,8 +70,13 @@ namespace Rover.OS
         {
             // LoadPhoto(cameraSystem.m_photos.Count - 1, true);
             // m_currentPhotoCount = cameraSystem.m_photos.Count - 1;
+            if(!m_loadingFromButton)
+                m_photoDatabaseEntries[m_photoDatabaseEntries.Count - 1].SelectEntry();
+
             UIManager.AddToViewport(canvas, 100);
             RoverOperatingSystem.SetUserControl(false);
+
+            m_loadingFromButton = false;
         }
 
         protected override void OnAppQuit()

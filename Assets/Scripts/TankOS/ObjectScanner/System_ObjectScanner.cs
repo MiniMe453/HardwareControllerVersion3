@@ -5,6 +5,7 @@ using Rover.Arduino;
 using Rover.DateTime;
 using Rover.Interface;
 using System;
+using Kit;
 
 public struct Struct_ObjectScan
 {
@@ -46,15 +47,35 @@ public class System_ObjectScanner : MonoBehaviour
 
     void OnScanButtonPressed(int pin)
     {
+        Debug.LogError("Button pressed");
+
         if(!m_scanObject)
         {
             UIManager.ShowMessageBox("NO SCANNABLE OBJECTS", Color.red, 2f);
             return;
         }
 
-        Struct_ObjectScan objectScan = m_scanObject.GetObjectProperties();
+        Struct_ObjectScan objectScan = m_scanObject.GetObjectScan();
+        
+        ClearScanObject();
+    }
+
+    void ClearScanObject()
+    {
         m_scanObject = null;
 
+        if(m_messageBox)
+        {
+            m_messageBox.HideMessageBox();
+            m_messageBox = null;
+
+            Debug.LogError("messagebox cleared");
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        GizmosExtend.DrawCapsule(transform.position, (transform.forward * objectScanCheckDistance) + transform.position, objectScanRadius, Color.red);
     }
 
     void FixedUpdate()
@@ -62,23 +83,18 @@ public class System_ObjectScanner : MonoBehaviour
         RaycastHit hit;
         ScanObject tmpScanObj = null;
 
-        if(Physics.SphereCast(transform.position, 1f,transform.forward, out hit, objectScanCheckDistance))
+        if(Physics.SphereCast(transform.position, objectScanRadius,transform.forward, out hit, objectScanCheckDistance, ~LayerMask.GetMask(new string[] {"Rover", "Terrain"})))
         {
             if(hit.collider.gameObject.TryGetComponent(out ScanObject scanObject))
             {
-                tmpScanObj = scanObject;
+                if(!scanObject.WasScanned)
+                    tmpScanObj = scanObject;
             }
         } 
 
-        if(tmpScanObj && !m_scanObject)
+        if(!tmpScanObj && m_scanObject)
         {
-            m_scanObject = null;
-            
-            if(m_messageBox)
-            {
-                m_messageBox.HideMessageBox();
-                m_messageBox = null;
-            }
+            ClearScanObject();
         }
 
         if(tmpScanObj != m_scanObject)
@@ -86,9 +102,10 @@ public class System_ObjectScanner : MonoBehaviour
             m_scanObject = tmpScanObj;
         }
 
-        if(!m_messageBox)
+        if(!m_messageBox && m_scanObject)
         {
             m_messageBox = UIManager.ShowMessageBox("OBJECT IN RANGE", Color.white, -1f);
+            Debug.LogError("Message box Shown");
         }
     }
 }

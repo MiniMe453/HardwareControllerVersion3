@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1359428900}
-  m_IndirectSpecularColor: {r: 0.91665107, g: 0.7719947, b: 0.6352431, a: 1}
+  m_IndirectSpecularColor: {r: 0.91670775, g: 0.77198905, b: 0.6349953, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -813,6 +813,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 68482831967794504, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 68482831967794504, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00124
+      objectReference: {fileID: 0}
     - target: {fileID: 225372827601210576, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1241,6 +1249,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2553312215912504176, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 3127
+      objectReference: {fileID: 0}
     - target: {fileID: 2606090005393625437, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1653,6 +1665,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4739139102350248278, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4739139102495531448, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1709,6 +1725,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4739139102780659222, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 3127
+      objectReference: {fileID: 0}
+    - target: {fileID: 4739139103321433800, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4739139103505517197, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4767355601003740323, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2452,6 +2480,14 @@ PrefabInstance:
     - target: {fileID: 5506165362807446677, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524148660889102325, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: objectScanRadius
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524148660889102325, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: objectScanCheckDistance
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5537284512359838797, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5086,7 +5122,7 @@ GameObject:
   - component: {fileID: 1532944142}
   - component: {fileID: 1532944141}
   - component: {fileID: 1532944140}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}

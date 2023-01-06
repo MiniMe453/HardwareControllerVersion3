@@ -205,7 +205,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 89300671}
-  - component: {fileID: 89300670}
   - component: {fileID: 89300669}
   m_Layer: 0
   m_Name: ArduinoPrinterManager
@@ -213,7 +212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &89300669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,18 +223,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 209d644f8ca997a40a659ff16a230b17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &89300670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89300668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87a46186d7be2694cbb5873a73cbcedf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &89300671
@@ -4048,10 +4035,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f89a7ae2a643024fae65c2682dd2e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objName: ScanObj
+  objScanMesh: {fileID: 0}
+  objSurfaceDepth: 0
+  surfaceProperties: []
   temperature: 0
   magnetic: 0
   radiation: 0
-  objName: ScanObj
 --- !u!65 &709678049
 BoxCollider:
   m_ObjectHideFlags: 0

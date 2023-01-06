@@ -4504,6 +4504,7 @@ GameObject:
   - component: {fileID: 2781169501864069685}
   - component: {fileID: 3411446475268923315}
   - component: {fileID: 4847384552575625070}
+  - component: {fileID: 1086792163470242276}
   m_Layer: 0
   m_Name: HandHeldRadio
   m_TagString: Untagged
@@ -4737,6 +4738,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1086792163470242276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4675132012310393585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a97f8368323d39743a874f7e6c74a75c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4739139102350248278
 GameObject:
   m_ObjectHideFlags: 0

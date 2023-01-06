@@ -95,8 +95,8 @@ void loop() {
     oldPosition = newPosition;
     counter = newPosition;
 
-    if(counter > 512)
-      counter = 512;
+    if(counter > 1024)
+      counter = 1024;
     else if (counter < 0)
       counter = 0;
   }

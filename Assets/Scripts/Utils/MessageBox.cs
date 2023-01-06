@@ -41,7 +41,11 @@ namespace Rover.Interface
             {
                 messageBoxInputs.Enable();
             }
-            else
+            else if(duration == -1f)
+            {
+                return;
+            }
+            else 
             {
                 Timer.Register(duration, () => HideMessageBox());
             }
@@ -50,6 +54,8 @@ namespace Rover.Interface
         public void HideMessageBox()
         {
             UIManager.RemoveFromViewport(canvas);
+
+            DestroyImmediate(this.gameObject);
         }
 
         private void Input_OnConfirm(InputAction.CallbackContext context)

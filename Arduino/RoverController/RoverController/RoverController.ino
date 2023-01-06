@@ -38,17 +38,7 @@ unsigned long timeSinceLastMessage;
 unsigned long interruptResetDelay = 25;
 unsigned long messageDelay = 10;
 
-int aState;
-int aLastState;
-
-int aPinCounter;
-int aPinCurrentState = LOW;
-int aPinReading;
-int bPinCounter;
-int bPinCurrentState = LOW;
-int bPinReading;
-int debounce_count = 2;
-
+const char* materialTypes[] = {"Strontium", "Tungsten", "Iron", "Aluminum", "Lead", "Carbon", "Radium", "Cobalt", "Sulfur", "Copper", "Titanium", "Potassium", "Sodium", "Unknown"};
 
 void setup() {
   Serial.begin(9600);

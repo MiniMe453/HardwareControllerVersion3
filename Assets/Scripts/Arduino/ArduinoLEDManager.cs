@@ -35,7 +35,7 @@ namespace Rover.Arduino
 
         private static void SendLEDCommand()
         {
-            if(UduinoManager.Instance.isConnected())
+            if(!UduinoManager.Instance.isConnected())
                 return;
             
             if(ArduinoPrinterManager.Instance.IsPrinting)

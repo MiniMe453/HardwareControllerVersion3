@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1359428900}
-  m_IndirectSpecularColor: {r: 0.91665107, g: 0.7719947, b: 0.6352431, a: 1}
+  m_IndirectSpecularColor: {r: 0.91670775, g: 0.77198905, b: 0.6349953, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -3196,7 +3196,6 @@ GameObject:
   m_Component:
   - component: {fileID: 309530199}
   - component: {fileID: 309530202}
-  - component: {fileID: 309530201}
   - component: {fileID: 309530200}
   m_Layer: 9
   m_Name: PlanetWireframeCamera
@@ -3235,14 +3234,6 @@ MonoBehaviour:
   lowResCamera: {fileID: 309530202}
   renderTexture: {fileID: 8600000, guid: b03a70309bcfde0428dd5031ec04abcb, type: 2}
   enableRendering: 0
---- !u!81 &309530201
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 309530198}
-  m_Enabled: 1
 --- !u!20 &309530202
 Camera:
   m_ObjectHideFlags: 0
@@ -3983,7 +3974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114023058375386772, guid: bb5e6aea88a650f4a8317e74940b0ea4, type: 3}
       propertyPath: debugLevel
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114023058375386772, guid: bb5e6aea88a650f4a8317e74940b0ea4, type: 3}
       propertyPath: threadIdleDelay
@@ -5634,7 +5625,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1968543761}
   - component: {fileID: 1968543763}
-  - component: {fileID: 1968543762}
   - component: {fileID: 1968543764}
   m_Layer: 9
   m_Name: RoverWireframeCamera
@@ -5658,14 +5648,6 @@ Transform:
   m_Father: {fileID: 951481789}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 21.856, y: 45, z: 0}
---- !u!81 &1968543762
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1968543760}
-  m_Enabled: 1
 --- !u!20 &1968543763
 Camera:
   m_ObjectHideFlags: 0

@@ -370,8 +370,8 @@ void PrintObjectScan()
   printer.println("Software version: 1.05a");
   printer.println("All data contained on this paper");
   printer.println("is property of Black Isle Space.");
-  printer.println("Unauthorized distribution will be");
-  printer.println("subject to prosecution.");
+  printer.println("Unauthorized distribution will");
+  printer.println("be subject to prosecution.");
   printer.println(" ");
   printer.println(" ");
   printer.println(" ");

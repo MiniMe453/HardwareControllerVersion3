@@ -54,7 +54,7 @@ namespace Rover.Arduino
                 data.Add(property.materialDensity.ToString());
             }
 
-            UduinoManager.Instance.sendCommand("pobs", data);
+            UduinoManager.Instance.sendCommand("pobs", data.ToArray());
 
             RoverOperatingSystem.SetArduinoEnabled(false);
 

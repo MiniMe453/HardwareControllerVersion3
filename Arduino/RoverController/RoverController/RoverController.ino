@@ -40,7 +40,7 @@ unsigned long messageDelay = 10;
 
 
 //Object Scan Variables
-const char* materialTypes[] = {"Strontium", "Tungsten", "Iron", "Aluminum", "Lead", "Carbon", "Radium", "Cobalt", "Sulfur", "Copper", "Titanium", "Potassium", "Sodium", "Unknown"};
+const String materialTypes[] = {"Strontium", "Tungsten", "Iron", "Aluminum", "Lead", "Carbon", "Radium", "Cobalt", "Sulfur", "Copper", "Titanium", "Potassium", "Sodium", "Unknown"};
 char* objName;
 char* objSurfaceDepth;
 char* temperature;
@@ -416,7 +416,7 @@ void PrintObjectScan()
   // PrintBoldLine("SCAN_TIME:");
   // printer.println(dateTime);
   PrintBoldLine("OBJ_TYPE_ESTIMATE:");
-  printer.println(objName);
+  printer.println(String(objName));
   // PrintBoldLine("OBJ_DIST:");
   // printer.println(objDistance);
   PrintBoldLine("Test");
@@ -439,7 +439,7 @@ void PrintObjectScan()
   isPrinting = false;
 }
 
-void PrintBoldLine(char* line)
+void PrintBoldLine(String line)
 {
   printer.boldOn();
   printer.println(line);

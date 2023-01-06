@@ -35,11 +35,17 @@ namespace Rover.Arduino
 
         private static void SendLEDCommand()
         {
-            if(UduinoManager.Instance.isConnected() && m_pinStatesUpdated)
-            {
-                m_pinStatesUpdated = false;
-                UduinoManager.Instance.sendCommand("led", m_ledPinStates);
-            }
+            if(UduinoManager.Instance.isConnected())
+                return;
+            
+            if(ArduinoPrinterManager.Instance.IsPrinting)
+                return;
+
+            if(!m_pinStatesUpdated)
+                return;
+        
+            m_pinStatesUpdated = false;
+            UduinoManager.Instance.sendCommand("led", m_ledPinStates);
         }
 
         public static void SetLEDMode(int pinIndex, int value)

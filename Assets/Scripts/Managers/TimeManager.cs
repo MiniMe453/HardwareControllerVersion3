@@ -75,7 +75,7 @@ namespace Rover.DateTime
         public static string ToStringMissionTimeLong(DateTimeStruct dateTimeStruct)
         {
             string year = dateTimeStruct.Years.ToString("00");
-            string day = dateTimeStruct.Days.ToString("000");
+            string day = dateTimeStruct.Days.ToString("00");
             string hour = dateTimeStruct.Hours.ToString("00");
             string minute = dateTimeStruct.Minutes.ToString("00");
             string seconds = dateTimeStruct.Seconds.ToString("00");

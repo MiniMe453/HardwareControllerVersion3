@@ -203,6 +203,9 @@ namespace Uduino
         /* Read Write */
         public virtual bool WriteToArduino(string message, object value = null, bool instant = false)
         {
+            if(UduinoManager.Instance.pauseArduinoWrite)
+                return false;
+                
             if (message == null || message == "")
                 return false;
 

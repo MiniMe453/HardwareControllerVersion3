@@ -376,6 +376,7 @@ namespace Uduino
         /// If the board should be automatically reconnected
         /// </summary>
         public bool shouldReconnect = false;
+        public bool pauseArduinoWrite = false;
 
         /// <summary>
         /// List of black listed ports
@@ -1573,14 +1574,16 @@ namespace Uduino
 #endif
             while (IsRunning() && !isApplicationQuiting)
             {
-                lock (uduinoDevices)
-                {
-                    foreach (KeyValuePair<string, UduinoDevice> uduino in uduinoDevices)
+                if(!pauseArduinoWrite)                
+                    lock (uduinoDevices)
                     {
-                        uduino.Value.WriteToArduinoLoop();
-                        uduino.Value.ReadFromArduinoLoop();
+                        foreach (KeyValuePair<string, UduinoDevice> uduino in uduinoDevices)
+                        {
+                            uduino.Value.WriteToArduinoLoop();
+                            uduino.Value.ReadFromArduinoLoop();
+                        }
                     }
-                }
+                
                 Thread.Sleep(threadIdleDelay);
                 if (limitSendRate) Thread.Sleep((int)sendRateDelay / 2);
             }

@@ -12,6 +12,8 @@ namespace Rover.Arduino
         public static ArduinoPrinterManager Instance;
         private MessageBox m_printMessageBox;
         private List<List<object>> m_objectScanLists = new List<List<object>>();
+        private bool m_isPrinting = false;
+        public bool IsPrinting {get {return m_isPrinting;}}
 
         void Awake()
         {
@@ -34,6 +36,9 @@ namespace Rover.Arduino
                 m_printMessageBox.HideMessageBox();
                 m_printMessageBox = null;
             }
+
+            m_isPrinting = false;
+            //UduinoManager.Instance.pauseArduinoWrite = false;
         }
 
         public void PrintObjectScan(Struct_ObjectScan objectScan)
@@ -53,7 +58,8 @@ namespace Rover.Arduino
             dataItr2.Add(objectScan.objDistAtScan.ToString("0.0"));
             dataItr2.Add(TimeManager.ToStringIngameDate + ", " + TimeManager.ToStringMissionTimeClk(objectScan.scanTime));
             
-            dataItr3.Add(objectScan.surfaceProperties.Count);
+            // dataItr3.Add(objectScan.surfaceProperties.Count);
+            dataItr3.Add(128);
 
             foreach(SurfaceProperty property in objectScan.surfaceProperties)
             {
@@ -86,6 +92,8 @@ namespace Rover.Arduino
                     RoverOperatingSystem.SetArduinoEnabled(false);
 
                     m_printMessageBox = UIManager.ShowMessageBox("PRINTING DATA", Color.red, -1f);
+                    //UduinoManager.Instance.pauseArduinoWrite = true;
+                    m_isPrinting = true;
                 }
                 
                 

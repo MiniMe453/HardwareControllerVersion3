@@ -46,8 +46,9 @@ char* objSurfaceDepth;
 char* temperature;
 char* magnetic;
 char* radiation;
-char* dateTime;
+String dateTime;
 char* objDistance;
+bool isPrinting = false;
 
 void setup() {
   Serial.begin(9600);
@@ -67,7 +68,7 @@ void setup() {
   uduino.addCommand("writeTM1", WriteTM1Display);
   uduino.addCommand("writeTM2", WriteTM2Display);
   uduino.addCommand("pobs", PrintObjectScan);
-  uduino.addCommand("sobs", SetupObjectScan;)
+  uduino.addCommand("sobs", SetupObjectScan);
   uduino.addCommand("prt", SimplePrint);
 
   lcd.setCursor(0, 0);
@@ -83,6 +84,9 @@ void setup() {
 
 void loop() {
   uduino.update();
+
+  if(isPrinting)
+    return;
 
   long newPosition = rotaryEnc.read();
 
@@ -328,17 +332,17 @@ void SetupObjectScan()
   int currentItr = uduino.charToInt(arg);
   uduino.next();
 
-  if(currentItr = 0)
+  if(currentItr == 0)
   {
     objName = arg;
     uduino.next();
-    objSurfaceDepth = arg;
-    uduino.next();
-    temperature = arg;
-    uduino.next();
-    magnetic = arg;
-    uduino.next();
-    radiation = arg;
+    // objSurfaceDepth = arg;
+    // uduino.next();
+    // temperature = arg;
+    // uduino.next();
+    // magnetic = arg;
+    // uduino.next();
+    // radiation = arg;
 
     /**
     char* objName;
@@ -355,25 +359,25 @@ char* objDistance;
   4 - radiation
     **/
   }
-  else if (currentItr = 1)
+  else if (currentItr == 1)
   {
-    objDistance = arg;
-    uduino.next();
+    // objDistance = arg;
+    // uduino.next();
 
-    char* finalDate;
+    // String finalDate;
 
-    finalDate += arg;
-    uduino.next();
-    finalDate += " ";
-    finalDate += arg;
-    uduino.next();
-    finalDate += " ";
-    finalDate += arg;
-    uduino.next();
-    finalDate += " ";
-    finalDate += arg;
+    // finalDate += arg;
+    // uduino.next();
+    // finalDate += " ";
+    // finalDate += arg;
+    // uduino.next();
+    // finalDate += " ";
+    // finalDate += arg;
+    // uduino.next();
+    // finalDate += " ";
+    // finalDate += arg;
 
-    dateTime = finalDate;
+    // dateTime = finalDate;
     /**
     0 - objDistance
     1 - Month
@@ -399,7 +403,7 @@ void PrintObjectScan()
   uduino.next();
   //We are now ready for surface properties, but we loop this inside the printing process.
 
-
+  isPrinting = true;
   printer.justify('C');
   printer.doubleHeightOn();
   printer.underlineOn();
@@ -409,27 +413,30 @@ void PrintObjectScan()
 
   printer.justify('L');
   printer.println(" ");
-  PrintBoldLine("SCAN_TIME:");
-  printer.println(dateTime);
+  // PrintBoldLine("SCAN_TIME:");
+  // printer.println(dateTime);
   PrintBoldLine("OBJ_TYPE_ESTIMATE:");
   printer.println(objName);
-  PrintBoldLine("OBJ_DIST:");
-  printer.println(objDistance);
+  // PrintBoldLine("OBJ_DIST:");
+  // printer.println(objDistance);
+  PrintBoldLine("Test");
+  printer.println(numOfSurfaceProperties);
 
 
-  printer.println("Scan Complete");
-  printer.println("Hardware Version: 3.40.1f");
-  printer.println("Software version: 1.05a");
-  printer.println("All data contained on this paper");
-  printer.println("is property of Black Isle Space.");
-  printer.println("Unauthorized distribution will");
-  printer.println("be subject to prosecution.");
+  // printer.println("Scan Complete");
+  // printer.println("Hardware Version: 3.40.1f");
+  // printer.println("Software version: 1.05a");
+  // printer.println("All data contained on this paper");
+  // printer.println("is property of Black Isle Space.");
+  // printer.println("Unauthorized distribution will");
+  // printer.println("be subject to prosecution.");
   printer.println(" ");
   printer.println(" ");
   printer.println(" ");
   printer.println(" ");
   printer.println(" ");
   uduino.println("prt_finished");
+  isPrinting = false;
 }
 
 void PrintBoldLine(char* line)

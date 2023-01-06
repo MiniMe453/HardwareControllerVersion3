@@ -138,14 +138,13 @@ namespace Uduino {
                     return false;
 
                 string message = (string)writeQueue.Dequeue();
-                Log.Info(message.Length + ": " + "<color=#4CAF50>" + message + "</color> sent to <color=#2196F3>[" + (name != "" ? name : _port) + "]</color>", true);
                 try
                 {
                     // try
                     // {
                         serial.WriteLine(message);
                         serial.BaseStream.Flush();
-                        
+                        Log.Info(message.Length + ": " + "<color=#4CAF50>" + message + "</color> sent to <color=#2196F3>[" + (name != "" ? name : _port) + "]</color>", true);  
                     // }
                     // catch (Exception e)
                     // {

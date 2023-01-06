@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf601dde0be2d93439a23fe43329ddbf, type: 3}
   m_Name: BasicRadioReceiver
   m_EditorClassIdentifier: 
-  sensitivity: -70
-  frequencyMax: 108
+  sensitivity: -90
+  frequencyMax: 107.9
   frequencyMin: 87.8
-  frequencyBand: 0.5
+  frequencyBand: 0.2
   mixerGroup: {fileID: 24300002, guid: 89d453852c866e243a5b26178915e5b3, type: 2}
   signalStrength: 0

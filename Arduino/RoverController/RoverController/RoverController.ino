@@ -109,7 +109,7 @@ void loop() {
 
     if(!skipValueSet)
     {
-      digitalReadArray[i] = digitalRead(digitalInputArray[i]);
+      digitalReadArray[i] = digitalRead(digitalInputArray[i] * invertValue);
     }
 
     serialLine += String(digitalReadArray[i]);

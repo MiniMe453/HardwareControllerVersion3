@@ -152,7 +152,7 @@ MonoBehaviour:
     pinNumber: 22
     dataIndex: 0
   - pinMode: 1
-    outputName: Radio Station LED 1
+    outputName: Radio LED 1
     pinNumber: 32
     dataIndex: 1
   - pinMode: 1
@@ -172,11 +172,11 @@ MonoBehaviour:
     pinNumber: 28
     dataIndex: 5
   - pinMode: 1
-    outputName: radio station 2 led
+    outputName: Radio LED 2
     pinNumber: 34
     dataIndex: 6
   - pinMode: 1
-    outputName: radio station 3 led
+    outputName: Radio LED 3
     pinNumber: 36
     dataIndex: 7
   - pinMode: 1

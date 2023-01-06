@@ -17,13 +17,13 @@ public class RadioReceiverData : ScriptableObject
             switch (m_RadioType)
             {
                 case RadioManager.ERadioTypes.AM:
-                    SetFrequencyData(1.7f, 0.54f, 0.01f);
+                    SetFrequencyData(3.6f, 1.1f, 0.01f);
                     break;
                 case RadioManager.ERadioTypes.FM:
                     SetFrequencyData(108f, 87.8f, 0.2f);
                     break;
                 case RadioManager.ERadioTypes.Other:
-                    SetFrequencyData(0.54f, 108f, 0.2f);
+                    SetFrequencyData(272.2f, 296.7f, 0.2f);
                     break;
             }
         }

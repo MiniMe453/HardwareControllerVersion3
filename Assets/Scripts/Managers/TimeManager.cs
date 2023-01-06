@@ -32,7 +32,7 @@ namespace Rover.DateTime
 
             DateTimeStruct tmp = new DateTimeStruct();
             tmp.Years = 5;
-            tmp.Days = 167;
+            tmp.Days = 45;
             tmp.Hours = 8;
             tmp.Minutes = 34;
             tmp.Seconds = 15;

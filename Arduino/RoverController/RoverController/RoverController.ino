@@ -44,6 +44,7 @@ void setup() {
   Serial.begin(9600);
   Serial3.begin(19200);
   printer.begin();
+  //printer.setHeatConfig(8, 10, 10);
 
   pinMode(A3, INPUT);
 
@@ -324,31 +325,66 @@ void PrintObjectScan()
   4 - magnetic
   5 - radiation
   6 - dateTime
+  7 - objDistance;
   7 - surfaceProperties
   **/
 
   int numOfSurfaceProperties = uduino.charToInt(arg);
+  uduino.next();
+  char* objName = arg;
+  uduino.next();
+  char* objSurfaceDepth = arg;
+  uduino.next();
+  char* temperature = arg;
+  uduino.next();
+  char* magnetic = arg;
+  uduino.next();
+  char* radiation = arg;
+  uduino.next();
+  char* dateTime = arg;
+  uduino.next();
+  char* objDistance = arg;
+  uduino.next();
+  //We are now ready for surface properties, but we loop this inside the printing process.
+
 
   printer.justify('C');
   printer.doubleHeightOn();
-  printer.println("SCAN RESULTS");
+  printer.underlineOn();
+  printer.println("OBJ_SCAN");
+  printer.underlineOff();
   printer.doubleHeightOff();
 
-  printer.println("This is a test");
-
+  printer.justify('L');
   printer.println(" ");
+  PrintBoldLine("SCAN_TIME:");
+  printer.println(dateTime);
+  PrintBoldLine("OBJ_TYPE_ESTIMATE:");
+  printer.println(objName);
+  PrintBoldLine("OBJ_DIST:");
+  printer.println(objDistance);
 
-  printer.println("Hello World!");
 
+  printer.println("Scan Complete");
+  printer.println("Hardware Version: 3.40.1f");
+  printer.println("Software version: 1.05a");
+  printer.println("All data contained on this paper");
+  printer.println("is property of Black Isle Space.");
+  printer.println("Unauthorized distribution will be");
+  printer.println("subject to prosecution.");
   printer.println(" ");
-
-  printer.println("Surface Properties thing");
-
   printer.println(" ");
   printer.println(" ");
   printer.println(" ");
-
+  printer.println(" ");
   uduino.println("prt_finished");
+}
+
+void PrintBoldLine(char* line)
+{
+  printer.boldOn();
+  printer.println(line);
+  printer.boldOff();
 }
 
 void SimplePrint()

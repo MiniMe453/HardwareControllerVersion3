@@ -34,6 +34,7 @@ public class System_ObjectScanner : MonoBehaviour
     public float objectScanCheckDistance = 5f;
     public float objectScanRadius = 1f;
     private ScanObject m_scanObject;
+    private float m_distToObject;
     private bool m_messageBoxShown;
     private MessageBox m_messageBox;
     public static event Action<Struct_ObjectScan> EOnObjectScanned;
@@ -59,6 +60,7 @@ public class System_ObjectScanner : MonoBehaviour
         }
 
         Struct_ObjectScan objectScan = m_scanObject.GetObjectScan();
+        objectScan.objDistAtScan = m_distToObject;
         
         ClearScanObject();
         
@@ -91,7 +93,10 @@ public class System_ObjectScanner : MonoBehaviour
             if(hit.collider.gameObject.TryGetComponent(out ScanObject scanObject))
             {
                 if(!scanObject.WasScanned)
+                {
                     tmpScanObj = scanObject;
+                    m_distToObject = hit.distance;
+                }
             }
         } 
 

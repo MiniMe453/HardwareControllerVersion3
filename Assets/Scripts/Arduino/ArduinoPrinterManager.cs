@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Uduino;
 using Rover.Interface;
+using Rover.DateTime;
 
 namespace Rover.Arduino
 {
@@ -36,9 +37,22 @@ namespace Rover.Arduino
 
         public void PrintObjectScan(Struct_ObjectScan objectScan)
         {
-            object[] data = new object[1];
+            List<object> data = new List<object>();
 
-            data[0] = "This was sent from Unity";
+            data.Add(objectScan.surfaceProperties.Count);
+            data.Add(objectScan.objName);
+            data.Add(objectScan.objectSurfaceDepth.ToString("00.0"));
+            data.Add(objectScan.temperature.ToString("000.0"));
+            data.Add(objectScan.magneticField.ToString("000.0"));
+            data.Add(objectScan.radiation.ToString("000.0"));
+            data.Add(objectScan.objDistAtScan.ToString("0.0"));
+            data.Add(TimeManager.ToStringIngameDate + "," + TimeManager.ToStringMissionTimeClk(objectScan.scanTime));
+
+            foreach(SurfaceProperty property in objectScan.surfaceProperties)
+            {
+                data.Add((int)property.materialType);
+                data.Add(property.materialDensity.ToString());
+            }
 
             UduinoManager.Instance.sendCommand("pobs", data);
 

@@ -38,7 +38,16 @@ unsigned long timeSinceLastMessage;
 unsigned long interruptResetDelay = 25;
 unsigned long messageDelay = 10;
 
+
+//Object Scan Variables
 const char* materialTypes[] = {"Strontium", "Tungsten", "Iron", "Aluminum", "Lead", "Carbon", "Radium", "Cobalt", "Sulfur", "Copper", "Titanium", "Potassium", "Sodium", "Unknown"};
+char* objName;
+char* objSurfaceDepth;
+char* temperature;
+char* magnetic;
+char* radiation;
+char* dateTime;
+char* objDistance;
 
 void setup() {
   Serial.begin(9600);
@@ -58,6 +67,7 @@ void setup() {
   uduino.addCommand("writeTM1", WriteTM1Display);
   uduino.addCommand("writeTM2", WriteTM2Display);
   uduino.addCommand("pobs", PrintObjectScan);
+  uduino.addCommand("sobs", SetupObjectScan;)
   uduino.addCommand("prt", SimplePrint);
 
   lcd.setCursor(0, 0);
@@ -311,6 +321,69 @@ void InitOutput() {
   }
 }
 
+void SetupObjectScan()
+{
+  char* arg;
+  arg = uduino.next();
+  int currentItr = uduino.charToInt(arg);
+  uduino.next();
+
+  if(currentItr = 0)
+  {
+    objName = arg;
+    uduino.next();
+    objSurfaceDepth = arg;
+    uduino.next();
+    temperature = arg;
+    uduino.next();
+    magnetic = arg;
+    uduino.next();
+    radiation = arg;
+
+    /**
+    char* objName;
+char* objSurfaceDepth;
+char* temperature;
+char* magnetic;
+char* radiation;
+char* dateTime;
+char* objDistance;
+  0 - objName
+  1 - objSurfaceDepth
+  2 - temperature
+  3 - magnetic
+  4 - radiation
+    **/
+  }
+  else if (currentItr = 1)
+  {
+    objDistance = arg;
+    uduino.next();
+
+    char* finalDate;
+
+    finalDate += arg;
+    uduino.next();
+    finalDate += " ";
+    finalDate += arg;
+    uduino.next();
+    finalDate += " ";
+    finalDate += arg;
+    uduino.next();
+    finalDate += " ";
+    finalDate += arg;
+
+    dateTime = finalDate;
+    /**
+    0 - objDistance
+    1 - Month
+    2 - Date
+    3 - Year
+    4 - Time
+    **/
+  }
+}
+
 void PrintObjectScan()
 {
   char* arg;
@@ -319,31 +392,10 @@ void PrintObjectScan()
   /**
   argument setup
   0 - numOfSurfaceProperties
-  1 - objName
-  2 - objSurfaceDepth
-  3 - temperature
-  4 - magnetic
-  5 - radiation
-  6 - dateTime
-  7 - objDistance;
-  7 - surfaceProperties
+  1 - ? - surfaceProperties
   **/
 
   int numOfSurfaceProperties = uduino.charToInt(arg);
-  uduino.next();
-  char* objName = arg;
-  uduino.next();
-  char* objSurfaceDepth = arg;
-  uduino.next();
-  char* temperature = arg;
-  uduino.next();
-  char* magnetic = arg;
-  uduino.next();
-  char* radiation = arg;
-  uduino.next();
-  char* dateTime = arg;
-  uduino.next();
-  char* objDistance = arg;
   uduino.next();
   //We are now ready for surface properties, but we loop this inside the printing process.
 

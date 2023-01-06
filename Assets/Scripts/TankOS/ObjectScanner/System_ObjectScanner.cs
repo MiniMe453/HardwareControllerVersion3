@@ -20,10 +20,13 @@ public struct Struct_ObjectScan
     public float radiation;
 }
 
+[Serializable]
 public struct SurfaceProperty
 {
-    SurfaceTypes materialType;
-    float materialAmount;
+    [SerializeField]
+    public SurfaceTypes materialType;
+    [SerializeField]
+    public float materialDensity;
 }
 public enum SurfaceTypes {Strontium, Tungsten, Iron, Aluminum, Lead, Carbon, Radium, Cobalt, Sulfur, Copper, Titanium, Potassium, Sodium, Unknown}
 public class System_ObjectScanner : MonoBehaviour
@@ -58,6 +61,8 @@ public class System_ObjectScanner : MonoBehaviour
         Struct_ObjectScan objectScan = m_scanObject.GetObjectScan();
         
         ClearScanObject();
+        
+        ArduinoPrinterManager.Instance.PrintObjectScan(objectScan);
     }
 
     void ClearScanObject()
@@ -68,8 +73,6 @@ public class System_ObjectScanner : MonoBehaviour
         {
             m_messageBox.HideMessageBox();
             m_messageBox = null;
-
-            Debug.LogError("messagebox cleared");
         }
     }
 
@@ -105,7 +108,6 @@ public class System_ObjectScanner : MonoBehaviour
         if(!m_messageBox && m_scanObject)
         {
             m_messageBox = UIManager.ShowMessageBox("OBJECT IN RANGE", Color.white, -1f);
-            Debug.LogError("Message box Shown");
         }
     }
 }

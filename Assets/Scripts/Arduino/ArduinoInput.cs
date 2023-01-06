@@ -416,6 +416,7 @@ namespace Rover.Arduino
     public static class ArduinoInputDecoder
     {
         public static event Action<string> EOnSerialMessageRecieved;
+        public static event Action EOnPrinterFinishedMessageReceived;
         private static List<string> m_lastMessage = new List<string>();
         public static List<string> LastMessage { get {return m_lastMessage;} }
         private static bool m_readMessage = false;
@@ -446,6 +447,12 @@ namespace Rover.Arduino
 
         private static void OnMessageReceived(string data, UduinoDevice device)
         {
+            if(data == "prt_finished")
+            {
+                EOnPrinterFinishedMessageReceived?.Invoke();
+                return;
+            }
+
             ParseInputData(data);
         }
 

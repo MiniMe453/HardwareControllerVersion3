@@ -56,7 +56,7 @@ void setup() {
   uduino.addCommand("initO", InitOutput);
   uduino.addCommand("writeTM1", WriteTM1Display);
   uduino.addCommand("writeTM2", WriteTM2Display);
-  uduino.addCommand("pobj", PrintObjectScan);
+  uduino.addCommand("pobs", PrintObjectScan);
   uduino.addCommand("prt", SimplePrint);
 
   lcd.setCursor(0, 0);
@@ -315,6 +315,20 @@ void PrintObjectScan()
   char* arg;
   arg = uduino.next();
 
+  /**
+  argument setup
+  0 - numOfSurfaceProperties
+  1 - objName
+  2 - objSurfaceDepth
+  3 - temperature
+  4 - magnetic
+  5 - radiation
+  6 - dateTime
+  7 - surfaceProperties
+  **/
+
+  int numOfSurfaceProperties = uduino.charToInt(arg);
+
   printer.justify('C');
   printer.doubleHeightOn();
   printer.println("SCAN RESULTS");
@@ -328,11 +342,13 @@ void PrintObjectScan()
 
   printer.println(" ");
 
-  printer.println(arg);
+  printer.println("Surface Properties thing");
 
   printer.println(" ");
   printer.println(" ");
   printer.println(" ");
+
+  uduino.println("prt_finished");
 }
 
 void SimplePrint()

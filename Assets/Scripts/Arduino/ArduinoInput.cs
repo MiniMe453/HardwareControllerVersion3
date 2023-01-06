@@ -190,12 +190,12 @@ namespace Rover.Arduino
 
             m_avgValue = avgMaxCount / 5;
 
-            if(m_avgValue < 30 && m_currentSelection != 2)
+            if(m_avgValue < 75 && m_currentSelection != 2)
             {
                 m_currentSelection = 2;
                 EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
             }
-            else if (m_avgValue > 630 && value < 700 && m_currentSelection != 1)
+            else if (m_avgValue > 600 && value < 700 && m_currentSelection != 1)
             {
                 m_currentSelection = 1;
                 EOnCurrentSelectionChanged?.Invoke(m_currentSelection);

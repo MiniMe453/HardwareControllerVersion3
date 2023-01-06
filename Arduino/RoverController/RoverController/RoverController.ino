@@ -41,7 +41,7 @@ unsigned long messageDelay = 10;
 
 //Object Scan Variables
 const String materialTypes[] = {"Strontium", "Tungsten", "Iron", "Aluminum", "Lead", "Carbon", "Radium", "Cobalt", "Sulfur", "Copper", "Titanium", "Potassium", "Sodium", "Unknown"};
-char* objName;
+String objName;
 char* objSurfaceDepth;
 char* temperature;
 char* magnetic;
@@ -334,7 +334,7 @@ void SetupObjectScan()
 
   if(currentItr == 0)
   {
-    objName = arg;
+    objName = String(arg);
     uduino.next();
     // objSurfaceDepth = arg;
     // uduino.next();
@@ -413,23 +413,23 @@ void PrintObjectScan()
 
   printer.justify('L');
   printer.println(" ");
-  // PrintBoldLine("SCAN_TIME:");
-  // printer.println(dateTime);
+  PrintBoldLine("SCAN_TIME:");
+  printer.println("Test time here");
   PrintBoldLine("OBJ_TYPE_ESTIMATE:");
-  printer.println(String(objName));
-  // PrintBoldLine("OBJ_DIST:");
-  // printer.println(objDistance);
+  printer.println(objName);
+  PrintBoldLine("OBJ_DIST:");
+  printer.println("Test Time here");
   PrintBoldLine("Test");
   printer.println(numOfSurfaceProperties);
 
 
-  // printer.println("Scan Complete");
-  // printer.println("Hardware Version: 3.40.1f");
-  // printer.println("Software version: 1.05a");
-  // printer.println("All data contained on this paper");
-  // printer.println("is property of Black Isle Space.");
-  // printer.println("Unauthorized distribution will");
-  // printer.println("be subject to prosecution.");
+  printer.println("Scan Complete");
+  printer.println("Hardware Version: 3.40.1f");
+  printer.println("Software version: 1.05a");
+  printer.println("All data contained on this paper");
+  printer.println("is property of Black Isle Space.");
+  printer.println("Unauthorized distribution will");
+  printer.println("be subject to prosecution.");
   printer.println(" ");
   printer.println(" ");
   printer.println(" ");

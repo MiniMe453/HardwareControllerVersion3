@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rover.Arduino;
+using System;
+using Uduino;
 
 public class System_RDIO : MonoBehaviour
 {
@@ -29,6 +31,17 @@ public class System_RDIO : MonoBehaviour
         m_frequency = ((ReceiverData.frequencyMax - ReceiverData.frequencyMin) * m_freqPercentage) + ReceiverData.frequencyMin;
         ReceiverData.Frequency = m_frequency;
 
-        Debug.LogError(ReceiverData.Frequency);
+        string strFreq = ReceiverData.Frequency.ToString("000.0");
+        strFreq = strFreq.Remove(3);
+
+        object[] data = new object[5];
+        data[4] = 0;
+
+        for(int i = 0; i < 4; i++)
+        {
+            data[i] = Int32.Parse(strFreq[i].ToString());
+        }
+
+        UduinoManager.Instance.sendCommand("writeTM1", data);
     }
 }

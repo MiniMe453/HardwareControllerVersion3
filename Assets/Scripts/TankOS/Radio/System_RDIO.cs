@@ -43,10 +43,17 @@ public class System_RDIO : MonoBehaviour
 
         string strFreq = "";
         float tempValue = Mathf.FloorToInt(ReceiverData.Frequency * 10f);
-        strFreq = tempValue.ToString("0");
+        strFreq = tempValue.ToString();
+
+       // Debug.LogError(ReceiverData.Frequency);
          
         if(strFreq.Length < 4)
-            strFreq = "0" + strFreq;
+            for(int i = 0; i < 4 - strFreq.Length; i++)
+            {
+                strFreq = "0" + strFreq;
+            }
+
+        Debug.LogError(strFreq);
 
         object[] data = new object[5];
         data[4] = 0;
@@ -67,6 +74,8 @@ public class System_RDIO : MonoBehaviour
         if(m_selectedRadioType > 2)
             m_selectedRadioType = 0;
 
+        Debug.LogError(m_selectedRadioType);
+
         int[] ledValues = new int[3];
 
         for(int i = 0; i < 3; i++)
@@ -77,9 +86,9 @@ public class System_RDIO : MonoBehaviour
         LEDManager.SetLEDMode(m_radioLEDPinIndexes, ledValues);
 
         ReceiverData.RadioType = (RadioManager.ERadioTypes)m_selectedRadioType;
-        OnRadioEncoderValueChanged(m_freqPercentage * 1024f, 0);
+        // OnRadioEncoderValueChanged(m_freqPercentage * 1024f, 0);
 
-        EOnNewRadioTypeSelected?.Invoke(m_selectedRadioType);
+        // EOnNewRadioTypeSelected?.Invoke(m_selectedRadioType);
 
         Debug.Log(ReceiverData.RadioType);
     }

@@ -112,7 +112,7 @@ void loop() {
     if(!skipValueSet)
     {
       if(invertInput)
-        digitalReadArray[i] = digitalRead(!digitalInputArray[i]);
+        digitalReadArray[i] = !digitalRead(digitalInputArray[i]);
       else
         digitalReadArray[i] = digitalRead(digitalInputArray[i]);
     }
@@ -158,9 +158,14 @@ void loop() {
 void ResetDigitalReadArray()
 {
   for (int i = 0; i < digitalInputArraySize; i++) {
-    
-    if(digitalRead(digitalInputArray[i]) == 1)
-      continue;
+    bool invertInput = digitalInputArray[i] == 11;
+
+    if(!invertInput)
+      if(digitalRead(digitalInputArray[i]) == 1)
+        continue;
+    else
+      if(!digitalRead(digitalInputArray[i]) == 1)
+        continue;
     
     digitalReadArray[i] = 0;
   }

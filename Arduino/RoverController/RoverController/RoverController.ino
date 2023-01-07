@@ -104,12 +104,17 @@ void loop() {
   String serialLine = "_";
 
   for (int i = 0; i < digitalInputArraySize; i++) {
+    bool invertInput = digitalInputArray[i] == 11;
+
     int prevReadValue = digitalReadArray[i];
     bool skipValueSet = prevReadValue == 1;
 
     if(!skipValueSet)
     {
-      digitalReadArray[i] = digitalRead(digitalInputArray[i] * invertValue);
+      if(invertInput)
+        digitalReadArray[i] = digitalRead(!digitalInputArray[i]);
+      else
+        digitalReadArray[i] = digitalRead(digitalInputArray[i]);
     }
 
     serialLine += String(digitalReadArray[i]);

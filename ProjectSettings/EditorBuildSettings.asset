@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Plugins/MarsEnv/Scene/Mars_scene.unity
+    path: Assets/Scenes/Mars_scene.unity
     guid: a63e9e46ee270c44aabcd8111bfacd95
   m_configObjects: {}

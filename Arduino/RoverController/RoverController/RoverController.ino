@@ -94,6 +94,11 @@ void loop() {
   {
     oldPosition = newPosition;
     counter = newPosition;
+
+    if(counter > 512)
+      counter = 512;
+    else if (counter < 0)
+      counter = 0;
   }
 
   String serialLine = "_";

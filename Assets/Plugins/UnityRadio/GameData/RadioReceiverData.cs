@@ -23,7 +23,7 @@ public class RadioReceiverData : ScriptableObject
                     SetFrequencyData(108f, 87.8f, 0.2f);
                     break;
                 case RadioManager.ERadioTypes.Other:
-                    SetFrequencyData(272.2f, 296.7f, 0.2f);
+                    SetFrequencyData(296.7f, 272.2f, 0.2f);
                     break;
             }
         }

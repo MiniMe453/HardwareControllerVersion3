@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Radios Global Data", menuName = "Radio/Radios Global Data")]
 public class RadioManager : ScriptableObject
 {
-    public enum ERadioTypes { FM, AM, Test, Other };
+    public enum ERadioTypes { FM, AM, Other };
     public enum EAntennaTypes { Omnidirectional, Directional, BeamAntenna };
     private List<RadioTransmitter> m_RadioTransmitters = new List<RadioTransmitter>();
 

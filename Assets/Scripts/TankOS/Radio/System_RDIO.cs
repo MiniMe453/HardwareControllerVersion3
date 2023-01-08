@@ -109,9 +109,11 @@ public class System_RDIO : MonoBehaviour
         MessageBox scanningMessage = UIManager.ShowMessageBox("SCANNING FREQUENCIES", Color.white, -1f);
         int counter = 0;
 
-        CommandConsoleMain.Instance.UpdateConsoleOutput("RADIO SCAN");
         CommandConsoleMain.Instance.UpdateConsoleOutput("TIME: " + TimeManager.ToStringMissionTimeLong(TimeManager.dateTime));
-        yield return new WaitForSeconds(UnityEngine.Random.Range(0.05f,0.15f));
+        CommandConsoleMain.Instance.UpdateConsoleOutput("================");
+        CommandConsoleMain.Instance.UpdateConsoleOutput("BND   FREQ   STR");
+        CommandConsoleMain.Instance.UpdateConsoleOutput("----------------");
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f,2f));
 
         while(true)
         {
@@ -119,15 +121,16 @@ public class System_RDIO : MonoBehaviour
                 break;
 
             Struct_RadioScan scan = m_prevScanResult[counter];
-            CommandConsoleMain.Instance.UpdateConsoleOutput($"{scan.radioType.ToString().PadRight(3)}  {scan.frequency.ToString("000.0")}  {scan.strength.ToString()}%");
+            CommandConsoleMain.Instance.UpdateConsoleOutput($"{scan.radioType.ToString().PadRight(3)} | {scan.frequency.ToString("000.0")} | {scan.strength.ToString().PadLeft(3)}%");
 
-            yield return new WaitForSeconds(UnityEngine.Random.Range(0.05f,0.15f));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(1f,2f));
             counter++;
         }
+        CommandConsoleMain.Instance.UpdateConsoleOutput("----------------");
+        CommandConsoleMain.Instance.UpdateConsoleOutput($"FOUND: {m_prevScanResult.Count}");
+        CommandConsoleMain.Instance.UpdateConsoleOutput("================");
         CommandConsoleMain.Instance.UpdateConsoleOutput("SCAN COMPLETE");
-        CommandConsoleMain.Instance.UpdateConsoleOutput($"FREQUENCIES FOUND: {m_prevScanResult.Count}");
-
-
+        
         scanningMessage.HideMessageBox();
         RoverOperatingSystem.SetArduinoEnabled(true);
         CommandConsoleMain.Instance.EnableUserInput(true);

@@ -218,7 +218,7 @@ public class RadioReceiver : MonoBehaviour
                 continue;
 
             Struct_RadioScan scanResult = new Struct_RadioScan();
-            scanResult.strength = Mathf.CeilToInt(distanceStrength * 100f);
+            scanResult.strength = Mathf.CeilToInt(distanceStrength * 25f);
             scanResult.radioType = transmitter.TransmitterData.radioType;
             scanResult.frequency = transmitter.TransmitterData.frequency;
             radioScanData.Add(scanResult);

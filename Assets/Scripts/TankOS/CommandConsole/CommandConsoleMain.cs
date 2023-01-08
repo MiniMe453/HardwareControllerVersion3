@@ -112,13 +112,14 @@ public class CommandConsoleMain : MonoBehaviourApplication
 
     public void EnableUserInput(bool userInputEnabled)
     {
-        if(userInputEnabled && !commandInputField.IsActive())
+        if(userInputEnabled)
         {
+            commandInputField.enabled = true;
             commandInputField.ActivateInputField();
         }
         else
         {
-            commandInputField.DeactivateInputField();
+            commandInputField.enabled = false;
         }
     }
 }

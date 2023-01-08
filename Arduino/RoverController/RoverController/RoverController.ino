@@ -160,14 +160,11 @@ void ResetDigitalReadArray()
   for (int i = 0; i < digitalInputArraySize; i++) {
     bool invertInput = digitalInputArray[i] == 11;
 
-    if(!invertInput)
-      if(digitalRead(digitalInputArray[i]) == 1)
-        continue;
+    if(invertInput)
+      digitalReadArray[i] = !digitalRead(digitalInputArray[i]);
     else
-      if(!digitalRead(digitalInputArray[i]) == 1)
-        continue;
-    
-    digitalReadArray[i] = 0;
+      digitalReadArray[i] = digitalRead(digitalInputArray[i]);
+  
   }
 }
 

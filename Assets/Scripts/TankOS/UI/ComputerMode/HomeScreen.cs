@@ -28,6 +28,8 @@ public class HomeScreen : MonoBehaviourApplication
         System_CAM.EOnNewCameraSelected += OnNewCameraSelected;
         System_MTR.EOnBrakeModeChanged += OnBrakeSwitchChanged;
         System_MTR.EOnRoverVelocityUpdate += OnRoverVelocityUpdate;
+        System_RDIO.EOnNewRadioTypeSelected += OnNewRadioTypeSelected;
+        System_RDIO.EOnRadioFrequencyUpdated += OnNewFrequencySelected;
     }
 
     public void LoadHomeScreen()
@@ -81,11 +83,11 @@ public class HomeScreen : MonoBehaviourApplication
 
     void OnNewRadioTypeSelected(int newType)
     {
-        radioBandText.text = ((RadioManager.ERadioTypes)newType).ToString();
+        radioBandText.text = "BAND: " + ((RadioManager.ERadioTypes)newType).ToString();
     }
 
     void OnNewFrequencySelected(float frequency)
     {
-        frequencyText.text = frequency.ToString("000.0");
+        frequencyText.text = "FREQ: " + frequency.ToString("000.0");
     }
 }

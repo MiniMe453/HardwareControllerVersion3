@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1359428900}
-  m_IndirectSpecularColor: {r: 0.91665107, g: 0.7719947, b: 0.6352431, a: 1}
+  m_IndirectSpecularColor: {r: 0.91670775, g: 0.77198905, b: 0.6349953, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -3177,6 +3177,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9218448235863146735, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 108.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218448235863146735, guid: 48b2e7c9e7e14d0479d5023418add52b, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -5065,7 +5069,7 @@ MonoBehaviour:
         customValues: []
   config:
     valueIndicatorSize: 12
-    showValueIndicators: 1
+    showValueIndicators: 0
     popupPrefab: {fileID: 0}
   data:
     dataSets:

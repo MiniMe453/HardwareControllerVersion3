@@ -50,6 +50,11 @@ public class RadioReceiver : MonoBehaviour
             "SYS.RDIO.SCAN",
             CmdPerformRadioScan
         );
+
+        foreach(RadioTransmitter transmitter in m_RadioManager.RadioTransmitters)
+        {
+            transmitter.SetSignalStrength(0);
+        }
     }
     void Update()
     {

@@ -16,6 +16,8 @@ public class System_RDIO_Interface : MonoBehaviourApplication
     public List<TextMeshProUGUI> bandNameTMPros;
     public TextMeshProUGUI signalStrengthText;
     public TextMeshProUGUI signalFrequencyText;
+    public RectTransform radioScanTransform;
+    public GameObject radioScanListEntry;
     private static int m_signalStrength;
     public static int SignalStrength {get {return m_signalStrength;}}
     private Timer updateSignalStrengthTimer;
@@ -29,6 +31,31 @@ public class System_RDIO_Interface : MonoBehaviourApplication
     {
         UIManager.AddToViewport(canvas, 100);
         updateSignalStrengthTimer = Timer.Register(GameSettings.RADIO_FREQ_CHART_UPDATE_TIMER, () => UpdateSignalStrengthText(), isLooped: true);
+
+        if(System_RDIO.PrevScanResults.Count == 0)
+        {
+            GameObject entry = Instantiate(radioScanListEntry, radioScanTransform);
+            entry.GetComponent<TextMeshProUGUI>().text = "NO SCAN PERFORMED";
+            GameObject entry2 = Instantiate(radioScanListEntry, radioScanTransform);
+            entry2.GetComponent<TextMeshProUGUI>().text = "USE SYS.RDIO.SCAN";
+            GameObject entry3 = Instantiate(radioScanListEntry, radioScanTransform);
+            entry3.GetComponent<TextMeshProUGUI>().text = "TO PERFORM A SCAN";
+            return;
+        }
+
+        if(radioScanTransform.childCount > 0)
+        {
+            for(int i = 0; i < radioScanTransform.childCount; i++)
+            {
+                DestroyImmediate(radioScanTransform.GetChild(i));
+            }
+        }
+
+        foreach(Struct_RadioScan result in System_RDIO.PrevScanResults)
+        {
+            GameObject entry = Instantiate(radioScanListEntry, radioScanTransform);
+            entry.GetComponent<TextMeshProUGUI>().text = $"  {result.radioType.ToString().PadLeft(3)}    {result.frequency.ToString("000.0")}  {result.strength.ToString().PadRight(3)}%";
+        }
     }
 
     protected override void OnAppQuit()

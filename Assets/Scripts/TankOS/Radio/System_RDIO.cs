@@ -21,6 +21,7 @@ public class System_RDIO : MonoBehaviour
     public static event Action<int> EOnNewRadioTypeSelected;
     public static event Action<float> EOnRadioFrequencyUpdated;
     private static List<Struct_RadioScan> m_prevScanResult = new List<Struct_RadioScan>();
+    public static List<Struct_RadioScan> PrevScanResults { get {return m_prevScanResult;}}
 
     void OnEnable()
     {

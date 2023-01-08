@@ -12,7 +12,8 @@ public class System_RDIO : MonoBehaviour
     private float m_freqPercentage;
     private float m_frequency;
     public float Frequency {get {return m_frequency;}}
-    private int m_selectedRadioType;
+    private static int m_selectedRadioType;
+    public static RadioManager.ERadioTypes SelectedRadioType {get {return (RadioManager.ERadioTypes)m_selectedRadioType;}}
     private int[] m_radioLEDPinIndexes;
     public static event Action<int> EOnNewRadioTypeSelected;
     public static event Action<float> EOnRadioFrequencyUpdated;

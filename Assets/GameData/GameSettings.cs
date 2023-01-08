@@ -23,6 +23,7 @@ namespace Rover.Settings
         public const int HORIZONTAL_CENTER_VAL = 508;
         public const int VERTICAL_CENTER_VAL = 460;
         public const float JOYSTICK_DEADZONE = 0.1f;
+        public const float RADIO_FREQ_CHART_UPDATE_TIMER = 1f/10f;
     }
 }
 

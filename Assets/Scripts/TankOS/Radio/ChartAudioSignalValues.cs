@@ -30,7 +30,7 @@ public class ChartAudioSignalValues : MonoBehaviour
         for(int i = 0; i <= numberOfEntries; i++)
         {
             LineEntry newEntry = new LineEntry();
-            lineEntries.Add(new LineEntry((float)i/(float)numberOfEntries, 0f));
+            lineEntries.Add(new LineEntry((float)i/(float)numberOfEntries, Random.Range(-1f, 1f)));
             Debug.LogError(lineEntries[i].Position);
         }
 

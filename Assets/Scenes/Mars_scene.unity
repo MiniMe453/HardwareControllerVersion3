@@ -4124,6 +4124,136 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &796160610
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2549613674525924585, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_RadioTransmitterData
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c02a47b36e8edf46b82d5923c7769ca, type: 2}
+    - target: {fileID: 5054590301726390866, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 261ab5f9820bb6d4cb3d0a45509d6e19, type: 2}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2358.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 33.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -480.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194514362762830527, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_Name
+      value: BasicRadioTransmitter (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+--- !u!1001 &799710656
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2549613674525924585, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_RadioTransmitterData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4080a6975b23f0e4f8dae5de819230db, type: 2}
+    - target: {fileID: 5054590301726390866, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 261ab5f9820bb6d4cb3d0a45509d6e19, type: 2}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2388
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 19.804907
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -116
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194514362762830527, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_Name
+      value: BasicRadioTransmitter (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
 --- !u!1 &801110447
 GameObject:
   m_ObjectHideFlags: 0

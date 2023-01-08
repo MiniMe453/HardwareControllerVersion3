@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   watts: 0.05
   antennaGain: 0.1
-  frequency: 95.3
+  frequency: 281.6
   cableLoss: 3
   antennaType: 0
-  radioType: 0
+  radioType: 2
   mixerGroup: {fileID: 24300002, guid: 261ab5f9820bb6d4cb3d0a45509d6e19, type: 2}

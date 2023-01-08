@@ -16,6 +16,9 @@ public class HomeScreen : MonoBehaviourApplication
     public TextMeshProUGUI roverSpeedText;
     public TextMeshProUGUI brakeText;
     public RenderCameraToTexture roverWireframeOverviewCamera;
+    [Header("Radio System")]
+    public TextMeshProUGUI frequencyText;
+    public TextMeshProUGUI radioBandText;
 
     public static event Action EOnHomeScreenLoaded;
     public static event Action EOnHomeScreenRemoved;
@@ -74,5 +77,15 @@ public class HomeScreen : MonoBehaviourApplication
     void OnRoverVelocityUpdate(float velocity)
     {
         roverSpeedText.text = "SPD: " + velocity.ToString("00.0") + "m/s";
+    }
+
+    void OnNewRadioTypeSelected(int newType)
+    {
+        radioBandText.text = ((RadioManager.ERadioTypes)newType).ToString();
+    }
+
+    void OnNewFrequencySelected(float frequency)
+    {
+        frequencyText.text = frequency.ToString("000.0");
     }
 }

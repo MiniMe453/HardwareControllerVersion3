@@ -17,6 +17,7 @@ public class ChartAudioSignalValues : MonoBehaviour
     public static float maxMagnitude = 10f;
     private static float m_sampleAmplitude = 1;
     public int numberOfEntries = 25;
+    public bool ignoreRadioBandType = false;
 
     
     void OnEnable()
@@ -43,7 +44,7 @@ public class ChartAudioSignalValues : MonoBehaviour
 
     void OnMainApplicationLoaded()
     {
-        if(System_RDIO.SelectedRadioType == radioType)
+        if(System_RDIO.SelectedRadioType == radioType || ignoreRadioBandType)
         {
             updateDataSetTimer = Timer.Register(GameSettings.RADIO_FREQ_CHART_UPDATE_TIMER, () => UpdateChart(), isLooped: true);
         }
@@ -59,7 +60,7 @@ public class ChartAudioSignalValues : MonoBehaviour
 
     void OnNewRadioTypeSelected(int newRadioType)
     {
-        if(newRadioType == (int)radioType && mainApplication.AppIsLoaded)
+        if((newRadioType == (int)radioType || ignoreRadioBandType) && mainApplication.AppIsLoaded)
         {
             updateDataSetTimer = Timer.Register(GameSettings.RADIO_FREQ_CHART_UPDATE_TIMER, () => UpdateChart(), isLooped: true);
         }

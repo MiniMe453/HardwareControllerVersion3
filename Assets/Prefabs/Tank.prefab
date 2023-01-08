@@ -3816,6 +3816,8 @@ MonoBehaviour:
   roverSpeedText: {fileID: 3891387690990012185}
   brakeText: {fileID: 9081304083095743575}
   roverWireframeOverviewCamera: {fileID: 0}
+  frequencyText: {fileID: 7849359896297352168}
+  radioBandText: {fileID: 2469921344936240319}
 --- !u!1 &3392655133911355372
 GameObject:
   m_ObjectHideFlags: 0

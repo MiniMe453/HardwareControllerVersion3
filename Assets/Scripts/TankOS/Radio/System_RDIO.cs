@@ -4,9 +4,12 @@ using UnityEngine;
 using Rover.Arduino;
 using System;
 using Uduino;
+using Rover.Interface;
+using Rover.DateTime;
 
 public class System_RDIO : MonoBehaviour
 {
+    public static System_RDIO Instance;
     private static RadioReceiverData m_receiverData;
     public static RadioReceiverData ReceiverData {get {return m_receiverData;}}
     private float m_freqPercentage;
@@ -17,11 +20,13 @@ public class System_RDIO : MonoBehaviour
     private int[] m_radioLEDPinIndexes;
     public static event Action<int> EOnNewRadioTypeSelected;
     public static event Action<float> EOnRadioFrequencyUpdated;
+    private static List<Struct_RadioScan> m_prevScanResult = new List<Struct_RadioScan>();
 
     void OnEnable()
     {
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
         m_receiverData = GetComponent<RadioReceiver>().RecieverData;
+        Instance = this;
     }
 
     void OnDatabaseInit()
@@ -85,5 +90,46 @@ public class System_RDIO : MonoBehaviour
         OnRadioEncoderValueChanged(m_freqPercentage * 1024f, 0);
 
         EOnNewRadioTypeSelected?.Invoke(m_selectedRadioType);
+    }
+
+    public void SetScanResult(List<Struct_RadioScan> scanResult)
+    {
+        m_prevScanResult = scanResult;
+
+        if(!CommandConsoleMain.IsConsoleVisible)
+            return;
+
+        StartCoroutine(DisplayScanResultsAnim());
+    }
+
+    IEnumerator DisplayScanResultsAnim()
+    {
+        RoverOperatingSystem.SetArduinoEnabled(false);
+        CommandConsoleMain.Instance.EnableUserInput(false);
+        MessageBox scanningMessage = UIManager.ShowMessageBox("SCANNING FREQUENCIES", Color.white, -1f);
+        int counter = 0;
+
+        CommandConsoleMain.Instance.UpdateConsoleOutput("RADIO SCAN");
+        CommandConsoleMain.Instance.UpdateConsoleOutput("TIME: " + TimeManager.ToStringMissionTimeLong(TimeManager.dateTime));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.05f,0.15f));
+
+        while(true)
+        {
+            if(counter == m_prevScanResult.Count)
+                break;
+
+            Struct_RadioScan scan = m_prevScanResult[counter];
+            CommandConsoleMain.Instance.UpdateConsoleOutput($"{scan.radioType.ToString().PadRight(3)}  {scan.frequency.ToString("000.0")}  {scan.strength.ToString()}%");
+
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0.05f,0.15f));
+            counter++;
+        }
+        CommandConsoleMain.Instance.UpdateConsoleOutput("SCAN COMPLETE");
+        CommandConsoleMain.Instance.UpdateConsoleOutput($"FREQUENCIES FOUND: {m_prevScanResult.Count}");
+
+
+        scanningMessage.HideMessageBox();
+        RoverOperatingSystem.SetArduinoEnabled(true);
+        CommandConsoleMain.Instance.EnableUserInput(true);
     }
 }

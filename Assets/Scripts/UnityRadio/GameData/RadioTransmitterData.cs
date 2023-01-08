@@ -16,5 +16,7 @@ public class RadioTransmitterData : ScriptableObject
 
     public RadioManager.EAntennaTypes antennaType;
 
+    public RadioManager.ERadioTypes radioType;
+
     public AudioMixerGroup mixerGroup;
 }

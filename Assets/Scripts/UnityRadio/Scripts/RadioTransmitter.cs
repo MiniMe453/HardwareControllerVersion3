@@ -19,6 +19,7 @@ public class RadioTransmitter : MonoBehaviour
     private AudioLowPassFilter m_LowPassFilter;
     private AudioAnalyzer audioAnalyzer;
     public float SignalStrength;
+    public RadioTransmitterData TransmitterData {get{return m_RadioTransmitterData;}}
 
     void Start()
     {

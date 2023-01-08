@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+public struct Struct_RadioScan
+{
+    public RadioManager.ERadioTypes radioType;
+    public float frequency;
+    public int strength;
+}
+
 public class RadioReceiver : MonoBehaviour
 {
 
@@ -27,6 +34,7 @@ public class RadioReceiver : MonoBehaviour
 
     private float currentUpdateTime;
     private float updateStep = 0.05f;
+    private Command RADIO_SCAN;
 
     void Start()
     {
@@ -35,6 +43,13 @@ public class RadioReceiver : MonoBehaviour
         staticAudioAnalyzer = new AudioAnalyzer(32, staticAudio);
         receiverData.RadioType = radioType;
         receiverData.AntennaType = antennaType;
+
+        RADIO_SCAN = new Command(
+            "SYS.RDIO.SCAN",
+            "Peform a freq scan",
+            "SYS.RDIO.SCAN",
+            CmdPerformRadioScan
+        );
     }
     void Update()
     {
@@ -189,5 +204,26 @@ public class RadioReceiver : MonoBehaviour
         else movingAverageArrStep = 0;
 
         return MovingAverageFilter(movingAverageArr);
+    }
+
+    private void CmdPerformRadioScan()
+    {
+        List<Struct_RadioScan> radioScanData = new List<Struct_RadioScan>();
+
+        foreach(RadioTransmitter transmitter in m_RadioManager.RadioTransmitters)
+        {
+            float distanceStrength = CalculateDistanceStrength(transmitter);
+            
+            if(distanceStrength <= 0f)
+                continue;
+
+            Struct_RadioScan scanResult = new Struct_RadioScan();
+            scanResult.strength = Mathf.CeilToInt(distanceStrength * 100f);
+            scanResult.radioType = transmitter.TransmitterData.radioType;
+            scanResult.frequency = transmitter.TransmitterData.frequency;
+            radioScanData.Add(scanResult);
+        }
+
+        System_RDIO.Instance.SetScanResult(radioScanData);
     }
 }

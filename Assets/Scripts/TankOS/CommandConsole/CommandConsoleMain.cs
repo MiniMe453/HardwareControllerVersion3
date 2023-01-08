@@ -20,6 +20,7 @@ public class CommandConsoleMain : MonoBehaviourApplication
         "CLR",
         ClearConsoleOutput
     );
+    public static bool IsConsoleVisible = false;
     
     void Awake()
     {
@@ -30,6 +31,7 @@ public class CommandConsoleMain : MonoBehaviourApplication
     {
         commandInputField.onValueChanged.AddListener(OnCommandInputFieldUpdated);
         commandInputField.onSubmit.AddListener(OnCommandInputFieldSubmitted);
+        commandInputField.resetOnDeActivation = true;
         commandInputText.text = "> |";
 
         homeScreen.EOnAppLoaded += OnHomeScreenLoaded;
@@ -54,29 +56,14 @@ public class CommandConsoleMain : MonoBehaviourApplication
         commandInputField.enabled = true;
         commandInputField.text = "";
         commandInputField.ActivateInputField();
+        IsConsoleVisible = true;
     }
 
     void OnHomeScreenRemoved()
     {
         commandInputField.enabled = false;
+        IsConsoleVisible = false;
     }
-
-    // void OnOSModeChanged(OSMode newMode)
-    // {
-    //     Debug.LogError("Command mode changed");
-    //     if(newMode == OSMode.Computer)
-    //     {
-    //         commandInputField.enabled = true;
-    //         commandInputField.text = "";
-    //         commandInputField.ActivateInputField();
-    //     }
-    //     else
-    //     {
-    //         // commandInputField.DeactivateInputField();
-    //         commandInputField.enabled = false;
-    //     }
-
-    // }
 
     void OnCommandInputFieldUpdated(string newValue)
     {
@@ -120,6 +107,18 @@ public class CommandConsoleMain : MonoBehaviourApplication
         for(int i = 0; i < Instance.commandOutputTransform.childCount; i++)
         {
             Destroy(Instance.commandOutputTransform.GetChild(i).gameObject);
+        }
+    }
+
+    public void EnableUserInput(bool userInputEnabled)
+    {
+        if(userInputEnabled && !commandInputField.IsActive())
+        {
+            commandInputField.ActivateInputField();
+        }
+        else
+        {
+            commandInputField.DeactivateInputField();
         }
     }
 }

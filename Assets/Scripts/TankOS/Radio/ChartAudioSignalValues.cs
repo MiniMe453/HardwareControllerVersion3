@@ -39,9 +39,6 @@ public class ChartAudioSignalValues : MonoBehaviour
         System_RDIO.EOnNewRadioTypeSelected += OnNewRadioTypeSelected;
         mainApplication.EOnAppLoaded += OnMainApplicationLoaded;
         mainApplication.EOnAppUnloaded += OnMainApplicationUnloaded;
-
-        //Debugging
-       // updateDataSetTimer = Timer.Register(GameSettings.RADIO_FREQ_CHART_UPDATE_TIMER, () => UpdateChart(), isLooped: true);
     }
 
     void OnMainApplicationLoaded()

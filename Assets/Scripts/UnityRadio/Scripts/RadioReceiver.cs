@@ -64,9 +64,11 @@ public class RadioReceiver : MonoBehaviour
                     receiverData.signalStrength = signalVolume;
                     transmitter.SetSignalStrength(signalVolume);
                     ChartAudioSignalValues.UpdateClipLoundess(signalVolume);
+                    System_RDIO_Interface.SetSignalStrength(signalVolume);
+                    continue;
                 }
 
-                if (setStaticVolume)
+                if (setStaticVolume && transmitter.SignalStrength != 0f)
                 {
                     transmitter.SetSignalStrength(0);
                 }
@@ -77,6 +79,7 @@ public class RadioReceiver : MonoBehaviour
                 staticAudio.volume = 1;
                 receiverData.signalStrength = 0;
                 ChartAudioSignalValues.UpdateClipLoundess(0);
+                System_RDIO_Interface.SetSignalStrength(0);
             }
         }
     }

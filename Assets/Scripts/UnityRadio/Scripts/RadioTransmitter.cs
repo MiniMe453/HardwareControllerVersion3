@@ -18,6 +18,7 @@ public class RadioTransmitter : MonoBehaviour
     [SerializeField]
     private AudioLowPassFilter m_LowPassFilter;
     private AudioAnalyzer audioAnalyzer;
+    public float SignalStrength;
 
     void Start()
     {
@@ -65,6 +66,7 @@ public class RadioTransmitter : MonoBehaviour
     {
         m_TransmitterSource.volume = signalVolume;
         m_LowPassFilter.cutoffFrequency = ((signalVolume * signalVolume) * 4) * 2000;
+        SignalStrength = signalVolume;
     }
 
     public float GetAverageAmplitude()

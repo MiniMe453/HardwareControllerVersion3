@@ -76,6 +76,7 @@ public class RadioReceiver : MonoBehaviour
             {
                 staticAudio.volume = 1;
                 receiverData.signalStrength = 0;
+                ChartAudioSignalValues.UpdateClipLoundess(0);
             }
         }
     }

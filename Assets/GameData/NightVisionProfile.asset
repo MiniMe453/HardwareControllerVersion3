@@ -169,11 +169,11 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   tint:
-    overrideState: 0
+    overrideState: 1
     value: 0
   colorFilter:
-    overrideState: 0
-    value: {r: 1, g: 1, b: 1, a: 1}
+    overrideState: 1
+    value: {r: 0.19101273, g: 1, b: 0.08962262, a: 1}
   hueShift:
     overrideState: 0
     value: 0
@@ -185,12 +185,12 @@ MonoBehaviour:
     value: 0
   postExposure:
     overrideState: 1
-    value: 4.1
+    value: 4
   contrast:
     overrideState: 1
     value: 28
   mixerRedOutRedIn:
-    overrideState: 0
+    overrideState: 1
     value: 100
   mixerRedOutGreenIn:
     overrideState: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   mixerBlueOutBlueIn:
-    overrideState: 0
+    overrideState: 1
     value: 100
   lift:
     overrideState: 0
@@ -1701,7 +1701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 363d22a71edb5214d8cf8e2d5946a938, type: 3}
   m_Name: Gradient
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1

@@ -47,14 +47,14 @@ public class System_RDIO_Interface : MonoBehaviourApplication
         {
             for(int i = 0; i < radioScanTransform.childCount; i++)
             {
-                DestroyImmediate(radioScanTransform.GetChild(i));
+                DestroyImmediate(radioScanTransform.GetChild(i).gameObject);
             }
         }
 
         foreach(Struct_RadioScan result in System_RDIO.PrevScanResults)
         {
             GameObject entry = Instantiate(radioScanListEntry, radioScanTransform);
-            entry.GetComponent<TextMeshProUGUI>().text = $"  {result.radioType.ToString().PadLeft(3)}    {result.frequency.ToString("000.0")}  {result.strength.ToString().PadRight(3)}%";
+            entry.GetComponent<TextMeshProUGUI>().text = $" {result.radioType.ToString().PadLeft(3)}    {result.frequency.ToString("000.0")}  {result.strength.ToString().PadRight(3)}%";
         }
     }
 

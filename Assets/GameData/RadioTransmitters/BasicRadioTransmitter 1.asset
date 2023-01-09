@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: def467b52581f1248abd839ee7722acd, type: 3}
-  m_Name: BasicRadioTransmitter
+  m_Name: BasicRadioTransmitter 1
   m_EditorClassIdentifier: 
   watts: 0.05
   antennaGain: 0.1
-  frequency: 95.3
+  frequency: 2
   cableLoss: 3
   antennaType: 0
-  radioType: 0
+  radioType: 1
   mixerGroup: {fileID: 24300002, guid: 261ab5f9820bb6d4cb3d0a45509d6e19, type: 2}

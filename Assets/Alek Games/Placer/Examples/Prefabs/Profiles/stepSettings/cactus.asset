@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2bebf67eed8c446927b16249642c31, type: 3}
+  m_Name: cactus
+  m_EditorClassIdentifier: 
+  possibleSpawns:
+  - {fileID: 1459497246287183811, guid: 31b44e5f82fa2644391de3f3d44b018d, type: 3}
+  - {fileID: 7195413872270131004, guid: d9b3a1087b73d0946aacf2ca3dadaf27, type: 3}
+  minMaxXZToYScale: {x: 0.2, y: 0.6, z: 0.4, w: 0.9}
+  sameScaleOnAllAxis: 0
+  maxRandRotAdd: {x: 0, y: 180, z: 0}
+  localPlacementOffset: {x: 0, y: 0.01, z: 0}
+  onSurface: 1
+  snapToNormal: 0
+  firstPlacePoints: 100
+  closeByPlacePoints: 30
+  placeRayMethod: 1
+  icoSubdivisons: 2
+  rayLengh: 50
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 16
+  avoidedLayer:
+    serializedVersion: 2
+    m_Bits: 7
+  groundFindRange: 5
+  centerSideMove: 0
+  freeTightPlacePreference: -1
+  minMaxNearObjects: {x: 0, y: 100}
+  colFindRange: 10
+  objectsLayer:
+    serializedVersion: 2
+    m_Bits: 3
+  desiredNormalAngle: 7.7
+  normalIncorrectcionAcceptance: 15
+  placePreferenceWeight: 0.742
+  placeWeightRandAddon: 0
+  normalAccuracyWeight: 0.135
+  normalWeightRandAddon: 0

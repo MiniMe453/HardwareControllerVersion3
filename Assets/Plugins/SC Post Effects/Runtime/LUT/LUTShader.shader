@@ -10,6 +10,9 @@ Shader "Hidden/SC Post Effects/LUT"
 	SamplerState sampler_LUT_Near;
 	SamplerState sampler_LUT_Far;
 
+	sampler2D _CameraGBufferTexture1;
+	sampler2D _CameraGBufferTexture0;
+
 	float4 _LUT_Near_TexelSize;
 	//X: 1.0 / Width
 	//Y: 1.0 / Height
@@ -154,15 +157,33 @@ Shader "Hidden/SC Post Effects/LUT"
 	{
 		UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
-		float4 screenColor = ScreenColor(UV);
+		half4 screenColor = tex2D (_CameraGBufferTexture1, input.uv);
 
-		ApplyColorGrading(screenColor.rgb, UV, false);
+		// float2 pCoord = ;
+		// float2 uv = (pCoord+0.5) * _MainTex_TexelSize.xy;
+
+		float sampleVal;
+
+		if(screenColor.a < 0.9)
+			sampleVal = screenColor.a + 0.1;
+		else
+			sampleVal = 0.99;
+
+		float2 sampleUV = float2(sampleVal, 0);
+		//float4 col = tex2D(_LUT_Near, sampleUV);
+
+		// ApplyColorGrading(screenColor.rgb, UV, false);
 		
-		ApplyVibrancy(screenColor.rgb);
+		// ApplyVibrancy(screenColor.rgb);
 
-		ApplyColorInversion(screenColor.rgb);
+		// ApplyColorInversion(screenColor.rgb);
 
-		return float4(screenColor.rgb, screenColor.a);
+		//half4 gbuffer1 = tex2D (_CameraGBufferTexture1, input.uv);
+
+		//_LUT_Near, sampler_LUT_Near
+
+		return _LUT_Near.Sample(sampler_LUT_Near, sampleUV);
+		//return gbuffer1;
 	}
 
 	float4 FragDuo(Varyings input) : SV_Target
@@ -186,6 +207,12 @@ Shader "Hidden/SC Post Effects/LUT"
 	{
 		Cull Off ZWrite Off ZTest Always
 
+		
+		CGINCLUDE
+		#include "UnityCG.cginc"
+
+		ENDCG
+
 		Pass
 		{
 			Name "Color Grading LUT"
@@ -198,17 +225,18 @@ Shader "Hidden/SC Post Effects/LUT"
 
 			ENDHLSL
 		}
-		Pass //Depth based
-		{
-			Name "Dual Color Grading LUT"
-			HLSLPROGRAM
-			#pragma multi_compile_vertex _ _USE_DRAW_PROCEDURAL
-			#pragma exclude_renderers gles
+		// Pass //Depth based
+		// {
+		// 	Name "Dual Color Grading LUT"
+		// 	HLSLPROGRAM
+		// 	#pragma multi_compile_vertex _ _USE_DRAW_PROCEDURAL
+		// 	#pragma exclude_renderers gles
 			
-			#pragma vertex Vert
-			#pragma fragment FragDuo
+		// 	#pragma vertex Vert
+		// 	#pragma fragment FragDuo
 
-			ENDHLSL
-		}
+		// 	ENDHLSL
+		// 	ENDCG
+		// }
 	}
 }

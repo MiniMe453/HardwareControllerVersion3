@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e7998efb8ddef4aa7b0ba51ff486ff, type: 3}
+  m_Name: Tree
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 242847114267723082, guid: 94d928487dc8f1d4393b31215d36cdb6, type: 3}
+  - {fileID: 548721154536699905, guid: aed61cfbbfe158e41a5c686289693e78, type: 3}
+  - {fileID: 6257733514810057304, guid: df1b7963f85e2f04192914fd3672099b, type: 3}
+  - {fileID: 4079425072677721540, guid: 9af7795c57a0f664eb746a8c31c74e8a, type: 3}
+  spawnAsPrefab: 1
+  snapChildren: 0
+  minMaxScale: {x: 0.2, y: 0.28}
+  randRotAdd: {x: 0, y: 180, z: 0}
+  maxNormal: 45
+  normalAllighn: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 16
+  avoidedLayer:
+    serializedVersion: 2
+    m_Bits: 3

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aca6b5f0da8ca64cb69109b860c1891, type: 3}
   m_Name: LightStreaks
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e21a9f18817d444b2c00478e04a58e, type: 3}
   m_Name: Posterize
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -73,47 +73,6 @@ MonoBehaviour:
     overrideState: 0
     value: 256
   shader: {fileID: 4800000, guid: 407dc05735867744dbd881f1604f9b4b, type: 3}
---- !u!114 &-2768919007538576205
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d6e299dc3638154bbc6de09e3382285, type: 3}
-  m_Name: Blur
-  m_EditorClassIdentifier: 
-  active: 0
-  enabled:
-    overrideState: 1
-    value: 1
-  mode:
-    overrideState: 1
-    value: 0
-  highQuality:
-    overrideState: 0
-    value: 0
-  distanceFade:
-    overrideState: 1
-    value: 1
-  startFadeDistance:
-    overrideState: 1
-    value: 0
-  endFadeDistance:
-    overrideState: 1
-    value: 10
-  amount:
-    overrideState: 1
-    value: 0.31
-  iterations:
-    overrideState: 1
-    value: 1
-  downscaling:
-    overrideState: 1
-    value: 2
-  shader: {fileID: 4800000, guid: b2d0fc0a10b87074bb6c8387fe709b8a, type: 3}
 --- !u!114 &-190157676897325496
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -126,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb84e30e02715445aeb9959894e3b4d, type: 3}
   m_Name: ColorGrading
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1435,11 +1394,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
-  m_Name: TestProfile
+  m_Name: ThermalCameraProfile
   m_EditorClassIdentifier: 
   settings:
   - {fileID: 7983280327542571365}
-  - {fileID: -2768919007538576205}
   - {fileID: 4972861932077044}
   - {fileID: 4864486953856386584}
   - {fileID: -190157676897325496}
@@ -1447,6 +1405,7 @@ MonoBehaviour:
   - {fileID: -7647909885510402517}
   - {fileID: 7936758774668626200}
   - {fileID: -5307186645561718819}
+  - {fileID: 8078571314538392686}
 --- !u!114 &4972861932077044
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1459,7 +1418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b924e2dad56384a8df2a1e111bb675, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1503,7 +1462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65e486e4de6e5448a8fbb43dc8756a0, type: 3}
   m_Name: Grain
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1531,7 +1490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74483714bbf784b45b0c9c7c76035dd8, type: 3}
   m_Name: Fog
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1655,7 +1614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1688,3 +1647,49 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   shader: {fileID: 4800000, guid: 9e05863aabb89b54bb728292ed5d83a5, type: 3}
+--- !u!114 &8078571314538392686
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b72aa2546c25764e8eb85a8bbfc41e4, type: 3}
+  m_Name: LUT
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  mode:
+    overrideState: 1
+    value: 0
+  startFadeDistance:
+    overrideState: 0
+    value: 0
+  endFadeDistance:
+    overrideState: 0
+    value: 1000
+  intensity:
+    overrideState: 1
+    value: 1
+  lutNear:
+    overrideState: 1
+    value: {fileID: 2800000, guid: 4699f9acd7093eb42a3df1391ace6704, type: 3}
+    defaultState: 1
+  lutFar:
+    overrideState: 0
+    value: {fileID: 0}
+    defaultState: 1
+  invert:
+    overrideState: 0
+    value: 0
+  vibrance:
+    overrideState: 0
+    value: 0
+  vibranceRGBBalance:
+    overrideState: 0
+    value: {r: 1, g: 1, b: 1, a: 1}
+  shader: {fileID: 4800000, guid: 7e619237041da594fbcd385b036643c0, type: 3}

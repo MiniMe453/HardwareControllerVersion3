@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2bebf67eed8c446927b16249642c31, type: 3}
+  m_Name: chest
+  m_EditorClassIdentifier: 
+  possibleSpawns:
+  - {fileID: 615596528819450452, guid: 127741c56530d294483176a734494fad, type: 3}
+  minMaxXZToYScale: {x: 1, y: 1.3, z: 1, w: 1}
+  sameScaleOnAllAxis: 0
+  maxRandRotAdd: {x: 0, y: 180, z: 0}
+  localPlacementOffset: {x: 0, y: 0, z: 0}
+  firstPlacePoints: 30
+  closeByPlacePoints: 10
+  onSurface: 1
+  placeRayMethod: 0
+  icoSubdivisons: 2
+  rayLengh: 15
+  groundFindRange: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  avoidedLayer:
+    serializedVersion: 2
+    m_Bits: 20
+  desiredNormalAngle: 0
+  normalAllighn: 0.2
+  normalIncorrectcionAcceptance: 5
+  centerSideMove: 0
+  freeTightPlacePreference: 0
+  minMaxNearObjects: {x: 0, y: 100}
+  colFindRange: 10
+  objectsLayer:
+    serializedVersion: 2
+    m_Bits: 2
+  placePreferenceWeight: 0
+  placeWeightRandAddon: 0
+  normalAccuracyWeight: 1
+  normalWeightRandAddon: 0

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e7998efb8ddef4aa7b0ba51ff486ff, type: 3}
+  m_Name: Rocks
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 851761165023439117, guid: 6f87baaf8a038a641ac6f6f685b09fa4, type: 3}
+  - {fileID: 5914856060982510692, guid: d433e44e7bdaa7d439b32607c53fe222, type: 3}
+  - {fileID: 3949538043507369222, guid: 9e093cf5e693ab7438670c1dcd636b87, type: 3}
+  - {fileID: 7337331865817483204, guid: ec08062f89cfe5b4994796d956cc11a8, type: 3}
+  - {fileID: 4545235570499599524, guid: 65e32eb554a4e5a48be296da864db5eb, type: 3}
+  spawnAsPrefab: 1
+  minMaxScale: {x: 0.9, y: 1.1}
+  randRotAdd: {x: 0, y: 180, z: 0}
+  maxNormal: 75
+  normalAllighn: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 16
+  avoidedLayer:
+    serializedVersion: 2
+    m_Bits: 0

@@ -17,8 +17,8 @@ TagManager:
   - WireframeRenders
   - Rover
   - Terrain
-  - 
-  - 
+  - DataCameraObjects
+  - VisualCameraObjects
   - 
   - 
   - 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Rover.Settings;
+using UnityEngine.Rendering.PostProcessing;
+
 
 public class RenderCameraToTexture : MonoBehaviour
 {
@@ -10,10 +12,12 @@ public class RenderCameraToTexture : MonoBehaviour
     public CustomRenderTexture renderTexture;
     private float m_camPhotoFpsCounter;
     public bool enableRendering = false;
+    public PostProcessVolume postProcessLayer;
 
     void OnEnable()
     {
-
+        if(postProcessLayer)
+            postProcessLayer.enabled = false;
     }
 
     void Update()
@@ -31,6 +35,10 @@ public class RenderCameraToTexture : MonoBehaviour
             m_camPhotoFpsCounter = 0;
 
             lowResCamera.enabled = true;
+
+            if(postProcessLayer)
+                postProcessLayer.enabled = true;
+
             lowResCamera.targetTexture = renderTexture;
 
             Texture2D cameraPhoto = new Texture2D(GameSettings.GAME_RES_X / 2, GameSettings.GAME_RES_Y / 2, TextureFormat.RGB24, false);
@@ -42,7 +50,9 @@ public class RenderCameraToTexture : MonoBehaviour
 
             lowResCamera.targetTexture = null;
 
-            lowResCamera.enabled = false;
+            lowResCamera.enabled = false; 
+            if(postProcessLayer)
+                postProcessLayer.enabled = false;
         }   
     }
 }

@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using Rover.OS;
 using UnityEngine.InputSystem;
+using Rover.Interface;
 
 public class System_Nav_Interface : MonoBehaviourApplication
 {
@@ -25,6 +26,8 @@ public class System_Nav_Interface : MonoBehaviourApplication
     [Header("MapMarkers")]
     public RectTransform mapMarkerTransform;
     public GameObject mapMarkerTransformEntry;
+
+    private MessageBox brakeWarningBox;
 
 
     protected override void Init()
@@ -48,8 +51,10 @@ public class System_Nav_Interface : MonoBehaviourApplication
         applicationInputs["resetLoc"].performed += ResetMapCameraPos;
         applicationInputs["markLoc"].performed += MarkMapLocation;
 
+        System_MTR.EOnBrakeModeChanged += OnBrakeStateChanged;
 
-        AppDatabase.LoadApp(AppID);
+
+        //AppDatabase.LoadApp(AppID);
     }
     protected override void OnAppLoaded()
     {
@@ -68,6 +73,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
     void NavigateUp(InputAction.CallbackContext context)
     {
         m_cursorConnectedToRover = false;
+        ShowBrakeWarningMessage();
 
         if(context.performed)
             m_currentMoveDir.x = 1f;
@@ -78,6 +84,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
     void NavigateDown(InputAction.CallbackContext context)
     {
         m_cursorConnectedToRover = false;
+        ShowBrakeWarningMessage();
 
         if(context.performed)
             m_currentMoveDir.x = -1f;
@@ -88,6 +95,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
     void NavigateLeft(InputAction.CallbackContext context)
     {
         m_cursorConnectedToRover = false;
+        ShowBrakeWarningMessage();
 
         if(context.performed)
             m_currentMoveDir.y = -1f;
@@ -98,11 +106,36 @@ public class System_Nav_Interface : MonoBehaviourApplication
     void NavigateRight(InputAction.CallbackContext context)
     {
         m_cursorConnectedToRover = false;
+        ShowBrakeWarningMessage();
 
         if(context.performed)
             m_currentMoveDir.y = 1f;
         else if (context.canceled)
             m_currentMoveDir.y = 0f;
+    }
+
+    void ShowBrakeWarningMessage()
+    {
+        if(System_MTR.IsBrakeActive)
+            return;
+
+        brakeWarningBox = UIManager.ShowMessageBox("WARNING: Brake disabled", Color.red, -1f);
+    }
+
+    void OnBrakeStateChanged(bool newState)
+    {
+        if(newState && brakeWarningBox)
+        {
+            brakeWarningBox.HideMessageBox();
+            brakeWarningBox = null;
+            return;
+        }
+
+        if(m_cursorConnectedToRover)
+            return;
+
+        ShowBrakeWarningMessage();
+            
     }
 
     void ResetMapCameraPos(InputAction.CallbackContext context)

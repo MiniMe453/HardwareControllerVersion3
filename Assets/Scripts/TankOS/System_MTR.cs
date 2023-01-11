@@ -11,7 +11,8 @@ public class System_MTR : MonoBehaviour
     Rigidbody m_rigidbody => GetComponent<Rigidbody>();
     float m_horizontalAxis;
     float m_throttleAxis;
-    bool m_brakeActive = true;
+    static bool m_brakeActive = true;
+    public static bool IsBrakeActive {get {return m_brakeActive;}}
     public static event Action<bool> EOnBrakeModeChanged;
     int m_brakeLEDpin;
 

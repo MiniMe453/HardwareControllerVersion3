@@ -29,6 +29,7 @@ namespace Rover.Arduino
         private float m_holdTimer;
         private float m_timeSinceStartHold;
         private bool m_holdStarted = false;
+        private bool m_used = false;
 
         public ArduinoInput(InputType type, int pin, int id, bool buttonHold = false, float holdTimer = 1f, string name = "Arduino Input")
         {

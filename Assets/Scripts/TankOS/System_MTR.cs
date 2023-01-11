@@ -5,6 +5,7 @@ using Rover.Arduino;
 using MilkShake;
 using System;
 using UnityTimer;
+using Rover.Settings;
 
 public class System_MTR : MonoBehaviour
 {
@@ -52,9 +53,9 @@ public class System_MTR : MonoBehaviour
 
     void OnHorizontalAxis(float value, int pin)
     {
-        m_horizontalAxis = (value - 508)/508;
+        m_horizontalAxis = (value - GameSettings.HORIZONTAL_CENTER_VAL)/GameSettings.HORIZONTAL_CENTER_VAL;
 
-        if(Mathf.Abs(m_horizontalAxis) < 0.05)
+        if(Mathf.Abs(m_horizontalAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_horizontalAxis = 0;
     }
 
@@ -62,6 +63,8 @@ public class System_MTR : MonoBehaviour
     {
         m_throttleAxis = (value - 512)/512;
 
+        if(Mathf.Abs(m_throttleAxis) < GameSettings.JOYSTICK_DEADZONE)
+            m_throttleAxis = 0;
     }
 
     void OnBrakeSwitchPressed(int pin)
@@ -101,7 +104,7 @@ public class System_MTR : MonoBehaviour
 
     void Update()
     {
-        if(RoverOperatingSystem.OSMode == OSMode.Computer)
+        if(RoverOperatingSystem.OSMode != OSMode.Rover)
             return;
 
         Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis);

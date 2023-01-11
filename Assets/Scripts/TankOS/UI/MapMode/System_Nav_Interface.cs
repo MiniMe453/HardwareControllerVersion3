@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using Rover.OS;
 using UnityEngine.InputSystem;
 using Rover.Interface;
+using Rover.Settings;
+using Rover.Arduino;
 
 public class System_Nav_Interface : MonoBehaviourApplication
 {
@@ -27,7 +29,9 @@ public class System_Nav_Interface : MonoBehaviourApplication
     public RectTransform mapMarkerTransform;
     public GameObject mapMarkerTransformEntry;
 
-    private MessageBox brakeWarningBox;
+    private MessageBox m_brakeWarningBox;
+    private float m_horizontalAxis;
+    private float m_verticalAxis;
 
 
     protected override void Init()
@@ -53,6 +57,9 @@ public class System_Nav_Interface : MonoBehaviourApplication
 
         System_MTR.EOnBrakeModeChanged += OnBrakeStateChanged;
 
+        ArduinoInputDatabase.GetInputFromName("Joystick X").EOnValueChanged += OnHorizontalAxis;
+        ArduinoInputDatabase.GetInputFromName("Joystick Y").EOnValueChanged += OnVerticalAxis;
+
 
         //AppDatabase.LoadApp(AppID);
     }
@@ -68,6 +75,26 @@ public class System_Nav_Interface : MonoBehaviourApplication
     {   
         UIManager.RemoveFromViewport(canvas);
         mapCamera.enableRendering = false;
+    }
+
+    void OnVerticalAxis(float value, int pin)
+    {
+        m_verticalAxis = (value - GameSettings.VERTICAL_CENTER_VAL) / GameSettings.VERTICAL_CENTER_VAL;
+
+        if(Mathf.Abs(m_verticalAxis) < GameSettings.JOYSTICK_DEADZONE)
+            m_verticalAxis = 0;
+
+        m_currentMoveDir = new Vector2(m_horizontalAxis, m_verticalAxis);
+    }
+
+    void OnHorizontalAxis(float value, int pin)
+    {
+        m_horizontalAxis = (value - GameSettings.HORIZONTAL_CENTER_VAL)/GameSettings.HORIZONTAL_CENTER_VAL;
+
+        if(Mathf.Abs(m_horizontalAxis) < GameSettings.JOYSTICK_DEADZONE)
+            m_horizontalAxis = 0;
+
+        m_currentMoveDir = new Vector2(m_horizontalAxis, m_verticalAxis);
     }
 
     void NavigateUp(InputAction.CallbackContext context)
@@ -119,15 +146,15 @@ public class System_Nav_Interface : MonoBehaviourApplication
         if(System_MTR.IsBrakeActive)
             return;
 
-        brakeWarningBox = UIManager.ShowMessageBox("WARNING: Brake disabled", Color.red, -1f);
+        m_brakeWarningBox = UIManager.ShowMessageBox("WARNING: Brake disabled", Color.red, -1f);
     }
 
     void OnBrakeStateChanged(bool newState)
     {
-        if(newState && brakeWarningBox)
+        if(newState && m_brakeWarningBox != null)
         {
-            brakeWarningBox.HideMessageBox();
-            brakeWarningBox = null;
+            m_brakeWarningBox.HideMessageBox();
+            m_brakeWarningBox = null;
             return;
         }
 

@@ -35,7 +35,7 @@ namespace Rover.Interface
             textBox.color = color;
             textBox.text = text;
 
-            UIManager.AddToViewport(canvas, -1);
+            UIManager.AddToViewport(canvas, 999);
 
             if (waitForInput)
             {

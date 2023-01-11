@@ -53,10 +53,10 @@ public class System_Nav_Interface : MonoBehaviourApplication
     }
     protected override void OnAppLoaded()
     {
-        Debug.LogError("App loaded");
         UIManager.AddToViewport(canvas, 50);
         mapCamera.enableRendering = true;
-        RoverOperatingSystem.SetUserControl(false);
+        RoverOperatingSystem.SetUserControl(true);
+        m_cursorConnectedToRover = true;
     }
 
     protected override void OnAppQuit()
@@ -67,6 +67,8 @@ public class System_Nav_Interface : MonoBehaviourApplication
 
     void NavigateUp(InputAction.CallbackContext context)
     {
+        m_cursorConnectedToRover = false;
+
         if(context.performed)
             m_currentMoveDir.x = 1f;
         else if (context.canceled)
@@ -127,7 +129,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
 
         RaycastHit hit;
 
-        if(Physics.Raycast(mapCamera.transform.position, Vector3.down, out hit, 1000f))
+        if(Physics.Raycast(mapCamera.transform.position, Vector3.down, out hit, 1000f, LayerMask.GetMask(new string[] {"Terrain"})))
         {
             cursorElevationText.text = Mathf.FloorToInt(hit.point.y).ToString() + "m";
         }

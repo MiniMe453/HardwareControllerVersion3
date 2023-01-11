@@ -13,7 +13,7 @@ public class RenderCameraToTexture : MonoBehaviour
 
     void OnEnable()
     {
-        
+
     }
 
     void Update()

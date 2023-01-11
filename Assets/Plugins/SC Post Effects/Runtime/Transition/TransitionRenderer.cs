@@ -26,6 +26,7 @@ namespace SCPE
             var sheet = context.propertySheets.Get(shader);
 
             sheet.properties.SetFloat("_Progress", settings.progress.value);
+            sheet.properties.SetFloat("_DepthPower", settings.depthPower.value);
             var overlayTexture = settings.gradientTex.value == null ? RuntimeUtilities.whiteTexture : settings.gradientTex.value;
             sheet.properties.SetTexture("_Gradient", overlayTexture);
 

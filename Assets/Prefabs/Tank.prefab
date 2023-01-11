@@ -3863,7 +3863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b9972537e6b9b44ab9292edec2ccbef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapModeCanvas: {fileID: 8967245909548843660}
+  navInterface: {fileID: 0}
 --- !u!1 &3628463711647457196
 GameObject:
   m_ObjectHideFlags: 0
@@ -4809,6 +4809,7 @@ GameObject:
   - component: {fileID: 4739139102495531449}
   - component: {fileID: 4739139102495531451}
   - component: {fileID: 3576117000424699875}
+  - component: {fileID: 3955157310554933465}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -4879,6 +4880,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74ef1f0800cf1b04da28317315c4a2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3955157310554933465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4739139102495531454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5cfd29736459334d953d0702695419d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4739139102677297136

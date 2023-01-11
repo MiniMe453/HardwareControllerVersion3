@@ -16,6 +16,9 @@ namespace SCPE
         [Range(0f, 1f), Tooltip("Progress")]
         public FloatParameter progress = new FloatParameter { value = 0f };
 
+        [Range(0f, 10f), Tooltip("DepthPower")]
+        public FloatParameter depthPower = new FloatParameter { value = 1f };
+
         public override bool IsEnabledAndSupported(PostProcessRenderContext context)
         {
             if (enabled.value)

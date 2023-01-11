@@ -41,7 +41,6 @@ public class HomeScreen : MonoBehaviourApplication
     public void RemoveHomeScreen()
     {
         AppDatabase.CloseApp(AppID);
-        
     }
 
     protected override void OnAppLoaded()

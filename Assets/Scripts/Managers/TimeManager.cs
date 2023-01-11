@@ -21,7 +21,7 @@ namespace Rover.DateTime
         public static float TimeScale { get { return m_timeScale; } set { m_timeScale = value; } }
         public static DateTimeStruct dateTime;
         public static event Action<DateTimeStruct> EOnDateTimeUpdated;
-        private static float m_currentYear = 1981;
+        private static float m_currentYear = 1984;
         private static float m_currentMonth = 7;
         private static float m_currentDay = 12;
         public static string ToStringIngameDate {get {return "July " + m_currentDay + ", " + m_currentYear;}}

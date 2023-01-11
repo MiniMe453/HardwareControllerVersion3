@@ -31,7 +31,6 @@ public class ChartAudioSignalValues : MonoBehaviour
         {
             LineEntry newEntry = new LineEntry();
             lineEntries.Add(new LineEntry((float)i/(float)numberOfEntries, Random.Range(-1f, 1f)));
-            Debug.LogError(lineEntries[i].Position);
         }
 
         m_dataSet.Entries = lineEntries;

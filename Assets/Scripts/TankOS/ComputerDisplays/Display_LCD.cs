@@ -25,7 +25,7 @@ public class Display_LCD : MonoBehaviour
         object[] data = new object[2];
 
         data[0] = TimeManager.ToStringMissionTimeLong(newDateTime);
-        data[1] = "TestStringBeingSent!";
+        data[1] = System_GPS.GPSCoordinates.x.ToString("00.000") + ":" + System_GPS.GPSCoordinates.y.ToString("00.000");
 
         UduinoManager.Instance.sendCommand("lcd", data);
     }

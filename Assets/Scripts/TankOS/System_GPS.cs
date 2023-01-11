@@ -26,7 +26,7 @@ public class System_GPS : MonoBehaviour
         if(sign < 0)
             m_heading = 360 - Mathf.Abs(m_heading);
 
-        m_elevation = transform.position.y;
+        m_elevation = ElevationAtWorldPos(transform.position);
         m_worldSpacePos = transform.position;
     }
 
@@ -41,5 +41,10 @@ public class System_GPS : MonoBehaviour
     public static string GPSCoordsToString(Vector2 gpsCoords, string format = "00.00")
     {
         return gpsCoords.x.ToString(format) + ":" + gpsCoords.y.ToString(format);
+    }
+
+    public static float ElevationAtWorldPos(Vector3 worldPos)
+    {
+        return worldPos.y - 13f;
     }
 }

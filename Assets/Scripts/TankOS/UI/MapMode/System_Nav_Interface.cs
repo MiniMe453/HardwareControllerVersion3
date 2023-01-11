@@ -191,7 +191,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
 
         if(Physics.Raycast(mapCamera.transform.position, Vector3.down, out hit, 1000f, LayerMask.GetMask(new string[] {"Terrain"})))
         {
-            cursorElevationText.text = Mathf.FloorToInt(hit.point.y).ToString() + "m";
+            cursorElevationText.text = Mathf.FloorToInt(System_GPS.ElevationAtWorldPos(hit.point)).ToString() + "m";
         }
 
         m_cursorGPSCoords = System_GPS.WorldPosToGPSCoords(mapCamera.transform.position);

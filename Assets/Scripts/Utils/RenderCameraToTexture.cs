@@ -13,6 +13,7 @@ public class RenderCameraToTexture : MonoBehaviour
     private float m_camPhotoFpsCounter;
     public bool enableRendering = false;
     public PostProcessVolume postProcessLayer;
+    public float fps = 0;
 
     void OnEnable()
     {
@@ -30,7 +31,7 @@ public class RenderCameraToTexture : MonoBehaviour
         if(!lowResCamera.gameObject.activeSelf)
             return;
 
-        if(m_camPhotoFpsCounter > 1/GameSettings.PHOTO_VIEWER_FPS)
+        if(m_camPhotoFpsCounter > 1/(fps == 0f? GameSettings.PHOTO_VIEWER_FPS : fps)) 
         {
             m_camPhotoFpsCounter = 0;
 

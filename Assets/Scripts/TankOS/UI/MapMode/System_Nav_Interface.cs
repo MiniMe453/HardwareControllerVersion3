@@ -32,6 +32,9 @@ public class System_Nav_Interface : MonoBehaviourApplication
     private MessageBox m_brakeWarningBox;
     private float m_horizontalAxis;
     private float m_verticalAxis;
+    private float m_Zoom;
+    public float minZoom;
+    public float maxZoom;
 
 
     protected override void Init()
@@ -57,12 +60,17 @@ public class System_Nav_Interface : MonoBehaviourApplication
 
         System_MTR.EOnBrakeModeChanged += OnBrakeStateChanged;
 
-        ArduinoInputDatabase.GetInputFromName("Joystick X").EOnValueChanged += OnHorizontalAxis;
-        ArduinoInputDatabase.GetInputFromName("Joystick Y").EOnValueChanged += OnVerticalAxis;
-
+        ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
 
         //AppDatabase.LoadApp(AppID);
     }
+
+    void OnDatabaseInit()
+    {
+        ArduinoInputDatabase.GetInputFromName("Joystick X").EOnValueChanged += OnHorizontalAxis;
+        ArduinoInputDatabase.GetInputFromName("Joystick Y").EOnValueChanged += OnVerticalAxis;
+    }
+
     protected override void OnAppLoaded()
     {
         UIManager.AddToViewport(canvas, 50);
@@ -77,24 +85,44 @@ public class System_Nav_Interface : MonoBehaviourApplication
         mapCamera.enableRendering = false;
     }
 
+
+//we want the user to be able to control the rover while in the map mode. 
+/**
+to do this, the map can only be controlled by the joystick whenever the brake is active. if the brake is not active
+then we will auto attach the camera to the rover and allow the user to control the rover.
+
+it's not the cleanest solution, but i can't figure out anything else. for other solutions, two joysticks would be needed.
+**/
     void OnVerticalAxis(float value, int pin)
     {
+        if(!System_MTR.IsBrakeActive)
+            return;
+
         m_verticalAxis = (value - GameSettings.VERTICAL_CENTER_VAL) / GameSettings.VERTICAL_CENTER_VAL;
 
         if(Mathf.Abs(m_verticalAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_verticalAxis = 0;
 
-        m_currentMoveDir = new Vector2(m_horizontalAxis, m_verticalAxis);
+        if(Mathf.Abs(m_horizontalAxis) > 0)
+            m_cursorConnectedToRover = false;
+
+        m_currentMoveDir = new Vector2(m_verticalAxis, m_horizontalAxis);
     }
 
     void OnHorizontalAxis(float value, int pin)
     {
+        if(!System_MTR.IsBrakeActive)
+            return;
+
         m_horizontalAxis = (value - GameSettings.HORIZONTAL_CENTER_VAL)/GameSettings.HORIZONTAL_CENTER_VAL;
 
         if(Mathf.Abs(m_horizontalAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_horizontalAxis = 0;
 
-        m_currentMoveDir = new Vector2(m_horizontalAxis, m_verticalAxis);
+        if(Mathf.Abs(m_horizontalAxis) > 0)
+            m_cursorConnectedToRover = false;
+
+        m_currentMoveDir = new Vector2(m_verticalAxis, m_horizontalAxis);
     }
 
     void NavigateUp(InputAction.CallbackContext context)
@@ -146,12 +174,19 @@ public class System_Nav_Interface : MonoBehaviourApplication
         if(System_MTR.IsBrakeActive)
             return;
 
-        m_brakeWarningBox = UIManager.ShowMessageBox("WARNING: Brake disabled", Color.red, -1f);
+        m_brakeWarningBox = UIManager.ShowMessageBox("WARNING: Brake is off", Color.red, -1f);
     }
 
     void OnBrakeStateChanged(bool newState)
     {
-        if(newState && m_brakeWarningBox != null)
+        if(!newState)
+        {
+            m_cursorConnectedToRover = true;
+            return;
+        }
+
+
+        if(m_brakeWarningBox != null)
         {
             m_brakeWarningBox.HideMessageBox();
             m_brakeWarningBox = null;
@@ -159,10 +194,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
         }
 
         if(m_cursorConnectedToRover)
-            return;
-
-        ShowBrakeWarningMessage();
-            
+            return;            
     }
 
     void ResetMapCameraPos(InputAction.CallbackContext context)
@@ -179,6 +211,8 @@ public class System_Nav_Interface : MonoBehaviourApplication
 
     void Update()
     {
+        //Debug.LogError(m_currentMoveDir);
+
         if(!AppIsLoaded)
             return;
 

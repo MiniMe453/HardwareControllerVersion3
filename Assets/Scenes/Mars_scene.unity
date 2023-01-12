@@ -1638,6 +1638,8 @@ MonoBehaviour:
   roverElevationText: {fileID: 1368073290}
   mapMarkerTransform: {fileID: 367625126}
   mapMarkerTransformEntry: {fileID: 1797530887485658472, guid: e5442bc35b020044ea2307a8f3608230, type: 3}
+  minZoom: 40
+  maxZoom: 120
 --- !u!1001 &84683746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12142,7 +12144,7 @@ Camera:
   far clip plane: 202.1
   field of view: 130.1
   orthographic: 1
-  orthographic size: 40
+  orthographic size: 60
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

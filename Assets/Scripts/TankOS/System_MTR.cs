@@ -104,7 +104,10 @@ public class System_MTR : MonoBehaviour
 
     void Update()
     {
-        if(RoverOperatingSystem.OSMode != OSMode.Rover)
+        if(RoverOperatingSystem.OSMode == OSMode.Computer)
+            return;
+
+        if(RoverOperatingSystem.OSMode == OSMode.Map && m_brakeActive)
             return;
 
         Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis);

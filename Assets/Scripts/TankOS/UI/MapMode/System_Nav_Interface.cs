@@ -25,6 +25,11 @@ public class System_Nav_Interface : MonoBehaviourApplication
     public TextMeshProUGUI roverGPSCoordText;
     public TextMeshProUGUI roverHeadingText;
     public TextMeshProUGUI roverElevationText;
+    [Header("Rover Speed Variables")]
+    public TextMeshProUGUI roverSpeedText;
+    public TextMeshProUGUI roverBrakeText;
+    public TextMeshProUGUI roverRollText;
+    public TextMeshProUGUI roverPitchText;
     [Header("MapMarkers")]
     public RectTransform mapMarkerTransform;
     public GameObject mapMarkerTransformEntry;
@@ -180,6 +185,8 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void OnBrakeStateChanged(bool newState)
     {
+        roverBrakeText.color = newState? Color.black : Color.gray;
+
         if(!newState)
         {
             m_cursorConnectedToRover = true;
@@ -240,5 +247,9 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
         roverGPSCoordText.text = System_GPS.GPSCoordsToString(System_GPS.GPSCoordinates);
         roverHeadingText.text = System_GPS.Heading.ToString("000.0");
         roverElevationText.text = System_GPS.Elevation.ToString("00.0") + "m";
+
+        roverSpeedText.text = System_MTR.RoverVelocity.ToString("0.0") + "m/s";
+        roverRollText.text = SystemPitchRoll.Roll.ToString("000.0");
+        roverPitchText.text = SystemPitchRoll.Pitch.ToString("000.0");
     }
 }

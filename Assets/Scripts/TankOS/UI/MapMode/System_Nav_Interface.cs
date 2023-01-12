@@ -28,6 +28,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
     [Header("MapMarkers")]
     public RectTransform mapMarkerTransform;
     public GameObject mapMarkerTransformEntry;
+    public GameObject mapMarkerWorldObject;
 
     private MessageBox m_brakeWarningBox;
     private float m_horizontalAxis;
@@ -207,6 +208,10 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
     {
         GameObject location = Instantiate(mapMarkerTransformEntry, mapMarkerTransform);
         location.GetComponent<TextMeshProUGUI>().text = System_GPS.GPSCoordsToString(System_GPS.WorldPosToGPSCoords(mapCamera.transform.position));
+
+        Vector3 markerPosition = new Vector3(mapCamera.transform.position.x, 0, mapCamera.transform.position.z);
+
+        Instantiate(mapMarkerWorldObject, markerPosition, Quaternion.identity);
     }
 
     void Update()

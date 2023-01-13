@@ -11,7 +11,9 @@ public class SystemPitchRoll : MonoBehaviour
 
     void Update()
     {
-        m_pitch = -(Vector3.SignedAngle(transform.forward, new Vector3(0,1,0), Vector3.right) + 90);
-        m_roll = Vector3.SignedAngle(transform.right, new Vector3(0,1,0), Vector3.forward) - 90;
+        m_pitch = -(Vector3.SignedAngle(transform.forward, new Vector3(0,1,0), transform.right) + 90);
+        m_roll = Vector3.SignedAngle(transform.right, new Vector3(0,1,0), transform.forward) - 90;
+
+        //m_roll = gameObject.transform.root.localRotation.x * 180f;
     }
 }

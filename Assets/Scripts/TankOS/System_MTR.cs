@@ -10,8 +10,10 @@ using Rover.Settings;
 public class System_MTR : MonoBehaviour
 {
     Rigidbody m_rigidbody => GetComponent<Rigidbody>();
-    float m_horizontalAxis;
-    float m_throttleAxis;
+    static float m_horizontalAxis;
+    public static float HorizontalAxis {get {return m_horizontalAxis;}}
+    static float m_throttleAxis;
+    public static float ThrottleAxis {get {return m_throttleAxis;}}
     static bool m_brakeActive = true;
     public static bool IsBrakeActive {get {return m_brakeActive;}}
     public static event Action<bool> EOnBrakeModeChanged;
@@ -36,7 +38,7 @@ public class System_MTR : MonoBehaviour
     {
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
 
-        Timer.Register(0.25f, () => OnRoverVelocityUpdate());
+        //Timer.Register(0.25f, () => OnRoverVelocityUpdate());
     }
 
     void OnDatabaseInit()
@@ -49,6 +51,7 @@ public class System_MTR : MonoBehaviour
         RoverOperatingSystem.EOnOSModeChanged += OnOSModeChanged;
 
         m_brakeLEDpin = ArduinoInputDatabase.GetOutputIndexFromName("brake light led");
+        Timer.Register(0.25f, () => OnRoverVelocityUpdate(), isLooped: true);
     }
 
     void OnHorizontalAxis(float value, int pin)
@@ -57,6 +60,8 @@ public class System_MTR : MonoBehaviour
 
         if(Mathf.Abs(m_horizontalAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_horizontalAxis = 0;
+
+        Debug.LogError(m_horizontalAxis * 100f);
     }
 
     void OnThrottleAxis(float value, int pin)
@@ -131,7 +136,7 @@ public class System_MTR : MonoBehaviour
 
     void OnRoverVelocityUpdate()
     {
-        RoverVelocity = maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f);
+        RoverVelocity = maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f) * 100f;
         EOnRoverVelocityUpdate?.Invoke(RoverVelocity);
     }
 }

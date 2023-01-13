@@ -10,7 +10,7 @@ public class CamModeInterface : MonoBehaviour
     public TextMeshProUGUI[] cameraNumbers;
     public RectTransform photoDatabaseTransform;
     public GameObject photoDatabaseEntry;
-    private List<GameObject> m_photoDatabaseEntryObjects;
+    private List<GameObject> m_photoDatabaseEntryObjects = new List<GameObject>();
     public TextMeshProUGUI pitchText;
     public RectTransform pitchImageTransform;
     public TextMeshProUGUI headingText;
@@ -68,7 +68,7 @@ public class CamModeInterface : MonoBehaviour
             return;
         }
 
-        if(System_Nav_Interface.MapMarkers.Count == 0)
+        if(System_CAM.CameraPhotos.Count == 0)
             return;
 
         if(m_photoDatabaseEntryObjects.Count > 0)

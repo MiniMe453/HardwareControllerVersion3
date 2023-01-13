@@ -165,7 +165,7 @@ namespace Rover.Systems
             photoMetadata.name = photoName;
             photoMetadata.photo = cameraPhoto;
             photoMetadata.camMode = SelectedCameraMode;
-            photoMetadata.gpsCoords = "Implement me";
+            photoMetadata.gpsCoords = System_GPS.GPSCoordsToString(System_GPS.WorldPosToGPSCoords(transform.position));
 
             m_photos.Add(photoMetadata);
 
@@ -187,7 +187,7 @@ namespace Rover.Systems
             if((xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.y < 70 && (xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.y > 1 )
                 xAxisParent.rotation *= Quaternion.Euler(newRot);
 
-            m_camPitch = -(Vector3.SignedAngle(xAxisParent.forward, new Vector3(0,1,0), xAxisParent.right) + 90);
+            m_camPitch = Vector3.SignedAngle(xAxisParent.forward, new Vector3(0,1,0), xAxisParent.right);
 
             m_heading = Vector3.SignedAngle(transform.forward, new Vector3(0,0,1), Vector3.up);
             float sign = Mathf.Sign(m_heading);

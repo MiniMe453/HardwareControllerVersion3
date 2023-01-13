@@ -182,7 +182,7 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 
 		//Combining sobel and luminance edge detections
 
-		float edgeFinal = max(edgeSobel + 0.15, edgeLum / 1.5);
+		float edgeFinal = max(edgeSobel, edgeLum / 1.5);
 
 		//return float4(lerp(original.rgb, edgeColor.rgb, edge).rgb, original.a);
 		return float4(lerp(originalLum.rgb, edgeColorLum.rgb, edgeFinal).rgb, originalLum.a);

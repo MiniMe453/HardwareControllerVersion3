@@ -41,7 +41,7 @@ unsigned long messageDelay = 10;
 
 //Object Scan Variables
 const String materialTypes[] = {"Strontium", "Tungsten", "Iron", "Aluminum", "Lead", "Carbon", "Radium", "Cobalt", "Sulfur", "Copper", "Titanium", "Potassium", "Sodium", "Unknown"};
-String objName;
+char* objName = "";
 char* objSurfaceDepth;
 char* temperature;
 char* magnetic;
@@ -346,7 +346,7 @@ void SetupObjectScan()
 
   if(currentItr == 0)
   {
-    objName = String(arg);
+    objName = arg;
     uduino.next();
     // objSurfaceDepth = arg;
     // uduino.next();
@@ -426,13 +426,23 @@ void PrintObjectScan()
   printer.justify('L');
   printer.println(" ");
   PrintBoldLine("SCAN_TIME:");
-  printer.println("Test time here");
+  printer.println("July 7, 1984 08:34:33");
   PrintBoldLine("OBJ_TYPE_ESTIMATE:");
-  printer.println(objName);
+  printer.println("UNKNOWN");
   PrintBoldLine("OBJ_DIST:");
-  printer.println("Test Time here");
-  PrintBoldLine("Test");
-  printer.println(numOfSurfaceProperties);
+  printer.println("0.1m");
+  printer.doubleHeightOn();
+  PrintBoldLine("OBJ_PROPERTIES");
+  printer.doubleHeightOff();
+  printer.println(" ");
+  printer.justify('C');
+  PrintBoldLine("SURFACE");
+  printer.println("Sulfur  20%");
+  printer.println("Carbon  73.2%");
+  printer.println("Aluminum  5.8%");
+  printer.println("Other  1%");
+  PrintBoldLine("DEPTH");
+  printer.println("> 10cm");
 
 
   printer.println("Scan Complete");

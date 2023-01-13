@@ -70,7 +70,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
 
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
 
-        //AppDatabase.LoadApp(AppID);
+        AppDatabase.LoadApp(AppID);
     }
 
     void OnDatabaseInit()

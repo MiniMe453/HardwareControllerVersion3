@@ -37,7 +37,7 @@ public class System_RDIO_Interface : MonoBehaviourApplication
             GameObject entry = Instantiate(radioScanListEntry, radioScanTransform);
             entry.GetComponent<TextMeshProUGUI>().text = "NO SCAN PERFORMED";
             GameObject entry2 = Instantiate(radioScanListEntry, radioScanTransform);
-            entry2.GetComponent<TextMeshProUGUI>().text = "USE SYS.RDIO.SCAN";
+            entry2.GetComponent<TextMeshProUGUI>().text = "USE CMD CONSOLE";
             GameObject entry3 = Instantiate(radioScanListEntry, radioScanTransform);
             entry3.GetComponent<TextMeshProUGUI>().text = "TO PERFORM A SCAN";
             return;
@@ -47,7 +47,7 @@ public class System_RDIO_Interface : MonoBehaviourApplication
         {
             for(int i = 0; i < radioScanTransform.childCount; i++)
             {
-                DestroyImmediate(radioScanTransform.GetChild(i).gameObject);
+                DestroyImmediate(radioScanTransform.GetChild(0).gameObject);
             }
         }
 

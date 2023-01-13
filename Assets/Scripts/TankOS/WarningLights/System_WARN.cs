@@ -63,7 +63,7 @@ public class System_WARN : MonoBehaviour
     {
         if((Mathf.Abs(SystemPitchRoll.Pitch) > GameSettings.PITCH_DANGER_ZONE || Mathf.Abs(SystemPitchRoll.Roll) > GameSettings.ROLL_DANGER_ZONE) && !LEDManager.GetLEDState(anglWarnPin))
             LEDManager.SetLEDMode(anglWarnPin, 1);
-        else if((Mathf.Abs(SystemPitchRoll.Pitch) < GameSettings.PITCH_DANGER_ZONE || Mathf.Abs(SystemPitchRoll.Roll) < GameSettings.ROLL_DANGER_ZONE) && LEDManager.GetLEDState(anglWarnPin))
+        else if((Mathf.Abs(SystemPitchRoll.Pitch) < GameSettings.PITCH_DANGER_ZONE && Mathf.Abs(SystemPitchRoll.Roll) < GameSettings.ROLL_DANGER_ZONE) && LEDManager.GetLEDState(anglWarnPin))
             LEDManager.SetLEDMode(anglWarnPin, 0);
     }
 
@@ -76,7 +76,7 @@ public class System_WARN : MonoBehaviour
 
         if (objectsInSphere.Length == 0)
         {
-            m_prevQuadrant = -1;
+            ResetProximitySensorPins();
             return;
         }
         
@@ -87,10 +87,8 @@ public class System_WARN : MonoBehaviour
             Vector2 playerPos = new Vector2(transform.forward.x, transform.forward.z);
             Vector2 objPos = new Vector2(obj.transform.position.x, obj.transform.position.z);
 
-            float angle_a = Mathf.Atan2(playerPos.y, playerPos.x);
-            float angle_b = Mathf.Atan2(objPos.y, objPos.x);
-
-            angle = angle_b - angle_a;
+            angle = Vector3.SignedAngle(transform.forward, (obj.transform.position - transform.position).normalized, Vector3.up);
+            Debug.LogError(angle);
 
             if (angle < Mathf.PI / 4 && angle > -Mathf.PI / 4 && m_ledPinStates[0] != 1)
                 SetLEDPinStates(0, 1);
@@ -104,17 +102,20 @@ public class System_WARN : MonoBehaviour
 
         if (sensorActivated && m_stateModified)
         {
-            Debug.Log("QuadrantChanged");
             m_stateModified = false;
             LEDManager.SetLEDMode(m_ledPins, m_ledPinStates);
         }
-        else if (m_stateModified && !sensorActivated)
-        {
-            Debug.Log("Proximity Sensor: Reset Pin States");
-            m_stateModified = false;
-            m_ledPinStates = new int[] { 0, 0, 0, 0 };
-            LEDManager.SetLEDMode(m_ledPins, m_ledPinStates);
-        }
+    }
+
+    void ResetProximitySensorPins()
+    {
+        if(!m_stateModified)
+            return;
+
+        m_stateModified = false;
+        m_prevQuadrant = -1;
+        m_ledPinStates = new int[] { 0, 0, 0, 0 };
+        LEDManager.SetLEDMode(m_ledPins, m_ledPinStates); 
     }
 
     private void SetLEDPinStates(int index, int value)

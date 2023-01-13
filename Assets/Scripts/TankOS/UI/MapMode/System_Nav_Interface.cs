@@ -34,6 +34,8 @@ public class System_Nav_Interface : MonoBehaviourApplication
     public RectTransform mapMarkerTransform;
     public GameObject mapMarkerTransformEntry;
     public GameObject mapMarkerWorldObject;
+    private static List<string> m_mapMarkers;
+    public static List<string> MapMarkers {get {return m_mapMarkers;}}
 
     private MessageBox m_brakeWarningBox;
     private float m_horizontalAxis;
@@ -215,6 +217,7 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
     {
         GameObject location = Instantiate(mapMarkerTransformEntry, mapMarkerTransform);
         location.GetComponent<TextMeshProUGUI>().text = System_GPS.GPSCoordsToString(System_GPS.WorldPosToGPSCoords(mapCamera.transform.position));
+        m_mapMarkers.Add(System_GPS.GPSCoordsToString(System_GPS.WorldPosToGPSCoords(mapCamera.transform.position)));
 
         Vector3 markerPosition = new Vector3(mapCamera.transform.position.x, 0, mapCamera.transform.position.z);
 

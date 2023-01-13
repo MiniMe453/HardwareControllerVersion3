@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  m_ReverseArrangement: 1
 --- !u!1 &2121562068103984008
 GameObject:
   m_ObjectHideFlags: 0
@@ -3878,7 +3878,7 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  m_ReverseArrangement: 1
 --- !u!1 &4700105379983139627
 GameObject:
   m_ObjectHideFlags: 0
@@ -4101,6 +4101,7 @@ GameObject:
   - component: {fileID: 7376456638277981755}
   - component: {fileID: 498421246105828587}
   - component: {fileID: 2301148257403408301}
+  - component: {fileID: 5680925818175928160}
   m_Layer: 6
   m_Name: UICanvas
   m_TagString: Untagged
@@ -4173,6 +4174,41 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &5680925818175928160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803003748387862685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee76ed647c13ff408e5e55122260ac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTexts:
+  - {fileID: 3335070935958991940}
+  - {fileID: 641447404611753544}
+  - {fileID: 2179693040993073302}
+  - {fileID: 1156048536563350349}
+  brakeText: {fileID: 2712743067356930159}
+  speedText: {fileID: 2245318582259231712}
+  throttleText: {fileID: 7702085376525944438}
+  pitchImageTransform: {fileID: 1690928513437333301}
+  rollImageTransform: {fileID: 7056525694031283639}
+  rollText: {fileID: 2033222498421565249}
+  pitchText: {fileID: 547790100400242654}
+  headingText: {fileID: 5559054341855027674}
+  elevationText: {fileID: 46001196924492405}
+  gpsCoordsText: {fileID: 920040815653664530}
+  frequencyText: {fileID: 5700454200172166782}
+  bandArr:
+  - {fileID: 1484066273239662554}
+  - {fileID: 966139669388044133}
+  - {fileID: 4394059116119451010}
+  mapMarkerTransform: {fileID: 3193175634832131584}
+  mapMarkerPrefab: {fileID: 1797530887485658472, guid: e5442bc35b020044ea2307a8f3608230, type: 3}
+  radioScanTransform: {fileID: 1804233513004405275}
 --- !u!1 &4861376541255017507
 GameObject:
   m_ObjectHideFlags: 0

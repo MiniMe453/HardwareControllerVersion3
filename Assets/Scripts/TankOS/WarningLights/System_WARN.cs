@@ -44,15 +44,18 @@ public class System_WARN : MonoBehaviour
         anglWarnPin = ArduinoInputDatabase.GetOutputIndexFromName("Angle Warning Light");
 
         m_ledPins[0] = ArduinoInputDatabase.GetOutputIndexFromName("Proximity Sensor front LED");
-        m_ledPins[1] = ArduinoInputDatabase.GetOutputIndexFromName("ProximitySensor right LED");
+        m_ledPins[3] = ArduinoInputDatabase.GetOutputIndexFromName("ProximitySensor right LED");
         m_ledPins[2] = ArduinoInputDatabase.GetOutputIndexFromName("Proximity Sensor Back");
-        m_ledPins[3] = ArduinoInputDatabase.GetOutputIndexFromName("Proximity Sensor Left");
+        m_ledPins[1] = ArduinoInputDatabase.GetOutputIndexFromName("Proximity Sensor Left");
 
         m_proximityTimer = Timer.Register(GameSettings.PROXIMITY_CHECK_DELAY, () => CheckRoverProximity(), isLooped: true);
     }
 
     void Update()
     {
+        if(!Uduino.UduinoManager.Instance.isConnected())
+            return;
+
         CheckAngle();
     }
 
@@ -69,10 +72,13 @@ public class System_WARN : MonoBehaviour
         float angle = 0f;
         bool sensorActivated = false;
 
-        Collider[] objectsInSphere = Physics.OverlapSphere(transform.position, GameSettings.PROXIMITY_CHECK_DELAY);
+        Collider[] objectsInSphere = Physics.OverlapSphere(transform.position, GameSettings.PROXIMITY_CHECK_RADIUS, ~LayerMask.GetMask(new string[] {"Terrain", "Rover"}));
 
         if (objectsInSphere.Length == 0)
-        return;
+        {
+            m_prevQuadrant = -1;
+            return;
+        }
         
         sensorActivated = true;
 

@@ -34,10 +34,10 @@ public class NavCameraInterface : MonoBehaviour
     [Header("Map Marker")]
     public RectTransform mapMarkerTransform;
     public GameObject mapMarkerPrefab;
-    private List<GameObject> m_mapMarkerList;
+    private List<GameObject> m_mapMarkerList = new List<GameObject>();
     [Header("Radio Scan")]
     public RectTransform radioScanTransform;
-    private List<GameObject> m_radioScanList;
+    private List<GameObject> m_radioScanList = new List<GameObject>();
 
     void Awake()
     {
@@ -45,10 +45,20 @@ public class NavCameraInterface : MonoBehaviour
         System_RDIO.EOnRadioFrequencyUpdated += OnRadioFrequencyChanged;
         System_RDIO.EOnNewRadioTypeSelected += OnRadioBandChanged;
         System_CAM.EOnNewCameraSelected += OnNewCameraSelected;
+        RoverOperatingSystem.EOnOSModeChanged += OnRoverOSModeChanged;
     }
 
     void OnEnable()
     {
+        SetMapMarkerList();
+        SetRadioScanList();
+    }
+
+    void OnRoverOSModeChanged(OSMode newMode)
+    {
+        if(newMode != OSMode.Rover)
+            return;
+        
         SetMapMarkerList();
         SetRadioScanList();
     }
@@ -58,58 +68,63 @@ public class NavCameraInterface : MonoBehaviour
         if(System_Nav_Interface.MapMarkers.Count == 0 && m_mapMarkerList.Count == 0)
         {
             GameObject location = Instantiate(mapMarkerPrefab, mapMarkerTransform);
-            location.GetComponent<TextMeshProUGUI>().text = "Use the map mode";
+            location.GetComponent<TextMeshProUGUI>().text = "MAP MARKERS";
             m_mapMarkerList.Add(location);
 
             GameObject location1 = Instantiate(mapMarkerPrefab, mapMarkerTransform);
-            location1.GetComponent<TextMeshProUGUI>().text = "to create map";
+            location1.GetComponent<TextMeshProUGUI>().text = "MODE TO CREATE";
             m_mapMarkerList.Add(location1);
 
             GameObject location2 = Instantiate(mapMarkerPrefab, mapMarkerTransform);
-            location2.GetComponent<TextMeshProUGUI>().text = "markers";
+            location2.GetComponent<TextMeshProUGUI>().text = "USE THE MAP";
             m_mapMarkerList.Add(location2);
 
             return;
         }
 
+        if(System_Nav_Interface.MapMarkers.Count == 0)
+            return;
 
-       if(m_mapMarkerList.Count > 0)
-       {
-            for(int i =0; i < m_mapMarkerList.Count;i++)
-            {
-                DestroyImmediate(m_mapMarkerList[i]);   
-            }
+        if(m_mapMarkerList.Count > 0)
+        {
+                for(int i =0; i < m_mapMarkerList.Count;i++)
+                {
+                    DestroyImmediate(m_mapMarkerList[i]);   
+                }
 
-            m_mapMarkerList.Clear();
-       }
+                m_mapMarkerList.Clear();
+        }
 
-       foreach(string marker in System_Nav_Interface.MapMarkers)
-       {
-            GameObject location = Instantiate(mapMarkerPrefab, mapMarkerTransform);
-            location.GetComponent<TextMeshProUGUI>().text = marker;
-            m_mapMarkerList.Add(location);
-       }
+        foreach(string marker in System_Nav_Interface.MapMarkers)
+        {
+                GameObject location = Instantiate(mapMarkerPrefab, mapMarkerTransform);
+                location.GetComponent<TextMeshProUGUI>().text = marker;
+                location.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+                m_mapMarkerList.Add(location);
+        }
     }
 
     void SetRadioScanList()
     {
-        if(System_RDIO.PrevScanResults.Count == 0 && m_mapMarkerList.Count == 0)
+        if(System_RDIO.PrevScanResults.Count == 0 && m_radioScanList.Count == 0)
         {
-            GameObject location = Instantiate(mapMarkerPrefab, mapMarkerTransform);
-            location.GetComponent<TextMeshProUGUI>().text = "Use the cmd console";
-            m_mapMarkerList.Add(location);
+            GameObject location = Instantiate(mapMarkerPrefab, radioScanTransform);
+            location.GetComponent<TextMeshProUGUI>().text = "RADIO FREQUENCIES";
+            m_radioScanList.Add(location);
 
-            GameObject location1 = Instantiate(mapMarkerPrefab, mapMarkerTransform);
-            location1.GetComponent<TextMeshProUGUI>().text = "scan for radio";
-            m_mapMarkerList.Add(location1);
+            GameObject location1 = Instantiate(mapMarkerPrefab, radioScanTransform);
+            location1.GetComponent<TextMeshProUGUI>().text = "CONSOLE TO SCAN";
+            m_radioScanList.Add(location1);
 
-            GameObject location2 = Instantiate(mapMarkerPrefab, mapMarkerTransform);
-            location2.GetComponent<TextMeshProUGUI>().text = "frequencies";
-            m_mapMarkerList.Add(location2);
+            GameObject location2 = Instantiate(mapMarkerPrefab, radioScanTransform);
+            location2.GetComponent<TextMeshProUGUI>().text = "USE THE COMMAND";
+            m_radioScanList.Add(location2);
 
             return;
         }
 
+        if(System_RDIO.PrevScanResults.Count == 0)
+            return;
 
        if(m_radioScanList.Count > 0)
        {
@@ -123,8 +138,9 @@ public class NavCameraInterface : MonoBehaviour
 
        foreach(Struct_RadioScan result in System_RDIO.PrevScanResults)
        {
-            GameObject resultGO = Instantiate(mapMarkerPrefab, mapMarkerTransform);
-            resultGO.GetComponent<TextMeshProUGUI>().text = $" {result.radioType.ToString().PadLeft(3)}  {result.frequency.ToString("000.0")}  {result.strength.ToString().PadRight(3)}%";
+            GameObject resultGO = Instantiate(mapMarkerPrefab, radioScanTransform);
+            resultGO.GetComponent<TextMeshProUGUI>().text = $" {result.radioType.ToString().PadLeft(3)}  {result.frequency.ToString("000.0")}  {result.strength.ToString().PadLeft(3)}%";
+            resultGO.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
             m_radioScanList.Add(resultGO);
        }
     }

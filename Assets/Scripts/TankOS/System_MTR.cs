@@ -60,8 +60,6 @@ public class System_MTR : MonoBehaviour
 
         if(Mathf.Abs(m_horizontalAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_horizontalAxis = 0;
-
-        Debug.LogError(m_horizontalAxis * 100f);
     }
 
     void OnThrottleAxis(float value, int pin)

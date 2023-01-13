@@ -145,7 +145,6 @@ public static class CommandDatabase
         }
 
         Commands.Add(newCommand);
-        Debug.LogError(newCommand.commandID);
     }
 
     public static bool InvokeCommand(string commandID)

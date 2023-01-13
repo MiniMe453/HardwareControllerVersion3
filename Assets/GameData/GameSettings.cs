@@ -24,8 +24,8 @@ namespace Rover.Settings
         public const int VERTICAL_CENTER_VAL = 460;
         public const float JOYSTICK_DEADZONE = 0.1f;
         public const float RADIO_FREQ_CHART_UPDATE_TIMER = 1f/10f;
-        public const float ROLL_DANGER_ZONE = 5f;
-        public const float PITCH_DANGER_ZONE = 5f;
+        public const float ROLL_DANGER_ZONE = 35f;
+        public const float PITCH_DANGER_ZONE = 35f;
         public const float PROXIMITY_CHECK_RADIUS = 2f;
     }
 }

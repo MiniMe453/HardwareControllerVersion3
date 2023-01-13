@@ -34,7 +34,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
     public RectTransform mapMarkerTransform;
     public GameObject mapMarkerTransformEntry;
     public GameObject mapMarkerWorldObject;
-    private static List<string> m_mapMarkers;
+    private static List<string> m_mapMarkers = new List<string>();
     public static List<string> MapMarkers {get {return m_mapMarkers;}}
 
     private MessageBox m_brakeWarningBox;

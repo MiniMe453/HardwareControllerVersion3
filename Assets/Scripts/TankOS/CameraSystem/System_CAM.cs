@@ -30,12 +30,15 @@ namespace Rover.Systems
         private static int m_screenshotCount;
         private static float m_heading;
         public static float Heading {get {return m_heading;}}
-        public List<Struct_CameraPhoto> m_photos = new List<Struct_CameraPhoto>();
+        private static List<Struct_CameraPhoto> m_photos = new List<Struct_CameraPhoto>();
+        public static List<Struct_CameraPhoto> CameraPhotos {get {return m_photos;}}
         public static event System.Action<CameraMode> EOnNewCameraSelected;
         public static event System.Action<Struct_CameraPhoto> EOnCameraPhotoTaken;
         public Transform xAxisParent;
         private float m_verticalAxis;
         public float turnSpeed = 1f;
+        static float m_camPitch;
+        public static float CameraPitch {get{return m_camPitch;}}
         void OnEnable()
         {
             ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
@@ -183,6 +186,8 @@ namespace Rover.Systems
 
             if((xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.y < 70 && (xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.y > 1 )
                 xAxisParent.rotation *= Quaternion.Euler(newRot);
+
+            m_camPitch = -(Vector3.SignedAngle(xAxisParent.forward, new Vector3(0,1,0), xAxisParent.right) + 90);
 
             m_heading = Vector3.SignedAngle(transform.forward, new Vector3(0,0,1), Vector3.up);
             float sign = Mathf.Sign(m_heading);

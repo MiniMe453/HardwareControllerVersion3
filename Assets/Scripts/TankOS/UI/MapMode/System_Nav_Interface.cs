@@ -237,7 +237,7 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
         if(Physics.Raycast(mapCamera.transform.position, Vector3.down, out hit, 1000f, LayerMask.GetMask(new string[] {"Terrain"})))
         {
-            cursorElevationText.text = Mathf.FloorToInt(System_GPS.ElevationAtWorldPos(hit.point)).ToString() + "m";
+            cursorElevationText.text = System_GPS.ElevationAtWorldPos(hit.point).ToString("00.0") + "m";
         }
 
         m_cursorGPSCoords = System_GPS.WorldPosToGPSCoords(mapCamera.transform.position);

@@ -86,7 +86,7 @@ MonoBehaviour:
   - inputType: 0
     pinMode: 2
     pinNumber: 35
-    inputName: Print Button 01
+    inputName: Mic Button
     inputIndex: 10
     canHoldButton: 0
     dataIndex: 16
@@ -135,7 +135,7 @@ MonoBehaviour:
   - inputType: 0
     pinMode: 2
     pinNumber: 33
-    inputName: Print Button 02
+    inputName: Mute Button
     inputIndex: 11
     canHoldButton: 0
     dataIndex: 15
@@ -164,7 +164,7 @@ MonoBehaviour:
     pinNumber: 26
     dataIndex: 3
   - pinMode: 1
-    outputName: print led button
+    outputName: Mic Led Button
     pinNumber: 30
     dataIndex: 4
   - pinMode: 1

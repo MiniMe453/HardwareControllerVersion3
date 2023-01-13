@@ -23,11 +23,14 @@ public class SoundManager : MonoBehaviour
     {
         ArduinoInputDatabase.GetInputFromName("Mic Button").EOnButtonPressed += OnMicButtonPressed;
         ArduinoInputDatabase.GetInputFromName("Mute Button").EOnButtonPressed += OnMuteButtonPressed;
-        m_micLedPin = ArduinoInputDatabase.GetOutputIndexFromName("Mic Button LED");
+        m_micLedPin = ArduinoInputDatabase.GetOutputIndexFromName("Mic Led Button");
+
+        OnMicButtonPressed(0);
     }
 
     void OnMicButtonPressed(int pin)
     {
+        Debug.LogError("Button pressed");
         m_isMicOn = !m_isMicOn;
 
         WorldSoundsMixer.SetFloat("Volume", m_isMicOn? 0f : -80f);
@@ -41,8 +44,8 @@ public class SoundManager : MonoBehaviour
     {
         m_isMuted = !m_isMuted;
 
-        WorldSoundsMixer.SetFloat("Volume", m_isMuted? 0f : (m_isMicOn? 0f : -80f));
-        RadioStaticMixer.SetFloat("Volume", m_isMuted? 0f : (m_isMicOn? -80f : 0f));
-        RadioStationMixer.SetFloat("Volume",m_isMuted? 0f : ( m_isMicOn? -80f : 0f));
+        WorldSoundsMixer.SetFloat("Volume", m_isMuted? -80f : (m_isMicOn? 0f : -80f));
+        RadioStaticMixer.SetFloat("Volume", m_isMuted? -80f : (m_isMicOn? -80f : 0f));
+        RadioStationMixer.SetFloat("Volume",m_isMuted? -80f : ( m_isMicOn? -80f : 0f));
     }
 }

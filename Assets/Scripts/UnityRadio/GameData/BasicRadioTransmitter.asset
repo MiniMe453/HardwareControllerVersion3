@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   watts: 0.05
   antennaGain: 0.1
-  frequency: 95.3
+  frequency: 101.5
   cableLoss: 3
   antennaType: 0
   radioType: 0

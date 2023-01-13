@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BasicRadioTransmitter
   m_EditorClassIdentifier: 
   watts: 0.05
-  antennaGain: 0.1
-  frequency: 281.6
+  antennaGain: 0.25
+  frequency: 289.4
   cableLoss: 3
   antennaType: 0
   radioType: 2

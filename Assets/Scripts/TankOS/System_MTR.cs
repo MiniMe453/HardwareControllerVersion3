@@ -32,6 +32,7 @@ public class System_MTR : MonoBehaviour
     public ShakePreset offRoadShakePreset;
     float m_shakeStrength = 0.15f;
     public GameObject navCamera;
+    public AudioSource motorSoundEffect;
 
 
     void OnEnable()
@@ -121,6 +122,8 @@ public class System_MTR : MonoBehaviour
 
         Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f));
         m_rigidbody.MovePosition(wantedPosition);
+
+        motorSoundEffect.volume = Mathf.Abs(m_throttleAxis * (m_brakeActive? 0f : 1f));
 
         // if(m_offroadShakeInstance == null)
         // {

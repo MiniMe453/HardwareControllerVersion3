@@ -4209,6 +4209,7 @@ MonoBehaviour:
   mapMarkerTransform: {fileID: 3193175634832131584}
   mapMarkerPrefab: {fileID: 1797530887485658472, guid: e5442bc35b020044ea2307a8f3608230, type: 3}
   radioScanTransform: {fileID: 1804233513004405275}
+  temperatureReading: {fileID: 3037330059259160403}
 --- !u!1 &4861376541255017507
 GameObject:
   m_ObjectHideFlags: 0

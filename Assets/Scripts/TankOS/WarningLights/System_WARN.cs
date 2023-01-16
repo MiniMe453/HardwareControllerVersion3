@@ -88,7 +88,6 @@ public class System_WARN : MonoBehaviour
             Vector2 objPos = new Vector2(obj.transform.position.x, obj.transform.position.z);
 
             angle = Vector3.SignedAngle(transform.forward, (obj.transform.position - transform.position).normalized, Vector3.up);
-            Debug.LogError(angle);
 
             if (angle < Mathf.PI / 4 && angle > -Mathf.PI / 4 && m_ledPinStates[0] != 1)
                 SetLEDPinStates(0, 1);

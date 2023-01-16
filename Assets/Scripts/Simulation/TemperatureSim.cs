@@ -18,6 +18,7 @@ public static class TemperatureSim
     public static void AddTemperatureNode(TemperatureSimNode node)
     {
         m_temperatureNodes.Add(node);
+        Debug.LogError("Node reigstered");
     }
 
     public static float ReadTemperatureFromLocation(Vector3 location)
@@ -29,11 +30,11 @@ public static class TemperatureSim
 
         foreach (TemperatureSimNode node in m_temperatureNodes)
         {
-            if (Vector3.Distance(location, node.Location) > node.NodeValue/2f)
+            if (Vector3.Distance(location, node.Location) > node.NodeValue)
                 continue;
 
             //Calculate the distance between the point and the location of the sensor. Invert it.
-            float tmp = 1 - Vector3.Distance(location, node.Location) / (node.NodeValue / 2f);
+            float tmp = 1 - Vector3.Distance(location, node.Location) / node.NodeValue;
             //Calculate the weighted value of the temperature of that node 
             tmp *= node.NodeValue;
 

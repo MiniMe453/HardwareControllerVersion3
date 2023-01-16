@@ -176,6 +176,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6857267422866222676}
     m_Modifications:
+    - target: {fileID: 4105220100416329831, guid: 7a07b038ebd57294ead24c926d979cf8, type: 3}
+      propertyPath: Temperature
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5463659924713744704, guid: 7a07b038ebd57294ead24c926d979cf8, type: 3}
       propertyPath: m_RootOrder
       value: 2

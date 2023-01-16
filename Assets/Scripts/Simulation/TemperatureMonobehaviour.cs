@@ -6,7 +6,7 @@ public class TemperatureMonobehaviour : MonoBehaviour
 {
     public float Temperature;
     private TemperatureSimNode temperatureSimNode;
-    void OnAwake()
+    void OnEnable()
     {
         temperatureSimNode = new TemperatureSimNode(Temperature, transform.position);
     }

@@ -38,6 +38,8 @@ public class NavCameraInterface : MonoBehaviour
     [Header("Radio Scan")]
     public RectTransform radioScanTransform;
     private List<GameObject> m_radioScanList = new List<GameObject>();
+    [Header("Sensors")]
+    public TextMeshProUGUI temperatureReading;
 
     void Awake()
     {
@@ -46,6 +48,7 @@ public class NavCameraInterface : MonoBehaviour
         System_RDIO.EOnNewRadioTypeSelected += OnRadioBandChanged;
         System_CAM.EOnNewCameraSelected += OnNewCameraSelected;
         RoverOperatingSystem.EOnOSModeChanged += OnRoverOSModeChanged;
+        System_SRS.EOnSensorsUpdated += OnSensorsRead;
     }
 
     void OnEnable()
@@ -61,6 +64,14 @@ public class NavCameraInterface : MonoBehaviour
         
         SetMapMarkerList();
         SetRadioScanList();
+    }
+
+    void OnSensorsRead()
+    {
+        if(RoverOperatingSystem.OSMode != OSMode.Rover)
+            return;
+
+        temperatureReading.text = System_SRS.Temperature.ToString("0.0").PadRight(4) + "C";
     }
 
     void SetMapMarkerList()

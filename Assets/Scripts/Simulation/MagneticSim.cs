@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MagneticSimNode : SimulationNodeBase
 {
-    public MagneticSimNode(float value) : base (value)
+    public MagneticSimNode(float value, Vector3 location) : base (value, location)
     {
         
     }

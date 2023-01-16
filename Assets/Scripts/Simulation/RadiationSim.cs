@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RadiationSimNode : SimulationNodeBase
 {
-    public RadiationSimNode(float value) : base (value)
+    public RadiationSimNode(float value, Vector3 location) : base (value, location)
     {
         
     }

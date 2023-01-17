@@ -39,6 +39,8 @@ public class System_SRS : MonoBehaviour
     void ReadSensors()
     {
         ReadTemperature();
+        ReadMagnetic();
+        ReadRadiation();
 
         EOnSensorsUpdated?.Invoke();
     }

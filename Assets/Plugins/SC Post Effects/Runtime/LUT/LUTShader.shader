@@ -166,8 +166,8 @@ Shader "Hidden/SC Post Effects/LUT"
 
 		float sampleVal;
 
-		if(screenColor.a < 0.9)
-			sampleVal = screenColor.a + 0.1;
+		if(screenColor.r < 0.9)
+			sampleVal = screenColor.r + 0.1;
 		else
 			sampleVal = 0.99;
 

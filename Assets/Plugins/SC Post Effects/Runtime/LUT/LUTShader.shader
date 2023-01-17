@@ -12,6 +12,7 @@ Shader "Hidden/SC Post Effects/LUT"
 
 	sampler2D _CameraGBufferTexture1;
 	sampler2D _CameraGBufferTexture0;
+	sampler2D _CameraGBufferTexture2;
 
 	float4 _LUT_Near_TexelSize;
 	//X: 1.0 / Width
@@ -158,6 +159,7 @@ Shader "Hidden/SC Post Effects/LUT"
 		UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
 		half4 screenColor = tex2D (_CameraGBufferTexture1, input.uv);
+		half4 screenNormals = tex2D(_CameraGBufferTexture2, input.uv);
 
 		// float2 pCoord = ;
 		// float2 uv = (pCoord+0.5) * _MainTex_TexelSize.xy;
@@ -170,19 +172,11 @@ Shader "Hidden/SC Post Effects/LUT"
 			sampleVal = 0.99;
 
 		float2 sampleUV = float2(sampleVal, 0);
-		//float4 col = tex2D(_LUT_Near, sampleUV);
 
-		// ApplyColorGrading(screenColor.rgb, UV, false);
-		
-		// ApplyVibrancy(screenColor.rgb);
+		float4 thermalCol = _LUT_Near.Sample(sampler_LUT_Near, sampleUV);
+		thermalCol *= screenNormals.r * 1.5f; 
 
-		// ApplyColorInversion(screenColor.rgb);
-
-		//half4 gbuffer1 = tex2D (_CameraGBufferTexture1, input.uv);
-
-		//_LUT_Near, sampler_LUT_Near
-
-		return _LUT_Near.Sample(sampler_LUT_Near, sampleUV);
+		return thermalCol;
 		//return gbuffer1;
 	}
 

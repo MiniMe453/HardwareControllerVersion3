@@ -166,8 +166,8 @@ Shader "Hidden/SC Post Effects/LUT"
 
 		float sampleVal;
 
-		if(screenColor.r < 0.9)
-			sampleVal = screenColor.r + 0.1;
+		if(screenColor.a < 0.9)
+			sampleVal = screenColor.a + 0.1;
 		else
 			sampleVal = 0.99;
 
@@ -179,6 +179,7 @@ Shader "Hidden/SC Post Effects/LUT"
 		thermalCol *= ((1 - screenNormals.g) + 0.8); 
 
 		return thermalCol;
+		//return tex2D (_CameraGBufferTexture1, input.uv);
 		//return gbuffer1;
 	}
 

@@ -182,12 +182,17 @@ namespace Rover.Systems
 
         void Update()
         {
-            Vector3 newRot = Vector3.up * turnSpeed * m_verticalAxis;
+            if(RoverOperatingSystem.RoverControlMode != RoverControlMode.CAM)
+                return;
 
-            if((xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.y < 70 && (xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.y > 1 )
+            Vector3 newRot = Vector3.right * turnSpeed * -m_verticalAxis;
+
+            float eulerX = (xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.x;
+
+            if((eulerX - ((eulerX > 180)? 360 : 0)) < 70 && (eulerX - ((eulerX > 180)? 360 : 0)) > -70)
                 xAxisParent.rotation *= Quaternion.Euler(newRot);
 
-            m_camPitch = Vector3.SignedAngle(xAxisParent.forward, new Vector3(0,1,0), xAxisParent.right);
+            m_camPitch = Vector3.SignedAngle(xAxisParent.forward, transform.up, xAxisParent.right) + 90;
 
             m_heading = Vector3.SignedAngle(transform.forward, new Vector3(0,0,1), Vector3.up);
             float sign = Mathf.Sign(m_heading);

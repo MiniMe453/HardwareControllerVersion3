@@ -14,6 +14,10 @@ public class CamModeInterface : MonoBehaviour
     public TextMeshProUGUI pitchText;
     public RectTransform pitchImageTransform;
     public TextMeshProUGUI headingText;
+    public Image cam1PreviewImage;
+    public Image cam2PreviewImage;
+    public TextMeshProUGUI cam1Text;
+    public TextMeshProUGUI cam2Text;
     void Awake()
     {
         System_CAM.EOnNewCameraSelected += OnNewCameraSelected;
@@ -26,6 +30,13 @@ public class CamModeInterface : MonoBehaviour
         {
             cameraNumbers[i].color = i == (int)newMode? Color.white : Color.gray;
         }
+
+        cam1PreviewImage.enabled = newMode != CameraMode.Cam2;
+        cam1Text.enabled = newMode != CameraMode.Cam2;
+        cam2PreviewImage.enabled = newMode == CameraMode.Cam2;
+        cam2Text.enabled = newMode == CameraMode.Cam2;
+
+        cam1Text.text = "CAM" + (((int)newMode) + 1).ToString() + " PREVIEW";
     }
 
     void Update()
@@ -33,7 +44,7 @@ public class CamModeInterface : MonoBehaviour
         if(RoverOperatingSystem.OSMode != OSMode.Rover)
             return;
 
-        pitchImageTransform.anchoredPosition = new Vector2(0,System_CAM.CameraPitch * 3f);
+        pitchImageTransform.anchoredPosition = new Vector2(0,System_CAM.CameraPitch * 2f);
         pitchText.text = "PTCH: " + (System_CAM.CameraPitch.ToString("0.0")).PadLeft(6);
         headingText.text = "HDNG: " + System_GPS.Heading.ToString("0.0").PadLeft(6);
     }

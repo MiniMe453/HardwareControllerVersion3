@@ -173,8 +173,10 @@ Shader "Hidden/SC Post Effects/LUT"
 
 		float2 sampleUV = float2(sampleVal, 0);
 
+		float3 color = max(0, dot(tex2D(_CameraGBufferTexture2, input.uv), float3(0,-1,0)));
+
 		float4 thermalCol = _LUT_Near.Sample(sampler_LUT_Near, sampleUV);
-		thermalCol *= screenNormals.r * 1.5f; 
+		thermalCol *= (color * 2f); 
 
 		return thermalCol;
 		//return gbuffer1;

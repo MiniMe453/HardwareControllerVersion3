@@ -40,6 +40,10 @@ public static class RadiationSim
 
             nodeCount++;
             nodeTempFull += tmp;
+
+            
+            if(nodeCount > 5)
+                break;
         }
 
         if (nodeCount > 0)

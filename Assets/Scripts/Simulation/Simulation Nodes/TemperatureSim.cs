@@ -40,6 +40,9 @@ public static class TemperatureSim
 
             nodeCount++;
             nodeTempFull += tmp;
+
+            if(nodeCount > 5)
+                break;
         }
 
         if (nodeCount > 0)

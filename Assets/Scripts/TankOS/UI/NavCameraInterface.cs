@@ -40,6 +40,8 @@ public class NavCameraInterface : MonoBehaviour
     private List<GameObject> m_radioScanList = new List<GameObject>();
     [Header("Sensors")]
     public TextMeshProUGUI temperatureReading;
+    public TextMeshProUGUI radiationReading;
+    public TextMeshProUGUI magneticReading;
 
     void Awake()
     {
@@ -72,6 +74,8 @@ public class NavCameraInterface : MonoBehaviour
             return;
 
         temperatureReading.text = System_SRS.Temperature.ToString("0.0").PadRight(4) + "C";
+        radiationReading.text = System_SRS.Radiation.ToString("0.0000").PadLeft(6) + "uSv/h";
+        magneticReading.text = System_SRS.Magnetic.ToString("0.0").PadLeft(4) + "G";
     }
 
     void SetMapMarkerList()

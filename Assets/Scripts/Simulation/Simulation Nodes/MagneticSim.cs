@@ -30,11 +30,11 @@ public static class MagneticSim
 
         foreach (MagneticSimNode node in m_mangeticNodes)
         {
-            if (Vector3.Distance(location, node.Location) > node.NodeValue)
+            if (Vector3.Distance(location, node.Location) > node.NodeValue/2f)
                 continue;
 
             //Calculate the distance between the point and the location of the sensor. Invert it.
-            float tmp = 1 - Vector3.Distance(location, node.Location) / node.NodeValue;
+            float tmp = 1 - Vector3.Distance(location, node.Location) /( node.NodeValue/2f);
             //Calculate the weighted value of the temperature of that node 
             tmp *= node.NodeValue;
 

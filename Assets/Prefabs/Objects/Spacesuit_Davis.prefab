@@ -167,6 +167,75 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &3312843464612161293
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6857267422866222676}
+    m_Modifications:
+    - target: {fileID: 2549613674525924585, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_RadioTransmitterData
+      value: 
+      objectReference: {fileID: 11400000, guid: bbc3caf24b13d9b48ae4287a01438711, type: 2}
+    - target: {fileID: 5054590301726390866, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054590301726390866, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 596e7b19a2c984046b2740a79475fcf7, type: 3}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085182210922234233, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194514362762830527, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
+      propertyPath: m_Name
+      value: BasicRadioTransmitter
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e390c28e3fe874c4cbd41d5c4be875c1, type: 3}
 --- !u!1001 &7869221882605739747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -268,6 +337,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
+--- !u!4 &6857267422866222676 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3611042442913951927, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
+  m_PrefabInstance: {fileID: 7869221882605739747}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6857267423165510123 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3611042442613190408, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}

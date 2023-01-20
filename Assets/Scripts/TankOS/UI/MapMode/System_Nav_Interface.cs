@@ -66,6 +66,8 @@ public class System_Nav_Interface : MonoBehaviourApplication
         applicationInputs["resetLoc"].performed += ResetMapCameraPos;
         applicationInputs["markLoc"].performed += MarkMapLocation;
 
+        applicationInputs["quit"].Disable();
+
         System_MTR.EOnBrakeModeChanged += OnBrakeStateChanged;
 
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
@@ -111,7 +113,7 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
         if(Mathf.Abs(m_verticalAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_verticalAxis = 0;
 
-        if(Mathf.Abs(m_horizontalAxis) > 0)
+        if(Mathf.Abs(m_verticalAxis) > 0)
             m_cursorConnectedToRover = false;
 
         m_currentMoveDir = new Vector2(m_verticalAxis, m_horizontalAxis);
@@ -135,6 +137,9 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void NavigateUp(InputAction.CallbackContext context)
     {
+        if(!System_MTR.IsBrakeActive)
+            return;
+
         m_cursorConnectedToRover = false;
         ShowBrakeWarningMessage();
 
@@ -146,6 +151,9 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void NavigateDown(InputAction.CallbackContext context)
     {
+        if(!System_MTR.IsBrakeActive)
+            return;
+
         m_cursorConnectedToRover = false;
         ShowBrakeWarningMessage();
 
@@ -157,6 +165,9 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void NavigateLeft(InputAction.CallbackContext context)
     {
+        if(!System_MTR.IsBrakeActive)
+            return;
+
         m_cursorConnectedToRover = false;
         ShowBrakeWarningMessage();
 
@@ -168,6 +179,9 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void NavigateRight(InputAction.CallbackContext context)
     {
+        if(!System_MTR.IsBrakeActive)
+            return;
+
         m_cursorConnectedToRover = false;
         ShowBrakeWarningMessage();
 

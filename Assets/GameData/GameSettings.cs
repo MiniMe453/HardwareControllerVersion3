@@ -21,7 +21,7 @@ namespace Rover.Settings
         public const float LIDAR_SCAN_RANGE = 20f;
         public const float PHOTO_VIEWER_FPS = 10f;
         public const int HORIZONTAL_CENTER_VAL = 508;
-        public const int VERTICAL_CENTER_VAL = 460;
+        public const int VERTICAL_CENTER_VAL = 495;
         public const float JOYSTICK_DEADZONE = 0.1f;
         public const float RADIO_FREQ_CHART_UPDATE_TIMER = 1f/10f;
         public const float ROLL_DANGER_ZONE = 35f;

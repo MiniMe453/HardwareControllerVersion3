@@ -27,6 +27,7 @@ public class NavCameraInterface : MonoBehaviour
     public TextMeshProUGUI headingText;
     public TextMeshProUGUI elevationText;
     public TextMeshProUGUI gpsCoordsText;
+    public RectTransform compassTransform;
 
     [Header("Radio Variables")] 
     public TextMeshProUGUI frequencyText;
@@ -199,6 +200,9 @@ public class NavCameraInterface : MonoBehaviour
 
         headingText.text = "HDNG: " + System_GPS.Heading.ToString("0.0").PadLeft(6);
         elevationText.text = "ELV: " + System_GPS.Elevation.ToString("0.0").PadLeft(5) + "m";
+
+        Vector3 newCompassPos = new Vector3((System_GPS.Heading/360f) * 537f, 0,0);
+        compassTransform.anchoredPosition = newCompassPos;
 
         speedText.text = "SPD: " + System_MTR.RoverVelocity.ToString("0.0").PadLeft(4) + "m/s";
         throttleText.text = "THRTL:  " + Mathf.CeilToInt(-System_MTR.ThrottleAxis * 100f).ToString().PadLeft(4) + "%";

@@ -31,6 +31,8 @@ public class RadioTransmitter : MonoBehaviour
         }
 
         m_RadioManager.RegisterTransmitter(this);
+
+        m_TransmitterSource.volume = 0f;
     }
 
     void OnApplicationQuit()

@@ -5297,9 +5297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080545c3d50b56d429c24310f81eb56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 1
-  speed: 2
-  maxSpeed: 0.05
+  turnSpeed: 30
+  speed: 20
+  maxSpeed: 2
   mainShaker: {fileID: 4167300033667649884}
   offRoadShakePreset: {fileID: 11400000, guid: eff7813850af08d4881df78d4443f520, type: 2}
   navCamera: {fileID: 4739139102780659220}

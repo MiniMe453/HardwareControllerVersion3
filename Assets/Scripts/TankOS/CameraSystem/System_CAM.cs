@@ -119,18 +119,14 @@ namespace Rover.Systems
 
         void OnTakePhotoButtonPressed(int pin)
         {
-            if(System_MTR.RoverVelocity > 0.01f)
+            if(Mathf.Abs(System_MTR.RoverVelocity) > 0.01f)
             {
-                Debug.Log(System_MTR.RoverVelocity);
                 UIManager.ShowMessageBox("STOP THE ROVER", Color.red, 1f);
             }
             else
             {
                 TakeCameraPhoto(cameraList[(int)m_cameraMode]);
             }
-
-            // TakeCameraPhoto(cameraList[(int)m_cameraMode]);
-            // Debug.LogError("Take Photo Button pressed");
         }
 
         void OnVerticalAxis(float value, int pin)

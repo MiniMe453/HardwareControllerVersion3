@@ -114,13 +114,13 @@ public class System_MTR : MonoBehaviour
         if(RoverOperatingSystem.OSMode == OSMode.Map && m_brakeActive)
             return;
 
-        Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis);
+        Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis * Time.deltaTime);
             m_rigidbody.MoveRotation(wantedRotation);
         
         if(RoverOperatingSystem.RoverControlMode != RoverControlMode.RVR)
             return;
 
-        Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f));
+        Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f) * Time.deltaTime);
         m_rigidbody.MovePosition(wantedPosition);
 
         motorSoundEffect.volume =  Mathf.Clamp01((Mathf.Abs(m_throttleAxis) + Mathf.Abs(m_horizontalAxis)) * (m_brakeActive? 0f: 1f));

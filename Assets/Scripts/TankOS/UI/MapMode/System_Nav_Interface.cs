@@ -66,7 +66,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
         applicationInputs["resetLoc"].performed += ResetMapCameraPos;
         applicationInputs["markLoc"].performed += MarkMapLocation;
 
-        applicationInputs["quit"].Disable();
+        applicationInputs["quitApp"].Disable();
 
         System_MTR.EOnBrakeModeChanged += OnBrakeStateChanged;
 

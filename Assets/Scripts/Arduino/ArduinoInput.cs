@@ -174,34 +174,50 @@ namespace Rover.Arduino
         {
             int avgMaxCount = 0;
 
-            for(int i = 0; i < m_mvgAvgFilter.Length; i++)
-            {
-                if(i == 0)
-                    continue;
+            // for(int i = 0; i < m_mvgAvgFilter.Length; i++)
+            // {
+            //     if(i == 0)
+            //         continue;
 
-                m_mvgAvgFilter[i - 1] = m_mvgAvgFilter[i];
-                avgMaxCount += m_mvgAvgFilter[i - 1];
+            //     m_mvgAvgFilter[i - 1] = m_mvgAvgFilter[i];
+            //     avgMaxCount += m_mvgAvgFilter[i - 1];
 
-                if(i == m_mvgAvgFilter.Length - 1)
-                {
-                    m_mvgAvgFilter[i] = Mathf.CeilToInt(value);
-                    avgMaxCount += m_mvgAvgFilter[i];
-                }
-            }
+            //     if(i == m_mvgAvgFilter.Length - 1)
+            //     {
+            //         m_mvgAvgFilter[i] = Mathf.CeilToInt(value);
+            //         avgMaxCount += m_mvgAvgFilter[i];
+            //     }
+            // }
 
-            m_avgValue = avgMaxCount / 5;
+            // m_avgValue = avgMaxCount / 5;
 
-            if(m_avgValue < 75 && m_currentSelection != 2)
+            // if(m_avgValue < 75 && m_currentSelection != 2)
+            // {
+            //     m_currentSelection = 2;
+            //     EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
+            // }
+            // else if (m_avgValue > 600 && value < 700 && m_currentSelection != 1)
+            // {
+            //     m_currentSelection = 1;
+            //     EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
+            // }
+            // else if(m_avgValue > 975 && m_currentSelection != 0)
+            // {
+            //     m_currentSelection = 0;
+            //     EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
+            // }
+
+            if(value < 150 && m_currentSelection != 2)
             {
                 m_currentSelection = 2;
                 EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
             }
-            else if (m_avgValue > 600 && value < 700 && m_currentSelection != 1)
+            else if((value > 300 && value < 850) && m_currentSelection != 1)
             {
                 m_currentSelection = 1;
                 EOnCurrentSelectionChanged?.Invoke(m_currentSelection);
             }
-            else if(m_avgValue > 975 && m_currentSelection != 0)
+            else if(value >875 && m_currentSelection != 0)
             {
                 m_currentSelection = 0;
                 EOnCurrentSelectionChanged?.Invoke(m_currentSelection);

@@ -157,6 +157,13 @@ void loop() {
 
     SetDateTimeString();
   }
+
+    if (millis() - timeSinceLastMessage > (1.0/INPUT_FRAMERATE) * 1000.0) {
+      uduino.println(serialLine);
+
+      timeSinceLastMessage = millis();
+      ResetDigitalReadArray();
+    }
 }
 
 void ResetDigitalReadArray()

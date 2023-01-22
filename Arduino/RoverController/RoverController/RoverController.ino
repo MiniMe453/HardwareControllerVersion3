@@ -3,6 +3,7 @@
 #include <LiquidCrystal.h>
 #include <TM1637.h>
 #include <Encoder.h>
+#include "printerLutTable.h"
 
 #define INPUT_FRAMERATE 30.0
 
@@ -68,7 +69,6 @@ void setup() {
   uduino.addCommand("writeTM1", WriteTM1Display);
   uduino.addCommand("writeTM2", WriteTM2Display);
   uduino.addCommand("pobs", PrintObjectScan);
-  uduino.addCommand("sobs", SetupObjectScan);
   uduino.addCommand("prt", SimplePrint);
 
   lcd.setCursor(0, 0);
@@ -337,69 +337,6 @@ void InitOutput() {
   }
 }
 
-void SetupObjectScan()
-{
-  char* arg;
-  arg = uduino.next();
-  int currentItr = uduino.charToInt(arg);
-  uduino.next();
-
-  if(currentItr == 0)
-  {
-    objName = arg;
-    uduino.next();
-    // objSurfaceDepth = arg;
-    // uduino.next();
-    // temperature = arg;
-    // uduino.next();
-    // magnetic = arg;
-    // uduino.next();
-    // radiation = arg;
-
-    /**
-    char* objName;
-char* objSurfaceDepth;
-char* temperature;
-char* magnetic;
-char* radiation;
-char* dateTime;
-char* objDistance;
-  0 - objName
-  1 - objSurfaceDepth
-  2 - temperature
-  3 - magnetic
-  4 - radiation
-    **/
-  }
-  else if (currentItr == 1)
-  {
-    // objDistance = arg;
-    // uduino.next();
-
-    // String finalDate;
-
-    // finalDate += arg;
-    // uduino.next();
-    // finalDate += " ";
-    // finalDate += arg;
-    // uduino.next();
-    // finalDate += " ";
-    // finalDate += arg;
-    // uduino.next();
-    // finalDate += " ";
-    // finalDate += arg;
-
-    // dateTime = finalDate;
-    /**
-    0 - objDistance
-    1 - Month
-    2 - Date
-    3 - Year
-    4 - Time
-    **/
-  }
-}
-
 void PrintObjectScan()
 {
   char* arg;
@@ -411,7 +348,7 @@ void PrintObjectScan()
   1 - ? - surfaceProperties
   **/
 
-  int numOfSurfaceProperties = uduino.charToInt(arg);
+  int stringLUTindex = uduino.charToInt(arg);
   uduino.next();
   //We are now ready for surface properties, but we loop this inside the printing process.
 
@@ -428,7 +365,7 @@ void PrintObjectScan()
   PrintBoldLine("SCAN_TIME:");
   printer.println("July 7, 1984 08:34:33");
   PrintBoldLine("OBJ_TYPE_ESTIMATE:");
-  printer.println("UNKNOWN");
+  printer.println(printer_lines[stringLUTindex][0]);
   PrintBoldLine("OBJ_DIST:");
   printer.println("0.1m");
   printer.doubleHeightOn();
@@ -437,12 +374,13 @@ void PrintObjectScan()
   printer.println(" ");
   printer.justify('C');
   PrintBoldLine("SURFACE");
-  printer.println("Sulfur  20%");
-  printer.println("Carbon  73.2%");
-  printer.println("Aluminum  5.8%");
-  printer.println("Other  1%");
+  printer.println(printer_lines[stringLUTindex][1]);
+  printer.println(printer_lines[stringLUTindex][2]);
+  printer.println(printer_lines[stringLUTindex][3]);
+  printer.println(printer_lines[stringLUTindex][4]);
+  printer.println(printer_lines[stringLUTindex][5]);
   PrintBoldLine("DEPTH");
-  printer.println("> 10cm");
+  printer.println(printer_lines[stringLUTindex][6]);
 
 
   printer.println("Scan Complete");

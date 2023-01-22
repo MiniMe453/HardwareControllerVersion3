@@ -18,6 +18,7 @@ public struct Struct_ObjectScan
     public float temperature;
     public float magneticField;
     public float radiation;
+    public ScanDataType scanDataType;
 }
 
 [Serializable]

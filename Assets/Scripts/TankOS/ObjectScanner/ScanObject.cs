@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rover.DateTime;
 
+public enum ScanDataType {TemplateData, TestString, MagneticScan, RoverScan, HumanScan, HDUScan, ScanBushesFar, ScanBushesMed, ScanBushesClose}
+
 public class ScanObject : MonoBehaviour
 {
     private bool m_wasScanned;
@@ -14,6 +16,7 @@ public class ScanObject : MonoBehaviour
     public float temperature;
     public float magnetic;
     public float radiation;
+    public ScanDataType scanDataType;
 
     public Struct_ObjectScan GetObjectScan()
     {
@@ -28,6 +31,7 @@ public class ScanObject : MonoBehaviour
         objectScan.magneticField = magnetic;
         objectScan.surfaceProperties = surfaceProperties;
         objectScan.scanTime = TimeManager.GetCurrentDateTime();
+        objectScan.scanDataType = scanDataType;
 
         return objectScan;
     }

@@ -42,12 +42,18 @@ unsigned long messageDelay = 10;
 
 //Object Scan Variables
 const String materialTypes[] = {"Strontium", "Tungsten", "Iron", "Aluminum", "Lead", "Carbon", "Radium", "Cobalt", "Sulfur", "Copper", "Titanium", "Potassium", "Sodium", "Unknown"};
+String date = "May 12, 1985";
+String dateTime = "";
+int seconds;
+int minutes;
+int hours;
+unsigned long timeSinceLastDateInterrupt;
+
 char* objName = "";
 char* objSurfaceDepth;
 char* temperature;
 char* magnetic;
 char* radiation;
-String dateTime;
 char* objDistance;
 bool isPrinting = false;
 
@@ -146,12 +152,10 @@ void loop() {
     interruptCalled = false;
   }
 
-  if (millis() - timeSinceLastMessage > (1.0/INPUT_FRAMERATE) * 1000.0) {
-    uduino.println(serialLine);
+  if (millis() - timeSinceLastDateInterrupt > 1000) {
+    timeSinceLastDateInterrupt = millis();
 
-    timeSinceLastMessage = millis();
-
-    ResetDigitalReadArray();
+    SetDateTimeString();
   }
 }
 
@@ -166,6 +170,37 @@ void ResetDigitalReadArray()
       digitalReadArray[i] = digitalRead(digitalInputArray[i]);
   
   }
+}
+
+void SetDateTimeString()
+{
+  seconds++;
+
+  if(seconds == 60)
+  {
+    seconds = 0;
+    minutes++;
+    if(minutes == 60)
+     {
+       minutes=0;
+       hours++;
+     } 
+  }
+
+  String min = "";
+  String sec = "";
+  String hrs = "";
+
+  if(minutes < 10)
+    min = "0" + String(minutes);
+  
+  if(seconds < 10)
+    sec = "0" + String(seconds);
+
+  if(hours < 10)
+    hrs = "0" + String(hours);
+
+  dateTime = date + " " + hrs +":"+min+":"+sec;
 }
 
 void SetLEDPins() {
@@ -335,6 +370,10 @@ void InitOutput() {
       arg = uduino.next();
     }
   }
+
+  seconds = 15;
+  minutes = 34;
+  hours = 8;
 }
 
 void PrintObjectScan()
@@ -363,7 +402,7 @@ void PrintObjectScan()
   printer.justify('L');
   printer.println(" ");
   PrintBoldLine("SCAN_TIME:");
-  printer.println("July 7, 1984 08:34:33");
+  printer.println(dateTime);
   PrintBoldLine("OBJ_TYPE_ESTIMATE:");
   printer.println(printer_lines[stringLUTindex][0]);
   PrintBoldLine("OBJ_DIST:");

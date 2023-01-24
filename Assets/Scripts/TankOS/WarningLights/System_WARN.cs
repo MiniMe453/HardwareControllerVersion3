@@ -12,6 +12,7 @@ public class System_WARN : MonoBehaviour
     private int radWarnPin;
     private int rdioWarnPin;
     private int anglWarnPin;
+    private bool m_magWarningShown = false;
 
     //Proximity Sensor Variables
     private int[] m_ledPins = new int[4];
@@ -44,7 +45,7 @@ public class System_WARN : MonoBehaviour
     void OnDatabaseInit()
     {
         tempWarnPin = ArduinoInputDatabase.GetOutputIndexFromName("Temp Warning Light");
-        radWarnPin = ArduinoInputDatabase.GetOutputIndexFromName("Radio Warning Light");
+        radWarnPin = ArduinoInputDatabase.GetOutputIndexFromName("Radiation Warning Light");
         rdioWarnPin = ArduinoInputDatabase.GetOutputIndexFromName("Radio Warning Light");
         anglWarnPin = ArduinoInputDatabase.GetOutputIndexFromName("Angle Warning Light");
 
@@ -71,8 +72,10 @@ public class System_WARN : MonoBehaviour
     {
         float magVal = MagneticSim.ReadMagneticFromLocation(transform.position);
 
-        if(magVal > GameSettings.MAG_MAX_VALUE)
+        if(magVal > GameSettings.MAG_MAX_VALUE && !m_magWarningShown)
         {
+            m_magWarningShown = true;
+
             if(m_currentMessageBox)
             {
                 m_currentMessageBox.HideMessageBox();
@@ -80,6 +83,10 @@ public class System_WARN : MonoBehaviour
             }
 
             m_currentMessageBox = UIManager.ShowMessageBox("WRNG: HIGH MAGNETIC FIELDS", Color.red, 2f);
+        }
+        else if (magVal < GameSettings.MAG_MAX_VALUE && m_magWarningShown)
+        {
+            m_magWarningShown = false;
         }
     }
 

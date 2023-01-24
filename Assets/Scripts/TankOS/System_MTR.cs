@@ -65,7 +65,7 @@ public class System_MTR : MonoBehaviour
 
     void OnThrottleAxis(float value, int pin)
     {
-        m_throttleAxis = (value - 512)/512;
+        m_throttleAxis = (value - 512)/((value - 512 > 0)? 1024 : 512);
 
         if(Mathf.Abs(m_throttleAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_throttleAxis = 0;
@@ -137,7 +137,7 @@ public class System_MTR : MonoBehaviour
 
     void OnRoverVelocityUpdate()
     {
-        RoverVelocity = maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f) * 100f;
+        RoverVelocity = maxSpeed * (m_throttleAxis * -1f) * (m_brakeActive? 0f : 1f) * 10f;
         EOnRoverVelocityUpdate?.Invoke(RoverVelocity);
     }
 }

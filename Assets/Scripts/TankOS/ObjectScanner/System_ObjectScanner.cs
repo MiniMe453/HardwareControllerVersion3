@@ -52,11 +52,9 @@ public class System_ObjectScanner : MonoBehaviour
 
     void OnScanButtonPressed(int pin)
     {
-        Debug.LogError("Button pressed");
-
         if(!m_scanObject)
         {
-            UIManager.ShowMessageBox("NO SCANNABLE OBJECTS", Color.red, 2f);
+            CheckForScannabaleObjects();
             return;
         }
 
@@ -82,6 +80,37 @@ public class System_ObjectScanner : MonoBehaviour
     void OnDrawGizmos()
     {
         GizmosExtend.DrawCapsule(transform.position, (transform.forward * objectScanCheckDistance) + transform.position, objectScanRadius, Color.red);
+    }
+
+    void CheckForScannabaleObjects()
+    {
+        int scannableObjectsCount = 0;
+
+        Collider[] collidedObjects = Physics.OverlapSphere(transform.position, 100f);
+
+        if(collidedObjects.Length == 0)
+        {
+            UIManager.ShowMessageBox("NO SCANNABLE OBJECTS", Color.red, 2f);
+            return;
+        }
+
+        foreach(Collider collider in collidedObjects)
+        {
+            if(collider.gameObject.TryGetComponent(out ScanObject obj))
+            {
+                scannableObjectsCount++;
+            }
+        }
+
+        if(scannableObjectsCount > 0)
+        {
+            UIManager.ShowMessageBox(scannableObjectsCount.ToString() + (scannableObjectsCount == 1? "OBJECT" : "OBJECTS") + "FOUND", Color.white, 2f);
+        }
+        else
+        {
+            UIManager.ShowMessageBox("NO SCANNABLE OBJECTS", Color.red, 2f); 
+        }
+
     }
 
     void FixedUpdate()

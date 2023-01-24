@@ -81,7 +81,7 @@ public class CommandConsoleMain : MonoBehaviourApplication
         UpdateConsoleOutput(value.ToUpper());
         commandInputText.text = "> |";
 
-        if(!CommandDatabase.InvokeCommand(value))
+        if(!CommandDatabase.InvokeCommand(value.ToLower()))
             UpdateConsoleOutput("ERR: UNRECOGNIZED COMMAND");
 
         commandInputField.text = "";

@@ -200,12 +200,18 @@ void SetDateTimeString()
 
   if(minutes < 10)
     min = "0" + String(minutes);
+  else
+    min = String(minutes);
   
   if(seconds < 10)
     sec = "0" + String(seconds);
+  else
+    sec = String(seconds);
 
   if(hours < 10)
     hrs = "0" + String(hours);
+  else
+    hrs = String(hours);
 
   dateTime = date + " " + hrs +":"+min+":"+sec;
 }

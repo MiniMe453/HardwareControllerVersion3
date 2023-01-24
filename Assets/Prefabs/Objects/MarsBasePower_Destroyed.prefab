@@ -235,7 +235,7 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: 830338
+  instanceID: 1050262
 --- !u!1 &4005579822042132342
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,8 +300,8 @@ MeshRenderer:
   - {fileID: 2100000, guid: 290a331ca1c94df4e9f581355e3f0818, type: 2}
   - {fileID: 2100000, guid: f9eb93421a9d0834797373378cf746a4, type: 2}
   - {fileID: 2100000, guid: b13b7d262ff8a1141a11ca2ff05c78af, type: 2}
-  - {fileID: 2100000, guid: bd36c0172a440a744bfb490ea7c086ff, type: 2}
-  - {fileID: 2100000, guid: bd36c0172a440a744bfb490ea7c086ff, type: 2}
+  - {fileID: -4973734387028869240, guid: a73f6b1c379f0fe4a936d5732b63f251, type: 3}
+  - {fileID: 2100000, guid: 6fd45ce9a3181494a9ca0d52d6505377, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -340,7 +340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4834487771953142742
 Transform:
   m_ObjectHideFlags: 0

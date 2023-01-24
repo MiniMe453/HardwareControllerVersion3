@@ -89,7 +89,7 @@ public static class RoverOperatingSystem
     {
         m_arduinoInputEnabled = newEnabled;
 
-        LEDManager.SetLEDMode(new int[] {m_readyLedPin, m_transmitLedPin}, newEnabled? new int[] {1,0} : new int[] {0,1});
+        LEDManager.SetLEDMode(new int[] {m_readyLedPin, m_transmitLedPin}, newEnabled? new int[] {0,1} : new int[] {1,0});
 
         EOnArduinoInputStateChanged?.Invoke(newEnabled);
     }

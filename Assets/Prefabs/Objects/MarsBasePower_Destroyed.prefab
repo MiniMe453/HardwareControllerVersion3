@@ -235,7 +235,7 @@ MonoBehaviour:
   surfaceRotation: 0
   quality: 1
   sharedMesh: {fileID: 0}
-  instanceID: 76268
+  instanceID: 830338
 --- !u!1 &4005579822042132342
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +560,7 @@ PrefabInstance:
     - target: {fileID: 3611042442002137833, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -1647036277512966756, guid: e07dac6d9cc3a8b42979f483c817e777, type: 3}
+      objectReference: {fileID: -2455023979593718971, guid: f6fe348f8a3edcb4b8261a7ed85e45a0, type: 3}
     - target: {fileID: 3611042442002137838, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_LocalScale.x
       value: 1

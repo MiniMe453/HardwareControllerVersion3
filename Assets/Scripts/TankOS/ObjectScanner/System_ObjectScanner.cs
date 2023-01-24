@@ -85,6 +85,7 @@ public class System_ObjectScanner : MonoBehaviour
     void CheckForScannabaleObjects()
     {
         int scannableObjectsCount = 0;
+        float closestDistance = 999f;
 
         Collider[] collidedObjects = Physics.OverlapSphere(transform.position, 100f);
 
@@ -99,12 +100,17 @@ public class System_ObjectScanner : MonoBehaviour
             if(collider.gameObject.TryGetComponent(out ScanObject obj))
             {
                 scannableObjectsCount++;
+
+                float dist = Vector3.Distance(transform.position, collider.gameObject.transform.position);
+
+                if(dist < closestDistance)
+                    closestDistance = dist;
             }
         }
 
         if(scannableObjectsCount > 0)
         {
-            UIManager.ShowMessageBox(scannableObjectsCount.ToString() + (scannableObjectsCount == 1? "OBJECT" : "OBJECTS") + "FOUND", Color.white, 2f);
+            UIManager.ShowMessageBox(scannableObjectsCount.ToString() + (scannableObjectsCount == 1? " OBJECT" : " OBJECTS") + " FOUND. CLOSEST OBJECT: " + closestDistance.ToString("0.0") + "M" , Color.white, 2f);
         }
         else
         {

@@ -814,7 +814,7 @@ PrefabInstance:
     - target: {fileID: 3611042442002137833, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -8519414387050480945, guid: 0dbeeec9bffb57f4a9cde7837ef25c80, type: 3}
+      objectReference: {fileID: -26589452106760613, guid: 6c79b5e031e6c524cb02890c56091db0, type: 3}
     - target: {fileID: 3611042442002137838, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_LocalScale.x
       value: 1

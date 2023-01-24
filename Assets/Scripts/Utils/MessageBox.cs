@@ -64,6 +64,11 @@ namespace Rover.Interface
             EOnInputConfirmed?.Invoke();
             HideMessageBox();
         }
+
+        public void SetMessageBoxText(string text)
+        {
+            textBox.text = text;
+        }
     }
 }
 

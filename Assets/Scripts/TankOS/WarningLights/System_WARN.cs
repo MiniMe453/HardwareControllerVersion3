@@ -4,6 +4,7 @@ using UnityEngine;
 using Rover.Arduino;
 using Rover.Settings;
 using UnityTimer;
+using Rover.Interface;
 
 public class System_WARN : MonoBehaviour
 {
@@ -19,10 +20,14 @@ public class System_WARN : MonoBehaviour
     private int m_prevQuadrant = 0;
     private Timer m_proximityTimer;
     private List<GameObject> objectsInRange = new List<GameObject>();
+    private MessageBox m_angleMessageBox;
+    private MessageBox m_currentMessageBox;
 
     void OnEnable()
     {
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
+        
+        m_proximityTimer = Timer.Register(GameSettings.PROXIMITY_CHECK_DELAY, () => CheckRoverProximity(), isLooped: true);
     }
 
 
@@ -57,14 +62,80 @@ public class System_WARN : MonoBehaviour
             return;
 
         CheckAngle();
+        CheckMagnetic();
+        CheckRadiation();
+        CheckTemperature();
+    }
+
+    void CheckMagnetic()
+    {
+        float magVal = MagneticSim.ReadMagneticFromLocation(transform.position);
+
+        if(magVal > GameSettings.MAG_MAX_VALUE)
+        {
+            if(m_currentMessageBox)
+            {
+                m_currentMessageBox.HideMessageBox();
+                m_currentMessageBox = null;    
+            }
+
+            m_currentMessageBox = UIManager.ShowMessageBox("WRNG: HIGH MAGNETIC FIELDS", Color.red, 2f);
+        }
+    }
+
+    void CheckTemperature()
+    {
+        float tempVal = TemperatureSim.ReadTemperatureFromLocation(transform.position);
+
+        if(tempVal > GameSettings.TEMP_MAX_VALUE && !LEDManager.GetLEDState(tempWarnPin))
+        {
+            if(!m_currentMessageBox)
+            {
+                m_currentMessageBox = UIManager.ShowMessageBox("WRNG: HIGH TEMPERATURE", Color.red, 2f);
+            }
+
+            LEDManager.SetLEDMode(tempWarnPin, 1);
+        }
+        else if (tempVal < GameSettings.TEMP_MAX_VALUE && LEDManager.GetLEDState(tempWarnPin))
+        {
+            LEDManager.SetLEDMode(tempWarnPin, 0);
+        }
+        
+    }
+
+    void CheckRadiation()
+    {
+        float radVal = RadiationSim.ReadRadiationFromLocation(transform.position);
+
+        if(radVal > GameSettings.RAD_MAX_VALUE && !LEDManager.GetLEDState(radWarnPin))
+        {
+            if(!m_currentMessageBox)
+            {
+                m_currentMessageBox = UIManager.ShowMessageBox("WRNG: HIGH RADIATION", Color.red, 2f);
+            }
+
+            LEDManager.SetLEDMode(radWarnPin, 1);
+        }
+        else if (radVal < GameSettings.RAD_MAX_VALUE && LEDManager.GetLEDState(radWarnPin))
+        {
+            LEDManager.SetLEDMode(radWarnPin, 0);
+        }
     }
 
     void CheckAngle()
     {
         if((Mathf.Abs(SystemPitchRoll.Pitch) > GameSettings.PITCH_DANGER_ZONE || Mathf.Abs(SystemPitchRoll.Roll) > GameSettings.ROLL_DANGER_ZONE) && !LEDManager.GetLEDState(anglWarnPin))
+        { 
             LEDManager.SetLEDMode(anglWarnPin, 1);
+            m_angleMessageBox = UIManager.ShowMessageBox("WRNG: HIGH PITCH OR ROLL", Color.red, -1f);    
+        }
         else if((Mathf.Abs(SystemPitchRoll.Pitch) < GameSettings.PITCH_DANGER_ZONE && Mathf.Abs(SystemPitchRoll.Roll) < GameSettings.ROLL_DANGER_ZONE) && LEDManager.GetLEDState(anglWarnPin))
             LEDManager.SetLEDMode(anglWarnPin, 0);
+
+            if(m_angleMessageBox)
+            {
+                m_angleMessageBox.HideMessageBox();
+            }
     }
 
     void CheckRoverProximity()
@@ -84,18 +155,15 @@ public class System_WARN : MonoBehaviour
 
         foreach (Collider obj in objectsInSphere)
         {
-            Vector2 playerPos = new Vector2(transform.forward.x, transform.forward.z);
-            Vector2 objPos = new Vector2(obj.transform.position.x, obj.transform.position.z);
-
             angle = Vector3.SignedAngle(transform.forward, (obj.transform.position - transform.position).normalized, Vector3.up);
 
-            if (angle < Mathf.PI / 4 && angle > -Mathf.PI / 4 && m_ledPinStates[0] != 1)
+            if ((angle <= -135f || angle >= 135f ) && m_ledPinStates[0] != 1)
                 SetLEDPinStates(0, 1);
-            if (angle > Mathf.PI / 4 && angle < (Mathf.PI / 4) * 3 && m_ledPinStates[1] != 1)
+            if (angle >= 45f && angle <= 135f && m_ledPinStates[1] != 1)
                 SetLEDPinStates(1, 1);
-            if (angle > (Mathf.PI / 4) * 3 || angle < (-Mathf.PI / 4) * 3 && m_ledPinStates[2] != 1)
+            if (angle >= -45f && angle <= 45f && m_ledPinStates[2] != 1)
                 SetLEDPinStates(2, 1);
-            if (angle > (-Mathf.PI / 4) * 3 && angle < -Mathf.PI / 4 && m_ledPinStates[3] != 1)
+            if (angle < -45f && angle > -135f && m_ledPinStates[3] != 1)
                 SetLEDPinStates(3, 1);
         }
 
@@ -129,6 +197,5 @@ public class System_WARN : MonoBehaviour
             m_prevQuadrant = index;
             m_stateModified = true;  
         }
-
     }
 }

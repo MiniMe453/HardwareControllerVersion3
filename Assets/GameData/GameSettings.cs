@@ -26,7 +26,10 @@ namespace Rover.Settings
         public const float RADIO_FREQ_CHART_UPDATE_TIMER = 1f/10f;
         public const float ROLL_DANGER_ZONE = 35f;
         public const float PITCH_DANGER_ZONE = 35f;
-        public const float PROXIMITY_CHECK_RADIUS = 2f;
+        public const float PROXIMITY_CHECK_RADIUS = 5f;
+        public const float MAG_MAX_VALUE = 30f;
+        public const float RAD_MAX_VALUE = 0.01f;
+        public const float TEMP_MAX_VALUE = 20f;
     }
 }
 

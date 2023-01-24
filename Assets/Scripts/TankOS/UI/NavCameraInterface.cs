@@ -8,9 +8,11 @@ using TMPro;
 using UnityTimer;
 using System;
 using Rover.Systems;
+using Rover.DateTime;
 
 public class NavCameraInterface : MonoBehaviour
 {
+    public TextMeshProUGUI dateTimeText;
     [Header("Camera System")]
     public TextMeshProUGUI[] cameraTexts;
 
@@ -49,6 +51,9 @@ public class NavCameraInterface : MonoBehaviour
     public TextMeshProUGUI tempWarnText;
     public TextMeshProUGUI radWarnText;
     public TextMeshProUGUI angleWarnText;
+    [Header("Transmit Texts")]
+    public TextMeshProUGUI transmitText;
+    public TextMeshProUGUI readyText;
 
     void Awake()
     {
@@ -58,6 +63,15 @@ public class NavCameraInterface : MonoBehaviour
         System_CAM.EOnNewCameraSelected += OnNewCameraSelected;
         RoverOperatingSystem.EOnOSModeChanged += OnRoverOSModeChanged;
         System_SRS.EOnSensorsUpdated += OnSensorsRead;
+
+        System_WARN.EOnAngleWarningLight += OnAngleWarning;
+        System_WARN.EOnRadiationWarningLight += OnRadiationWarning;
+        System_WARN.EOnTemperatureWarningLight += OnTemperatureWarning;
+        System_WARN.EOnMagWarningLight += OnMagneticWarning;
+        System_WARN.EOnProximitySensorModified += OnProximityWarning;
+
+        RoverOperatingSystem.EOnArduinoInputStateChanged += OnArduinoInputChanged;
+        TimeManager.EOnDateTimeUpdated += OnNewDateTime;
     }
 
     void OnEnable()
@@ -73,6 +87,17 @@ public class NavCameraInterface : MonoBehaviour
         
         SetMapMarkerList();
         SetRadioScanList();
+    }
+
+    void OnNewDateTime(DateTimeStruct time)
+    {
+        dateTimeText.text = TimeManager.ToStringIngameDate + " " + TimeManager.ToStringMissionTimeClk(time);
+    }
+
+    void OnArduinoInputChanged(bool newInput)
+    {
+        transmitText.color = newInput? Color.gray : Color.white;
+        readyText.color = newInput? Color.white : Color.gray;
     }
 
     void OnRadiationWarning(bool state)

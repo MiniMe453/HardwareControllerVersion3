@@ -15,10 +15,13 @@ public static class RoverOperatingSystem
     public static OSMode OSMode {get{return m_osMode;}}
     public static event Action<OSMode> EOnOSModeChanged;
     public static event Action<RoverControlMode> EOnRoverControlModeChanged;
+    public static event Action<bool> EOnArduinoInputStateChanged;
     private static bool m_allowUserControl = true;
     public static bool AllowUserControl {get {return m_allowUserControl;}}
     private static bool m_arduinoInputEnabled = true;
     public static bool ArduinoInputEnabled {get{return m_arduinoInputEnabled;}}
+    private static int m_readyLedPin;
+    private static int m_transmitLedPin;
 
     //LED Pins
     public static void InitOS()
@@ -27,12 +30,16 @@ public static class RoverOperatingSystem
     }
 
     private static void OnInputDatabasedInit()
-    {
+    {//Transmit LED ReadyTransmit LED
         ArduinoInputDatabase.GetInputFromName("RVR Button").EOnButtonPressed += OnRVRButtonPressed;
         ArduinoInputDatabase.GetInputFromName("CAM Button").EOnButtonPressed += OnCAMButtonPressed;
+        m_transmitLedPin = ArduinoInputDatabase.GetOutputIndexFromName("Transmit LED");
+        m_readyLedPin = ArduinoInputDatabase.GetOutputIndexFromName("ReadyTransmit LED");
         ThreeWaySwitch.EOnCurrentSelectionChanged += OnNewControlModeSelected;
 
         OnNewControlModeSelected(ThreeWaySwitch.CurrentValue);
+
+        LEDManager.SetLEDMode(new int[] {m_readyLedPin, m_transmitLedPin}, new int[] {1,0});
     }
 
     public static void SetRoverControlMode(RoverControlMode newMode)
@@ -81,6 +88,10 @@ public static class RoverOperatingSystem
     public static void SetArduinoEnabled(bool newEnabled)
     {
         m_arduinoInputEnabled = newEnabled;
+
+        LEDManager.SetLEDMode(new int[] {m_readyLedPin, m_transmitLedPin}, newEnabled? new int[] {1,0} : new int[] {0,1});
+
+        EOnArduinoInputStateChanged?.Invoke(newEnabled);
     }
 
     public static void SetOSMode(OSMode newMode)

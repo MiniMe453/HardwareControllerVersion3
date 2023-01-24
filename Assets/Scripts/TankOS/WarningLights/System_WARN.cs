@@ -5,7 +5,7 @@ using Rover.Arduino;
 using Rover.Settings;
 using UnityTimer;
 using Rover.Interface;
-
+using System;
 public class System_WARN : MonoBehaviour
 {
     private int tempWarnPin;
@@ -23,6 +23,11 @@ public class System_WARN : MonoBehaviour
     private List<GameObject> objectsInRange = new List<GameObject>();
     private MessageBox m_angleMessageBox;
     private MessageBox m_currentMessageBox;
+    public static event Action<int> EOnProximitySensorModified;
+    public static event Action<bool> EOnRadiationWarningLight;
+    public static event Action<bool> EOnTemperatureWarningLight;
+    public static event Action<bool> EOnMagWarningLight;
+    public static event Action<bool> EOnAngleWarningLight;
 
     void OnEnable()
     {
@@ -83,10 +88,12 @@ public class System_WARN : MonoBehaviour
             }
 
             m_currentMessageBox = UIManager.ShowMessageBox("WRNG: HIGH MAGNETIC FIELDS", Color.red, 2f);
+            EOnMagWarningLight?.Invoke(true);
         }
         else if (magVal < GameSettings.MAG_MAX_VALUE && m_magWarningShown)
         {
             m_magWarningShown = false;
+            EOnMagWarningLight?.Invoke(false);
         }
     }
 
@@ -102,10 +109,12 @@ public class System_WARN : MonoBehaviour
             }
 
             LEDManager.SetLEDMode(tempWarnPin, 1);
+            EOnTemperatureWarningLight?.Invoke(true);
         }
         else if (tempVal < GameSettings.TEMP_MAX_VALUE && LEDManager.GetLEDState(tempWarnPin))
         {
             LEDManager.SetLEDMode(tempWarnPin, 0);
+            EOnTemperatureWarningLight?.Invoke(false);
         }
         
     }
@@ -122,10 +131,12 @@ public class System_WARN : MonoBehaviour
             }
 
             LEDManager.SetLEDMode(radWarnPin, 1);
+            EOnRadiationWarningLight?.Invoke(true);
         }
         else if (radVal < GameSettings.RAD_MAX_VALUE && LEDManager.GetLEDState(radWarnPin))
         {
             LEDManager.SetLEDMode(radWarnPin, 0);
+            EOnRadiationWarningLight?.Invoke(false);
         }
     }
 
@@ -134,10 +145,14 @@ public class System_WARN : MonoBehaviour
         if((Mathf.Abs(SystemPitchRoll.Pitch) > GameSettings.PITCH_DANGER_ZONE || Mathf.Abs(SystemPitchRoll.Roll) > GameSettings.ROLL_DANGER_ZONE) && !LEDManager.GetLEDState(anglWarnPin))
         { 
             LEDManager.SetLEDMode(anglWarnPin, 1);
-            m_angleMessageBox = UIManager.ShowMessageBox("WRNG: HIGH PITCH OR ROLL", Color.red, -1f);    
+            m_angleMessageBox = UIManager.ShowMessageBox("WRNG: HIGH PITCH OR ROLL", Color.red, -1f);
+            EOnAngleWarningLight?.Invoke(true);    
         }
         else if((Mathf.Abs(SystemPitchRoll.Pitch) < GameSettings.PITCH_DANGER_ZONE && Mathf.Abs(SystemPitchRoll.Roll) < GameSettings.ROLL_DANGER_ZONE) && LEDManager.GetLEDState(anglWarnPin))
+        {    
             LEDManager.SetLEDMode(anglWarnPin, 0);
+            EOnAngleWarningLight?.Invoke(false);
+        }
 
             if(m_angleMessageBox)
             {
@@ -190,6 +205,7 @@ public class System_WARN : MonoBehaviour
         m_prevQuadrant = -1;
         m_ledPinStates = new int[] { 0, 0, 0, 0 };
         LEDManager.SetLEDMode(m_ledPins, m_ledPinStates); 
+        EOnProximitySensorModified?.Invoke(-1);
     }
 
     private void SetLEDPinStates(int index, int value)
@@ -203,6 +219,8 @@ public class System_WARN : MonoBehaviour
 
             m_prevQuadrant = index;
             m_stateModified = true;  
+
+            EOnProximitySensorModified?.Invoke(index);
         }
     }
 }

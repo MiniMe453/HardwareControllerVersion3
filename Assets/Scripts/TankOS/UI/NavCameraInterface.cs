@@ -43,6 +43,12 @@ public class NavCameraInterface : MonoBehaviour
     public TextMeshProUGUI temperatureReading;
     public TextMeshProUGUI radiationReading;
     public TextMeshProUGUI magneticReading;
+    [Header("Warning Lights")]
+    public TextMeshProUGUI[] proximityTexts;
+    public TextMeshProUGUI magWarnText;
+    public TextMeshProUGUI tempWarnText;
+    public TextMeshProUGUI radWarnText;
+    public TextMeshProUGUI angleWarnText;
 
     void Awake()
     {
@@ -67,6 +73,39 @@ public class NavCameraInterface : MonoBehaviour
         
         SetMapMarkerList();
         SetRadioScanList();
+    }
+
+    void OnRadiationWarning(bool state)
+    {
+        radWarnText.color = state? Color.white : Color.gray;
+        radiationReading.color = state? Color.red : Color.white;
+    }
+
+    void OnTemperatureWarning(bool state)
+    {
+        tempWarnText.color = state? Color.white : Color.gray;
+        temperatureReading.color = state? Color.red : Color.white;
+    }
+
+    void OnMagneticWarning(bool state)
+    {
+        magWarnText.color = state? Color.white : Color.gray;
+        magneticReading.color = state? Color.red : Color.white;
+    }
+    
+    void OnAngleWarning(bool state)
+    {
+        angleWarnText.color = state? Color.white : Color.gray;
+        rollText.color = state? Color.red : Color.white;
+        pitchText.color = state? Color.red : Color.white;
+    }
+
+    void OnProximityWarning(int state)
+    {
+        for(int i = 0; i < proximityTexts.Length; i++)
+        {
+            proximityTexts[i].color = i == state? Color.white: Color.gray;
+        }
     }
 
     void OnSensorsRead()

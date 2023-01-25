@@ -193,10 +193,12 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void ShowBrakeWarningMessage()
     {
-        if(System_MTR.IsBrakeActive)
-            return;
+        return;
+        
+        // if(System_MTR.IsBrakeActive)
+        //     return;
 
-        m_brakeWarningBox = UIManager.ShowMessageBox("WARNING: Brake is off", Color.red, -1f);
+        // m_brakeWarningBox = UIManager.ShowMessageBox("WARNING: Brake is off", Color.red, -1f);
     }
 
     void OnBrakeStateChanged(bool newState)
@@ -240,12 +242,10 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void Update()
     {
-        //Debug.LogError(m_currentMoveDir);
-
         if(!AppIsLoaded)
             return;
 
-        if(m_cursorConnectedToRover)
+        if(System_MTR.RoverVelocity > 0f)
             mapCamera.transform.position = new Vector3(System_GPS.WorldSpacePos.x, mapCamera.transform.position.y, System_GPS.WorldSpacePos.z);
         else
             mapCamera.transform.position += new Vector3(m_currentMoveDir.y, 0, m_currentMoveDir.x) * cameraMoveSpeed * Time.deltaTime;

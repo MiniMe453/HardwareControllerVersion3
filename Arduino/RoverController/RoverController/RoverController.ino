@@ -49,12 +49,6 @@ int minutes;
 int hours;
 unsigned long timeSinceLastDateInterrupt;
 
-char* objName = "";
-char* objSurfaceDepth;
-char* temperature;
-char* magnetic;
-char* radiation;
-char* objDistance;
 bool isPrinting = false;
 
 void setup() {
@@ -401,7 +395,10 @@ void PrintObjectScan()
   **/
 
   int stringLUTindex = uduino.charToInt(arg);
-  uduino.next();
+
+  if(stringLUTindex > 4)
+    return;
+
   //We are now ready for surface properties, but we loop this inside the printing process.
 
   isPrinting = true;

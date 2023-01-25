@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112f7bf8cfd7ca34e91ff8e8a8956fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Magnetic: 150
+  Magnetic: 102.5
 --- !u!1 &2536575735427076526
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112f7bf8cfd7ca34e91ff8e8a8956fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Magnetic: 150
+  Magnetic: 102.5
 --- !u!1 &3558373903090563749
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112f7bf8cfd7ca34e91ff8e8a8956fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Magnetic: 150
+  Magnetic: 102.5
 --- !u!1 &4005579822042132342
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112f7bf8cfd7ca34e91ff8e8a8956fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Magnetic: 150
+  Magnetic: 102.5
 --- !u!1 &7669361044824781397
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112f7bf8cfd7ca34e91ff8e8a8956fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Magnetic: 150
+  Magnetic: 102.5
 --- !u!1001 &1272230120081890712
 PrefabInstance:
   m_ObjectHideFlags: 0

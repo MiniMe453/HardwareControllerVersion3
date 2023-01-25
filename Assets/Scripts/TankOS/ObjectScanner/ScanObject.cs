@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rover.DateTime;
 
-public enum ScanDataType {TemplateData, TestString, Main_HDU, RoverScan, HumanScan, HDUScan, ScanBushesFar, ScanBushesMed, ScanBushesClose}
+public enum ScanDataType {TemplateData, TestString, Main_HDU, Power_Station, Lillie_Nunez, HDUScan, ScanBushesFar, ScanBushesMed, ScanBushesClose}
 
 public class ScanObject : MonoBehaviour
 {

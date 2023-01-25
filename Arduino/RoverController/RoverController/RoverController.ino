@@ -416,24 +416,41 @@ void PrintObjectScan()
   printer.println(" ");
   PrintBoldLine("SCAN_TIME:");
   printer.println(dateTime);
-  PrintBoldLine("OBJ_TYPE_ESTIMATE:");
+  PrintBoldLine("OBJ_TYPE:");
   printer.println(printer_lines[stringLUTindex][0]);
   PrintBoldLine("OBJ_DIST:");
-  printer.println("0.1m");
+  printer.println("0.37m");
   printer.doubleHeightOn();
-  PrintBoldLine("OBJ_PROPERTIES");
+  PrintBoldLine("DATA LOGS");
   printer.doubleHeightOff();
   printer.println(" ");
-  printer.justify('C');
-  PrintBoldLine("SURFACE");
-  printer.println(printer_lines[stringLUTindex][1]);
-  printer.println(printer_lines[stringLUTindex][2]);
-  printer.println(printer_lines[stringLUTindex][3]);
-  printer.println(printer_lines[stringLUTindex][4]);
-  printer.println(printer_lines[stringLUTindex][5]);
-  PrintBoldLine("DEPTH");
-  printer.println(printer_lines[stringLUTindex][6]);
 
+  if(printer_lines[stringLUTindex][1] == "No data logs")
+  {
+    printer.println("No data logs.");
+  }
+  else
+  {
+    printer.println(printer_lines[stringLUTindex][1]);
+    printer.println(printer_lines[stringLUTindex][2]);
+    printer.println(printer_lines[stringLUTindex][3]);
+    printer.println(printer_lines[stringLUTindex][4]);
+    printer.println(printer_lines[stringLUTindex][5]);
+    printer.println(printer_lines[stringLUTindex][6]);
+  }
+
+  printer.println(" ");
+  printer.doubleHeightOn();
+  PrintBoldLine("SURFACE READINGS");
+  printer.doubleHeightOff();
+  printer.println(" ");
+  PrintBoldLine("TEMPERATURE:");
+  printer.println(printer_lines[stringLUTindex][9]);
+  PrintBoldLine("RADIATION:");
+  printer.println(printer_lines[stringLUTindex][7]);
+  PrintBoldLine("MAGNETIC FIELD:");
+  printer.println(printer_lines[stringLUTindex][8]);
+  printer.println(" ");
 
   printer.println("Scan Complete");
   printer.println("Hardware Version: 3.40.1f");

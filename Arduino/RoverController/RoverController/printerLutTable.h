@@ -4,10 +4,16 @@
 static const String printer_lines[][10] = {
   {"","","","","","","","","",""},
   {"This","is","a","test","string","in","the","array","!","!"},
-  {"UNKNOWN","Iron         - 82.8%","Neodymium    -  8.2%","Aluminum     -  5.6%","Lithium      -  2.3%","Praseodymium -  1.1%","3mm","","",""},
-  {"BLACK_ISLE_EQUIPMENT","Aluminum     - 85.1%","Titanium     -  5.6%","Polyisoprene -  4.6%","Copper       -  3.4%","Other        -  1.3%",">10cm","","",""},
-  {"ORGANIC","Carbon       - 76.0%","Calcium      -  9.0%","Phosphorus   -  7.0%","Potassium    -  4.4%","Sodium       -  3.6%",">10cm","","",""},
-  {"BLACK_ISLE_EQUIPMENT","Aluminum     - 85.1%","Titanium     -  5.6%","Polyisoprene -  4.6%","Copper       -  3.4%","Other        -  1.3%",">10cm","","",""}
+  {"MAIN_HDU","04/04 08:49 Setup Complete","04/10 17:10 Crew Entered","05/15 10:21 Maintence Complete","06/05 09:25 Anonamly detected","07/15 23:01 Anonamly detected","07/30 17:41 Power Surge Shutdown","0.00001 uSv","102.5 Gauss","-62.1 C"},
 };
 
 #endif
+
+
+/**
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+05/15 10:21 - Maintence Complete
+06/05 09:25 Anonamly detected
+07/30 17:41 Power Surge Shutdown
+
+**/

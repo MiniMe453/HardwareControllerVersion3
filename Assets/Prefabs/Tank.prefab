@@ -4483,8 +4483,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a8d6802838f4c4b990d096cb2e2c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectScanCheckDistance: 1
-  objectScanRadius: 0.5
+  objectScanCheckDistance: 2
+  objectScanRadius: 0.21
 --- !u!1 &4143299956563196647
 GameObject:
   m_ObjectHideFlags: 0

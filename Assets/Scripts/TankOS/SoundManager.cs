@@ -12,7 +12,7 @@ public class SoundManager : MonoBehaviour
     public AudioMixer WorldSoundsMixer;
     private int m_micLedPin;
     private bool m_isMuted = false;
-    private bool m_isMicOn = false;
+    private bool m_isMicOn = true;
 
     void OnEnable()
     {

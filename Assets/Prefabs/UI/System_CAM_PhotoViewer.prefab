@@ -3366,7 +3366,6 @@ GameObject:
   - component: {fileID: 5973534017177439064}
   - component: {fileID: 633971165636439383}
   - component: {fileID: 7859704387094354318}
-  - component: {fileID: 791459186378024178}
   m_Layer: 5
   m_Name: MissionTimer (1)
   m_TagString: Untagged
@@ -3495,19 +3494,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &791459186378024178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8966090803776353689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92114d0001b862f40b605adb19c99449, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayType: 0
 --- !u!1 &8989147289393132232
 GameObject:
   m_ObjectHideFlags: 0

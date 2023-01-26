@@ -87,7 +87,7 @@ public class System_WARN : MonoBehaviour
                 m_currentMessageBox = null;    
             }
 
-            m_currentMessageBox = UIManager.ShowMessageBox("WRNG: HIGH MAGNETIC FIELDS", Color.red, 2f);
+            m_currentMessageBox = UIManager.ShowMessageBox("WRNG: ABNORMAL MAGNETIC FIELDS", Color.red, 2f);
             EOnMagWarningLight?.Invoke(true);
         }
         else if (magVal < GameSettings.MAG_MAX_VALUE && m_magWarningShown)
@@ -105,7 +105,7 @@ public class System_WARN : MonoBehaviour
         {
             if(!m_currentMessageBox)
             {
-                m_currentMessageBox = UIManager.ShowMessageBox("WRNG: HIGH TEMPERATURE", Color.red, 2f);
+                m_currentMessageBox = UIManager.ShowMessageBox("WRNG: ABNORMAL TEMPERATURE", Color.red, 2f);
             }
 
             LEDManager.SetLEDMode(tempWarnPin, 1);
@@ -127,7 +127,7 @@ public class System_WARN : MonoBehaviour
         {
             if(!m_currentMessageBox)
             {
-                m_currentMessageBox = UIManager.ShowMessageBox("WRNG: HIGH RADIATION", Color.red, 2f);
+                m_currentMessageBox = UIManager.ShowMessageBox("WRNG: ABNORMAL RADIATION", Color.red, 2f);
             }
 
             LEDManager.SetLEDMode(radWarnPin, 1);

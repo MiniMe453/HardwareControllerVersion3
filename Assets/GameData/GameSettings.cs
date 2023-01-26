@@ -27,7 +27,7 @@ namespace Rover.Settings
         public const float ROLL_DANGER_ZONE = 35f;
         public const float PITCH_DANGER_ZONE = 35f;
         public const float PROXIMITY_CHECK_RADIUS = 5f;
-        public const float MAG_MAX_VALUE = 10f;
+        public const float MAG_MAX_VALUE = 70f;
         public const float RAD_MAX_VALUE = 0.01f;
         public const float TEMP_MAX_VALUE = 20f;
     }

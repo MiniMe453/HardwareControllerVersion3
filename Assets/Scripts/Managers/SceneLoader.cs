@@ -14,6 +14,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.UnloadSceneAsync("StartupScene");
 
         inputActions["resetGame"].performed += OnResetGame;
+        inputActions.Enable();
     }
 
     void OnSceneUnloaded(Scene unloadedScene)
@@ -24,6 +25,8 @@ public class SceneLoader : MonoBehaviour
         {
             SceneManager.LoadScene("Mars_scene", LoadSceneMode.Additive);
         }
+
+        Debug.LogError("Scene unloaded");
     }
 
     void OnResetGame(InputAction.CallbackContext context)

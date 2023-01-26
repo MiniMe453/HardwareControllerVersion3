@@ -5,6 +5,7 @@ using Uduino;
 using System;
 using UnityTimer;
 using System.IO.Ports;
+using UnityEngine.SceneManagement;
 
 namespace Rover.Arduino
 {
@@ -232,6 +233,7 @@ namespace Rover.Arduino
         private static ArduinoInputActionMap m_InputActionMap;
         private static Timer inputUpdateTimer;
         public static event Action EOnDatabasedInitialized;
+        private static bool m_databaseInitialized = false;
         public const float INPUT_TIMER_DELAY = 0.05f;
         public static ThreeWaySwitch threeWaySwitch;
         private static string[] m_inputsToSkipWhenNoControl = new string[] {"Joystick X", "Joystick Y", "Push Potentiometer"};
@@ -256,6 +258,15 @@ namespace Rover.Arduino
             UduinoManager.Instance.OnBoardConnected += OnBoardConnected;
             m_InputActionMap = Resources.Load<ArduinoInputActionMap>("RoverInputActions");
             Debug.LogError(m_InputActionMap);
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        static void OnSceneLoaded(Scene loadedScene, LoadSceneMode mode)
+        {
+            if(!m_databaseInitialized)
+                return;
+
+            Timer.Register(0.1f, () => {EOnDatabasedInitialized?.Invoke(); Debug.LogError("InputDatabase initialized");}); 
         }
 
         private static void OnBoardConnected(UduinoDevice device)
@@ -376,6 +387,7 @@ namespace Rover.Arduino
             sendSetupMessagesTimer.Cancel();
 
             EOnDatabasedInitialized?.Invoke();
+            m_databaseInitialized = true;
         }
 
 

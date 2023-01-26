@@ -67,6 +67,9 @@ public class RadioTransmitter : MonoBehaviour
 
     public void SetSignalStrength(float signalVolume)
     {
+        if(m_TransmitterSource == null)
+            return;
+
         m_TransmitterSource.volume = signalVolume;
         m_LowPassFilter.cutoffFrequency = ((signalVolume * signalVolume) * 4) * 2000;
         SignalStrength = signalVolume;
@@ -74,6 +77,9 @@ public class RadioTransmitter : MonoBehaviour
 
     public float GetAverageAmplitude()
     {
+        if(audioAnalyzer == null)
+            return 0f;
+
         return audioAnalyzer.AverageAmplitude();
     }
 }

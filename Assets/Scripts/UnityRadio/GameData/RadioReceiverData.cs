@@ -17,7 +17,7 @@ public class RadioReceiverData : ScriptableObject
             switch (m_RadioType)
             {
                 case RadioManager.ERadioTypes.AM:
-                    SetFrequencyData(3.6f, 1.1f, 0.01f);
+                    SetFrequencyData(34.4f, 10.1f, 0.2f);
                     break;
                 case RadioManager.ERadioTypes.FM:
                     SetFrequencyData(108f, 87.8f, 0.2f);

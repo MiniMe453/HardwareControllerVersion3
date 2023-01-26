@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112f7bf8cfd7ca34e91ff8e8a8956fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Magnetic: 20
+  Magnetic: 95.5
 --- !u!114 &3862535377262624550
 MonoBehaviour:
   m_ObjectHideFlags: 0

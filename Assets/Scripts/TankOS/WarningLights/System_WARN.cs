@@ -19,7 +19,7 @@ public class System_WARN : MonoBehaviour
     private int[] m_ledPinStates = { 0, 0, 0, 0 };
     private bool m_stateModified = false;
     private int m_prevQuadrant = 0;
-    private Timer m_proximityTimer;
+    private Timer m_roverSensorsTimer;
     private List<GameObject> objectsInRange = new List<GameObject>();
     private MessageBox m_angleMessageBox;
     private MessageBox m_currentMessageBox;
@@ -32,8 +32,7 @@ public class System_WARN : MonoBehaviour
     void OnEnable()
     {
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
-        
-        m_proximityTimer = Timer.Register(GameSettings.PROXIMITY_CHECK_DELAY, () => CheckRoverProximity(), isLooped: true);
+
     }
 
 
@@ -59,10 +58,10 @@ public class System_WARN : MonoBehaviour
         m_ledPins[2] = ArduinoInputDatabase.GetOutputIndexFromName("Proximity Sensor Back");
         m_ledPins[1] = ArduinoInputDatabase.GetOutputIndexFromName("Proximity Sensor Left");
 
-        m_proximityTimer = Timer.Register(GameSettings.PROXIMITY_CHECK_DELAY, () => CheckRoverProximity(), isLooped: true);
+        m_roverSensorsTimer = Timer.Register(GameSettings.PROXIMITY_CHECK_DELAY, () => CheckRoverSensors(), isLooped: true);
     }
 
-    void Update()
+    void CheckRoverSensors()
     {
         if(!Uduino.UduinoManager.Instance.isConnected())
             return;
@@ -71,6 +70,7 @@ public class System_WARN : MonoBehaviour
         CheckMagnetic();
         CheckRadiation();
         CheckTemperature();
+        CheckRoverProximity();
     }
 
     void CheckMagnetic()

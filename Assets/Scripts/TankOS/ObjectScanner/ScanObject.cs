@@ -18,6 +18,11 @@ public class ScanObject : MonoBehaviour
     public float radiation;
     public ScanDataType scanDataType;
 
+    void OnEnable()
+    {
+
+    }
+
     public Struct_ObjectScan GetObjectScan()
     {
         Struct_ObjectScan objectScan = new Struct_ObjectScan();

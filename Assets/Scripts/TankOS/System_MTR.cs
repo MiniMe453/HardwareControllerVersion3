@@ -34,12 +34,14 @@ public class System_MTR : MonoBehaviour
     public GameObject navCamera;
     public AudioSource motorSoundEffect;
 
+    private Transform m_originalTransform;
+
 
     void OnEnable()
     {
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
 
-        //Timer.Register(0.25f, () => OnRoverVelocityUpdate());
+        m_originalTransform = transform;
     }
 
     void OnDatabaseInit()

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rover.Arduino;
+using UnityEngine.InputSystem;
+using System;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -14,4 +16,5 @@ public class GameInitializer : MonoBehaviour
 
         RoverOperatingSystem.InitOS();
     }
+
 }

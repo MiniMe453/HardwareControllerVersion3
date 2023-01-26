@@ -48,13 +48,12 @@ namespace Rover.Arduino
             data.Add((int)objectScan.scanDataType);
             data.Add(objectScan.objDistAtScan * 100f);
 
-            UduinoManager.Instance.sendCommand("pobs", data.ToArray());  
             RoverOperatingSystem.SetArduinoEnabled(false);
 
             m_printMessageBox = UIManager.ShowMessageBox("PRINTING DATA", Color.red, -1f);
-            //UduinoManager.Instance.pauseArduinoWrite = true;
-            m_isPrinting = true;
 
+            UduinoManager.Instance.sendCommand("pobs", data.ToArray());  
+            m_isPrinting = true;
         }
 
         public void SimplePrint(string _data)

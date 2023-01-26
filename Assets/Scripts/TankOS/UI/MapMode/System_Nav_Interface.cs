@@ -81,6 +81,16 @@ public class System_Nav_Interface : MonoBehaviourApplication
         ArduinoInputDatabase.GetInputFromName("Joystick Y").EOnValueChanged += OnVerticalAxis;
     }
 
+    void OnGameReset()
+    {
+        for(int i = 0; i < mapMarkerTransform.childCount; i++)
+        {
+            DestroyImmediate(mapMarkerTransform.GetChild(0));
+        }
+
+        m_mapMarkers.Clear();
+    }
+
     protected override void OnAppLoaded()
     {
         UIManager.AddToViewport(canvas, 50);

@@ -90,16 +90,22 @@ void loop() {
 
   long newPosition = rotaryEnc.read();
 
-  if (newPosition != oldPosition) 
+  if (newPosition > oldPosition) 
   {
-    oldPosition = newPosition;
-    counter = newPosition;
-
-    if(counter > 1024)
-      counter = 1024;
-    else if (counter < 0)
-      counter = 0;
+    counter++;
   }
+  else if(newPosition < oldPosition)
+  {
+    counter--;
+  }
+  
+  oldPosition = newPosition;
+
+
+  if(counter > 1024)
+    counter = 1024;
+  else if (counter < 0)
+    counter = 0;
 
   String serialLine = "_";
 

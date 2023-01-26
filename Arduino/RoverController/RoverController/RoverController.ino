@@ -399,6 +399,11 @@ void PrintObjectScan()
   if(stringLUTindex > 4)
     return;
 
+  printer.println(printer_lines[stringLUTindex][0]);
+  uduino.println("prt_finished");
+  isPrinting = false;
+  return;
+
   //We are now ready for surface properties, but we loop this inside the printing process.
 
   isPrinting = true;

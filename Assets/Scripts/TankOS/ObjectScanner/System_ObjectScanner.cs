@@ -99,6 +99,9 @@ public class System_ObjectScanner : MonoBehaviour
         {
             if(collider.gameObject.TryGetComponent(out ScanObject obj))
             {
+                if(obj.WasScanned)
+                    continue;
+                    
                 scannableObjectsCount++;
 
                 float dist = Vector3.Distance(transform.position, collider.gameObject.transform.position);

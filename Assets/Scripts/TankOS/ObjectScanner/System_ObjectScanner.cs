@@ -86,6 +86,7 @@ public class System_ObjectScanner : MonoBehaviour
     {
         int scannableObjectsCount = 0;
         float closestDistance = 999f;
+        int closestIndex = -1;
 
         Collider[] collidedObjects = Physics.OverlapSphere(transform.position, 100f);
 
@@ -95,25 +96,34 @@ public class System_ObjectScanner : MonoBehaviour
             return;
         }
 
-        foreach(Collider collider in collidedObjects)
+        for(int i = 0; i < collidedObjects.Length; i++)
         {
-            if(collider.gameObject.TryGetComponent(out ScanObject obj))
+            if(collidedObjects[i].gameObject.TryGetComponent(out ScanObject obj))
             {
                 if(obj.WasScanned)
                     continue;
                     
                 scannableObjectsCount++;
 
-                float dist = Vector3.Distance(transform.position, collider.gameObject.transform.position);
+                float dist = Vector3.Distance(transform.position, collidedObjects[i].ClosestPoint(transform.position));
 
                 if(dist < closestDistance)
+                {
                     closestDistance = dist;
+                    closestIndex = i;
+                }
             }
         }
 
+        float heading = Vector3.SignedAngle((collidedObjects[closestIndex].ClosestPoint(transform.position) - transform.position).normalized, new Vector3(0,0,1), Vector3.up);
+        float sign = Mathf.Sign(heading);
+
+        if(sign < 0)
+            heading = 360 - Mathf.Abs(heading);
+
         if(scannableObjectsCount > 0)
         {
-            UIManager.ShowMessageBox(scannableObjectsCount.ToString() + (scannableObjectsCount == 1? " OBJECT" : " OBJECTS") + " FOUND. CLOSEST OBJECT: " + closestDistance.ToString("0.0") + "M" , Color.white, 2f);
+            UIManager.ShowMessageBox(scannableObjectsCount.ToString() + "  SCANNABLE" + (scannableObjectsCount == 1? " OBJECT" : " OBJECTS") + " FOUND. CLOSEST OBJECT DIRECTION: " + heading.ToString("0.0") + "°", Color.white, 2f);
         }
         else
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rover.Arduino;
 using System;
+using Rover.OS;
 
 public enum RoverControlMode {CAM, RVR};
 public enum OSMode {Rover, Computer, Map};
@@ -59,6 +60,14 @@ public static class RoverOperatingSystem
         int[] ledPinIndex = new int[] {ArduinoInputDatabase.GetOutputIndexFromName("rvr button led"), ArduinoInputDatabase.GetOutputIndexFromName("cam led button")};
         int[] ledPinValues = new int[] {1,0};
         LEDManager.SetLEDMode(ledPinIndex, ledPinValues);
+
+        if(OSMode != OSMode.Rover)
+            return;
+
+        if(AppDatabase.CurrentlyLoadedApp != null)
+        {
+            AppDatabase.CloseApp(AppDatabase.CurrentlyLoadedApp.AppID);
+        }
     }
 
     static void OnCAMButtonPressed(int pin)
@@ -68,6 +77,14 @@ public static class RoverOperatingSystem
         int[] ledPinIndex = new int[] {ArduinoInputDatabase.GetOutputIndexFromName("rvr button led"), ArduinoInputDatabase.GetOutputIndexFromName("cam led button")};
         int[] ledPinValues = new int[] {0,1};
         LEDManager.SetLEDMode(ledPinIndex, ledPinValues);
+
+        if(OSMode != OSMode.Rover)
+            return;
+
+        if(AppDatabase.CurrentlyLoadedApp != null)
+        {
+            AppDatabase.CloseApp(AppDatabase.CurrentlyLoadedApp.AppID);
+        }
     }
 
     static void OnNewControlModeSelected(int newSelection)

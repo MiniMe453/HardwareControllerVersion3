@@ -157,6 +157,10 @@ namespace Rover.OS
             {
                 LoadApp(GetAppFromName("Home").AppID);
             }
+            else
+            {
+                m_currentApplication = null;
+            }
         }
     }
 }

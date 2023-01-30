@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56431e1ed12f3a145ad9779567138d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radiationValue: 0.02
+  radiationValue: 0.01
 --- !u!1001 &7869221882605739747
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -90,12 +90,6 @@ public class System_ObjectScanner : MonoBehaviour
 
         Collider[] collidedObjects = Physics.OverlapSphere(transform.position, 100f);
 
-        if(collidedObjects.Length == 0)
-        {
-            UIManager.ShowMessageBox("NO SCANNABLE OBJECTS", Color.red, 2f);
-            return;
-        }
-
         for(int i = 0; i < collidedObjects.Length; i++)
         {
             if(collidedObjects[i].gameObject.TryGetComponent(out ScanObject obj))
@@ -105,7 +99,7 @@ public class System_ObjectScanner : MonoBehaviour
                     
                 scannableObjectsCount++;
 
-                float dist = Vector3.Distance(transform.position, collidedObjects[i].ClosestPoint(transform.position));
+                float dist = Vector3.Distance(transform.position, collidedObjects[i].gameObject.transform.position);
 
                 if(dist < closestDistance)
                 {
@@ -115,21 +109,23 @@ public class System_ObjectScanner : MonoBehaviour
             }
         }
 
-        float heading = Vector3.SignedAngle((collidedObjects[closestIndex].ClosestPoint(transform.position) - transform.position).normalized, new Vector3(0,0,1), Vector3.up);
+        if(scannableObjectsCount == 0)
+        {
+            UIManager.ShowMessageBox("NO SCANNABLE OBJECTS", Color.red, 2f); 
+            return;
+        }
+        
+        float heading = Vector3.SignedAngle((collidedObjects[closestIndex].ClosestPointOnBounds(transform.position) - transform.position), new Vector3(0,0,1), Vector3.up) - 180f;
         float sign = Mathf.Sign(heading);
+
+        Debug.LogError((collidedObjects[closestIndex].ClosestPointOnBounds(transform.position).ToString() + "  " + transform.position));
+
 
         if(sign < 0)
             heading = 360 - Mathf.Abs(heading);
-
-        if(scannableObjectsCount > 0)
-        {
-            UIManager.ShowMessageBox(scannableObjectsCount.ToString() + "  SCANNABLE" + (scannableObjectsCount == 1? " OBJECT" : " OBJECTS") + " FOUND. CLOSEST OBJECT DIRECTION: " + heading.ToString("0.0") + "°", Color.white, 2f);
-        }
-        else
-        {
-            UIManager.ShowMessageBox("NO SCANNABLE OBJECTS", Color.red, 2f); 
-        }
-
+            
+            
+        UIManager.ShowMessageBox(scannableObjectsCount.ToString() + "  SCANNABLE" + (scannableObjectsCount == 1? " OBJECT" : " OBJECTS") + " FOUND. CLOSEST OBJECT DIRECTION: " + heading.ToString("0.0") + "°", Color.white, 2f);
     }
 
     void FixedUpdate()

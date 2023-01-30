@@ -4484,7 +4484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectScanCheckDistance: 2
-  objectScanRadius: 0.21
+  objectScanRadius: 0.45
 --- !u!1 &4143299956563196647
 GameObject:
   m_ObjectHideFlags: 0

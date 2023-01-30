@@ -17,6 +17,10 @@ public class SoundManager : MonoBehaviour
     void OnEnable()
     {
         ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
+        
+        WorldSoundsMixer.SetFloat("Volume", -80f);
+        RadioStaticMixer.SetFloat("Volume", -80f);
+        RadioStationMixer.SetFloat("Volume", -80f);
     }
 
     void OnDatabaseInit()

@@ -97,6 +97,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
         mapCamera.enableRendering = true;
         RoverOperatingSystem.SetUserControl(true);
         m_cursorConnectedToRover = true;
+        mapCamera.transform.position = new Vector3(System_GPS.WorldSpacePos.x, mapCamera.transform.position.y, System_GPS.WorldSpacePos.z);
     }
 
     protected override void OnAppQuit()
@@ -115,7 +116,7 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 **/
     void OnVerticalAxis(float value, int pin)
     {
-        if(!System_MTR.IsBrakeActive)
+        if(!System_MTR.IsBrakeActive && System_MTR.RoverVelocity > 0f)
             return;
 
         m_verticalAxis = (value - GameSettings.VERTICAL_CENTER_VAL) / GameSettings.VERTICAL_CENTER_VAL;
@@ -131,7 +132,7 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void OnHorizontalAxis(float value, int pin)
     {
-        if(!System_MTR.IsBrakeActive)
+        if(!System_MTR.IsBrakeActive  && System_MTR.RoverVelocity > 0f)
             return;
 
         m_horizontalAxis = (value - GameSettings.HORIZONTAL_CENTER_VAL)/GameSettings.HORIZONTAL_CENTER_VAL;

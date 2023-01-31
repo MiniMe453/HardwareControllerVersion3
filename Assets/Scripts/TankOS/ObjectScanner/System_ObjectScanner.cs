@@ -90,6 +90,12 @@ public class System_ObjectScanner : MonoBehaviour
 
         Collider[] collidedObjects = Physics.OverlapSphere(transform.position, 100f);
 
+        if(m_messageBox != null)
+        {
+            m_messageBox.HideMessageBox();
+            m_messageBox = null;
+        }
+
         for(int i = 0; i < collidedObjects.Length; i++)
         {
             if(collidedObjects[i].gameObject.TryGetComponent(out ScanObject obj))
@@ -111,7 +117,7 @@ public class System_ObjectScanner : MonoBehaviour
 
         if(scannableObjectsCount == 0)
         {
-            UIManager.ShowMessageBox("NO SCANNABLE OBJECTS", Color.red, 2f); 
+            m_messageBox = UIManager.ShowMessageBox("NO SCANNABLE OBJECTS", Color.red, 2f); 
             return;
         }
         
@@ -125,7 +131,7 @@ public class System_ObjectScanner : MonoBehaviour
             heading = 360 - Mathf.Abs(heading);
             
             
-        UIManager.ShowMessageBox(scannableObjectsCount.ToString() + "  SCANNABLE" + (scannableObjectsCount == 1? " OBJECT" : " OBJECTS") + " FOUND. CLOSEST OBJECT DIRECTION: " + heading.ToString("0.0") + "°", Color.white, 2f);
+        m_messageBox = UIManager.ShowMessageBox(scannableObjectsCount.ToString() + " SCANNABLE" + (scannableObjectsCount == 1? " OBJECT" : " OBJECTS") + " FOUND. CLOSEST OBJECT DIRECTION: " + heading.ToString("0.0") + "°", Color.white, 2f);
     }
 
     void FixedUpdate()

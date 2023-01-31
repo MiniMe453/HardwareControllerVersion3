@@ -270,6 +270,24 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3611042442002137833, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
+--- !u!1 &6857267422866222679 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3611042442913951924, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
+  m_PrefabInstance: {fileID: 7869221882605739747}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8467866849873268706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6857267422866222679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 112f7bf8cfd7ca34e91ff8e8a8956fcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Magnetic: 35
 --- !u!4 &6857267423165510123 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3611042442613190408, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
@@ -285,6 +303,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3611042442002137839, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
   m_PrefabInstance: {fileID: 7869221882605739747}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &8746719432454139457
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6857267423626107916}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 5.6
+  m_Height: 18.68
+  m_Direction: 1
+  m_Center: {x: 0, y: 4.42, z: 0}
 --- !u!114 &2785977453230655001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,17 +337,3 @@ MonoBehaviour:
   magnetic: 0
   radiation: 0
   scanDataType: 6
---- !u!136 &8746719432454139457
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6857267423626107916}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 5.6
-  m_Height: 18.68
-  m_Direction: 1
-  m_Center: {x: 0, y: 4.42, z: 0}

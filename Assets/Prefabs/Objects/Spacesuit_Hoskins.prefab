@@ -376,4 +376,4 @@ MonoBehaviour:
   temperature: 0
   magnetic: 0
   radiation: 0
-  scanDataType: 4
+  scanDataType: 9

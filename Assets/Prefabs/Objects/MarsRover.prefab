@@ -3046,19 +3046,19 @@ PrefabInstance:
       objectReference: {fileID: -8264120970138348303, guid: 6a7d8d7da43897a448ed2a97fa458164, type: 3}
     - target: {fileID: 3611042442002137838, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.05
+      value: 3.8941967
       objectReference: {fileID: 0}
     - target: {fileID: 3611042442002137838, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.1875
+      value: 3.2584999
       objectReference: {fileID: 0}
     - target: {fileID: 3611042442002137838, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.16396
+      value: 6.5095186
       objectReference: {fileID: 0}
     - target: {fileID: 3611042442002137838, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.11
+      value: 1.61
       objectReference: {fileID: 0}
     - target: {fileID: 3611042442002137838, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3187,4 +3187,4 @@ MonoBehaviour:
   temperature: 0
   magnetic: 0
   radiation: 0
-  scanDataType: 3
+  scanDataType: 13

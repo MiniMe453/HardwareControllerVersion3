@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2770649115721335213}
   - component: {fileID: 4792334064997184194}
+  - component: {fileID: 4163302607110522993}
   m_Layer: 0
   m_Name: WeirdStuffTesting04
   m_TagString: Untagged
@@ -46,7 +47,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112f7bf8cfd7ca34e91ff8e8a8956fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Magnetic: 100
+  Magnetic: 200
+--- !u!114 &4163302607110522993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3258497388941302551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7038bbfde4e0e44188739474c794798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Temperature: 19.6
 --- !u!1 &4579462598009048448
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +156,7 @@ GameObject:
   - component: {fileID: 8655984822278898250}
   - component: {fileID: 1311143651004509735}
   - component: {fileID: 8015258976581339621}
+  - component: {fileID: 7396229608989401376}
   m_Layer: 12
   m_Name: Sphere
   m_TagString: Untagged
@@ -227,3 +242,23 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.41393042
   m_Center: {x: 0.000003054738, y: 0.27958247, z: -0.004604757}
+--- !u!114 &7396229608989401376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8083014065615192856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f89a7ae2a643024fae65c2682dd2e9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objName: 
+  objScanMesh: {fileID: 0}
+  objSurfaceDepth: 0
+  surfaceProperties: []
+  temperature: 0
+  magnetic: 0
+  radiation: 0
+  scanDataType: 5

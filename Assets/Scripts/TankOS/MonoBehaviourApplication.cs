@@ -87,7 +87,7 @@ namespace Rover.OS
             AppDatabase.LoadApp(AppID);
         }
 
-        private void Action_Quit(InputAction.CallbackContext context)
+        protected void Action_Quit(InputAction.CallbackContext context)
         {
             AppDatabase.CloseApp(AppID);
         }

@@ -6,8 +6,9 @@ using Uduino;
 using Rover.Settings;
 using Rover.Can;
 using Rover.DateTime;
-// using Rover.Interface;
+using Rover.Interface;
 using UnityEngine.UI;
+using Rover.OS;
 
 namespace Rover.Systems
 {
@@ -39,6 +40,7 @@ namespace Rover.Systems
         public float turnSpeed = 1f;
         static float m_camPitch;
         public static float CameraPitch {get{return m_camPitch;}}
+        private MessageBox m_brakeWarningMessageBox;
         void OnEnable()
         {
             ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
@@ -62,6 +64,8 @@ namespace Rover.Systems
             ArduinoInputDatabase.GetInputFromName("CAM 4 Button").EOnButtonPressed += OnCam4ButtonPressed;
             ArduinoInputDatabase.GetInputFromName("CAM Take Photo Button").EOnButtonPressed += OnTakePhotoButtonPressed;
             ArduinoInputDatabase.GetInputFromName("Joystick Y").EOnValueChanged += OnVerticalAxis;
+
+            System_MTR.EOnBrakeModeChanged += CheckBrakeState;
             
             SelectNewCameraMode(CameraMode.Cam1);
         }
@@ -72,11 +76,38 @@ namespace Rover.Systems
             {
                 case RoverControlMode.RVR:
                     mainPhotoCamera.SetActive(false);
+
+                    if(m_brakeWarningMessageBox != null)
+                    {
+                        m_brakeWarningMessageBox.HideMessageBox();
+                        m_brakeWarningMessageBox = null;
+                    }
+
                     break;
                 case RoverControlMode.CAM:
                     mainPhotoCamera.SetActive(true);
+                    CheckBrakeState(System_MTR.IsBrakeActive);
                     break;
             }
+        }
+
+        void CheckBrakeState(bool brakeState)
+        {
+            if(RoverOperatingSystem.RoverControlMode != RoverControlMode.CAM)
+                return;
+            
+            if(brakeState)
+            {
+                if(m_brakeWarningMessageBox != null)
+                {
+                    m_brakeWarningMessageBox.HideMessageBox();
+                    m_brakeWarningMessageBox = null;
+                }
+
+                return;
+            }
+
+            m_brakeWarningMessageBox = UIManager.ShowMessageBox("BRAKE IS NOT ENABLED", Color.red, -1f);
         }
 
         public void SelectNewCameraMode(CameraMode newMode)

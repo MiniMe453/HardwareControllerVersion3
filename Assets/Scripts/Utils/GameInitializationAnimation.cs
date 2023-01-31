@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class GameInitializationAnimation : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class GameInitializationAnimation : MonoBehaviour
             GameObject text = Instantiate(textPrefab, commandTransform);
             text.GetComponent<TextMeshProUGUI>().text = commandsToShow[i];
 
-            yield return new WaitForSeconds(Random.Range(timeBetweenLines - randomRange, timeBetweenLines + randomRange));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(timeBetweenLines - randomRange, timeBetweenLines + randomRange));
         }
 
         GameObject finalText = Instantiate(textPrefab, commandTransform);

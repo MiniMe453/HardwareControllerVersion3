@@ -16,6 +16,7 @@ namespace Rover.Interface
         public Canvas canvas;
         private InputActionMap messageBoxInputs = new InputActionMap();
         public event Action EOnInputConfirmed;
+        private Timer m_clearTimer;
 
         void OnEnable()
         {
@@ -47,13 +48,16 @@ namespace Rover.Interface
             }
             else 
             {
-                Timer.Register(duration, () => HideMessageBox());
+                m_clearTimer = Timer.Register(duration, () => HideMessageBox());
             }
         }
 
         public void HideMessageBox()
         {
             UIManager.RemoveFromViewport(canvas);
+
+            if(m_clearTimer != null)
+                m_clearTimer.Cancel();
 
             DestroyImmediate(this.gameObject);
         }

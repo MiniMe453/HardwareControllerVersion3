@@ -32,7 +32,7 @@ public class System_RDIO_Interface : MonoBehaviourApplication
         UIManager.AddToViewport(canvas, 100);
         updateSignalStrengthTimer = Timer.Register(GameSettings.RADIO_FREQ_CHART_UPDATE_TIMER, () => UpdateSignalStrengthText(), isLooped: true);
 
-        if(System_RDIO.PrevScanResults.Count == 0)
+        if(System_RDIO.PrevScanResults.Count == 0 && radioScanTransform.childCount == 0)
         {
             GameObject entry = Instantiate(radioScanListEntry, radioScanTransform);
             entry.GetComponent<TextMeshProUGUI>().text = "NO SCAN PERFORMED";

@@ -23,7 +23,7 @@ namespace Rover.Systems
     }
     public class System_CAM : MonoBehaviour
     {
-        private static CameraMode m_cameraMode = CameraMode.Cam1;
+        private static CameraMode m_cameraMode = CameraMode.Cam4;
         public static CameraMode SelectedCameraMode {get {return m_cameraMode;}}
         int[] m_ledPins;
         public List<Camera> cameraList;

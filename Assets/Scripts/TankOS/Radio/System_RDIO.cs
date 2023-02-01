@@ -15,7 +15,7 @@ public class System_RDIO : MonoBehaviour
     private float m_freqPercentage;
     private float m_frequency;
     public float Frequency {get {return m_frequency;}}
-    private static int m_selectedRadioType;
+    private static int m_selectedRadioType = 2;
     public static RadioManager.ERadioTypes SelectedRadioType {get {return (RadioManager.ERadioTypes)m_selectedRadioType;}}
     private int[] m_radioLEDPinIndexes;
     public static event Action<int> EOnNewRadioTypeSelected;
@@ -39,6 +39,8 @@ public class System_RDIO : MonoBehaviour
             ArduinoInputDatabase.GetOutputIndexFromName("Radio LED 2"),
             ArduinoInputDatabase.GetOutputIndexFromName("Radio LED 3")
         };
+
+        OnRadioButtonPressed(0);
     }
 
 

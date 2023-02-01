@@ -10,7 +10,7 @@ public enum OSMode {Rover, Computer, Map};
 
 public static class RoverOperatingSystem
 {
-    private static RoverControlMode m_roverControlMode = RoverControlMode.RVR;
+    private static RoverControlMode m_roverControlMode = RoverControlMode.CAM;
     public static RoverControlMode RoverControlMode {get {return m_roverControlMode;}}
     private static OSMode m_osMode = OSMode.Rover;
     public static OSMode OSMode {get{return m_osMode;}}
@@ -39,6 +39,7 @@ public static class RoverOperatingSystem
         ThreeWaySwitch.EOnCurrentSelectionChanged += OnNewControlModeSelected;
 
         OnNewControlModeSelected(ThreeWaySwitch.CurrentValue);
+        SetRoverControlMode(RoverControlMode.RVR);
 
         LEDManager.SetLEDMode(new int[] {m_readyLedPin, m_transmitLedPin}, new int[] {1,0});
     }

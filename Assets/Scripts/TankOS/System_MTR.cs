@@ -49,7 +49,7 @@ public class System_MTR : MonoBehaviour
         ArduinoInputDatabase.GetInputFromName("Joystick X").EOnValueChanged += OnHorizontalAxis;
         ArduinoInputDatabase.GetInputFromName("Push Potentiometer").EOnValueChanged += OnThrottleAxis;
         ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonPressed += OnBrakeSwitchPressed;
-        ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonReleased += OnBrakeSwitchReleased;
+        ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonReleased += OnBrakeSwitchPressed;
         RoverOperatingSystem.EOnRoverControlModeChanged += OnRoverControlModeChanged;
         RoverOperatingSystem.EOnOSModeChanged += OnOSModeChanged;
 
@@ -75,8 +75,10 @@ public class System_MTR : MonoBehaviour
 
     void OnBrakeSwitchPressed(int pin)
     {
-        m_brakeActive = true;
-        LEDManager.SetLEDMode(m_brakeLEDpin, 1);
+        m_brakeActive = !m_brakeActive;
+
+
+        LEDManager.SetLEDMode(m_brakeLEDpin, m_brakeActive? 1 : 0);
 
         EOnBrakeModeChanged?.Invoke(m_brakeActive);
     }

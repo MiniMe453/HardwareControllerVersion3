@@ -18,8 +18,6 @@ public class System_RDIO_Interface : MonoBehaviourApplication
     public TextMeshProUGUI signalFrequencyText;
     public RectTransform radioScanTransform;
     public GameObject radioScanListEntry;
-    private static int m_signalStrength;
-    public static int SignalStrength {get {return m_signalStrength;}}
     private Timer updateSignalStrengthTimer;
     
     protected override void Init()
@@ -82,13 +80,8 @@ public class System_RDIO_Interface : MonoBehaviourApplication
         signalFrequencyText.text = newFreq.ToString("000.0");
     }
 
-    public static void SetSignalStrength(float signalStrength)
-    {
-        m_signalStrength = Mathf.CeilToInt(signalStrength * 100f);
-    }
-
     void UpdateSignalStrengthText()
     {
-        signalStrengthText.text = m_signalStrength.ToString() + "%";
+        signalStrengthText.text = System_RDIO.SignalStrength.ToString() + "%";
     }
 }

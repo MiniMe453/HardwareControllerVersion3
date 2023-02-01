@@ -22,6 +22,8 @@ public class System_RDIO : MonoBehaviour
     public static event Action<float> EOnRadioFrequencyUpdated;
     private static List<Struct_RadioScan> m_prevScanResult = new List<Struct_RadioScan>();
     public static List<Struct_RadioScan> PrevScanResults { get {return m_prevScanResult;}}
+    private static int m_signalStrength;
+    public static int SignalStrength {get{return m_signalStrength;}}
 
     void OnEnable()
     {
@@ -104,6 +106,11 @@ public class System_RDIO : MonoBehaviour
             return;
 
         StartCoroutine(DisplayScanResultsAnim());
+    }
+
+    public static void SetSignalStrength(float signalStrength)
+    {
+        m_signalStrength = Mathf.CeilToInt(signalStrength * 100f);
     }
 
     IEnumerator DisplayScanResultsAnim()

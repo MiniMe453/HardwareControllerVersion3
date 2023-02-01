@@ -33,6 +33,7 @@ public class NavCameraInterface : MonoBehaviour
 
     [Header("Radio Variables")] 
     public TextMeshProUGUI frequencyText;
+    public TextMeshProUGUI freqStrengthText;
     public TextMeshProUGUI[] bandArr;
     [Header("Map Marker")]
     public RectTransform mapMarkerTransform;
@@ -272,5 +273,7 @@ public class NavCameraInterface : MonoBehaviour
         throttleText.text = "THRTL:  " + Mathf.CeilToInt(-System_MTR.ThrottleAxis * 100f).ToString().PadLeft(4) + "%";
 
         gpsCoordsText.text = System_GPS.GPSCoordsToString(System_GPS.GPSCoordinates);
+
+        freqStrengthText.text = System_RDIO.SignalStrength.ToString().PadLeft(3) + "%";
     }
 }

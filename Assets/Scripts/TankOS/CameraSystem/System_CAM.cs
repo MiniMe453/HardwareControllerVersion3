@@ -93,6 +93,9 @@ namespace Rover.Systems
 
         void CheckBrakeState(bool brakeState)
         {
+            if(RoverOperatingSystem.OSMode != OSMode.Rover)
+                return;
+
             if(RoverOperatingSystem.RoverControlMode != RoverControlMode.CAM)
                 return;
             

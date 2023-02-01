@@ -17,31 +17,28 @@ TM1637 tm2(16, 17);
 Adafruit_Thermal printer(&Serial3);
 Encoder rotaryEnc(20, 21);
 
-int* digitalInputArray = 0;
-int* digitalReadArray = 0;
-int digitalInputArraySize;
+int* dIoArr = 0;
+int* dIoRdArr = 0;
+uint8_t dIoArrSize;
 
-int* analogInputArray = 0;
-int analogInputArraySize;
+int* aIoArr = 0;
+uint8_t aIoArrSize;
 
-int* ledOutputArray = 0;
-int ledOutputArraySize;
+int* ledArr = 0;
+uint8_t ledArrSize;
 
 //Rotary Encoder variables
-int rotaryAPin = 12;
-int rotaryBPin = 13;
+int rtrA = 12;
+int rtrB = 13;
 int counter = 0;
-long oldPosition  = -999;
+long oldPos  = -999;
 
-bool interruptCalled = false;
-unsigned long timeSinceLastInterrupt;
 unsigned long timeSinceLastMessage;
 unsigned long interruptResetDelay = 25;
 unsigned long messageDelay = 10;
 
 
 //Object Scan Variables
-const String materialTypes[] = {"Strontium", "Tungsten", "Iron", "Aluminum", "Lead", "Carbon", "Radium", "Cobalt", "Sulfur", "Copper", "Titanium", "Potassium", "Sodium", "Unknown"};
 String date = "May 12, 1985";
 String dateTime = "";
 int seconds;
@@ -90,16 +87,16 @@ void loop() {
 
   long newPosition = rotaryEnc.read();
 
-  if (newPosition > oldPosition) 
+  if (newPosition > oldPos) 
   {
     counter++;
   }
-  else if(newPosition < oldPosition)
+  else if(newPosition < oldPos)
   {
     counter--;
   }
   
-  oldPosition = newPosition;
+  oldPos = newPosition;
 
 
   if(counter > 1024)
@@ -109,26 +106,26 @@ void loop() {
 
   String serialLine = "_";
 
-  for (int i = 0; i < digitalInputArraySize; i++) {
-    bool invertInput = digitalInputArray[i] == 11;
+  for (int i = 0; i < dIoArrSize; i++) {
+    bool invertInput = dIoArr[i] == 11;
 
-    int prevReadValue = digitalReadArray[i];
+    int prevReadValue = dIoRdArr[i];
     bool skipValueSet = prevReadValue == 1;
 
     if(!skipValueSet)
     {
       if(invertInput)
-        digitalReadArray[i] = !digitalRead(digitalInputArray[i]);
+        dIoRdArr[i] = !digitalRead(dIoArr[i]);
       else
-        digitalReadArray[i] = digitalRead(digitalInputArray[i]);
+        dIoRdArr[i] = digitalRead(dIoArr[i]);
     }
 
-    serialLine += String(digitalReadArray[i]);
+    serialLine += String(dIoRdArr[i]);
   }
 
-  for (int i = 0; i < analogInputArraySize; i++) {
+  for (int i = 0; i < aIoArrSize; i++) {
     serialLine += " ";
-    serialLine += String(analogRead(analogInputArray[i]));
+    serialLine += String(analogRead(aIoArr[i]));
   }
 
   serialLine += " ";
@@ -148,10 +145,6 @@ void loop() {
 
 **/
 
-  if (millis() - timeSinceLastInterrupt > interruptResetDelay && interruptCalled) {
-    interruptCalled = false;
-  }
-
   if (millis() - timeSinceLastDateInterrupt > 1000) {
     timeSinceLastDateInterrupt = millis();
 
@@ -162,19 +155,19 @@ void loop() {
       uduino.println(serialLine);
 
       timeSinceLastMessage = millis();
-      ResetDigitalReadArray();
+      ResetdIoRdArr();
     }
 }
 
-void ResetDigitalReadArray()
+void ResetdIoRdArr()
 {
-  for (int i = 0; i < digitalInputArraySize; i++) {
-    bool invertInput = digitalInputArray[i] == 11;
+  for (int i = 0; i < dIoArrSize; i++) {
+    bool invertInput = dIoArr[i] == 11;
 
     if(invertInput)
-      digitalReadArray[i] = !digitalRead(digitalInputArray[i]);
+      dIoRdArr[i] = !digitalRead(dIoArr[i]);
     else
-      digitalReadArray[i] = digitalRead(digitalInputArray[i]);
+      dIoRdArr[i] = digitalRead(dIoArr[i]);
   
   }
 }
@@ -220,10 +213,10 @@ void SetLEDPins() {
   char* arg;
   arg = uduino.next();
 
-  for (int i = 0; i < ledOutputArraySize; i++) {
+  for (int i = 0; i < ledArrSize; i++) {
     if (arg != NULL)
     {
-      digitalWrite(ledOutputArray[i], uduino.charToInt(arg));
+      digitalWrite(ledArr[i], uduino.charToInt(arg));
     }
 
     arg = uduino.next();
@@ -286,12 +279,12 @@ void InitDigital()
 
   //Input Array: [Array Size, Pin, PinMode, Pin, PinMode, etc.]
   //Init a new array with the size of our input parameters
-  if (digitalInputArray != 0)
+  if (dIoArr != 0)
     return;
 
-  digitalInputArray = new int[arrLength];
-  digitalReadArray = new int[arrLength];
-  digitalInputArraySize = arrLength;
+  dIoArr = new int[arrLength];
+  dIoRdArr = new int[arrLength];
+  dIoArrSize = arrLength;
 
   //Move to the first value inside the parameter array
   arg = uduino.next();
@@ -307,8 +300,8 @@ void InitDigital()
         // int pinM = uduino.charToInt(arg);
 
         pinMode(pin, INPUT_PULLUP);
-        digitalInputArray[i] = pin;
-        digitalReadArray[i] = 0;
+        dIoArr[i] = pin;
+        dIoRdArr[i] = 0;
       }
 
       arg = uduino.next();
@@ -323,11 +316,11 @@ void InitAnalog() {
 
   //Input Array: [Array Size, Pin, PinMode, Pin, PinMode, etc.]
   //Init a new array with the size of our input parameters
-  if (analogInputArray != 0)
+  if (aIoArr != 0)
     return;
 
-  analogInputArray = new int[arrLength];
-  analogInputArraySize = arrLength;
+  aIoArr = new int[arrLength];
+  aIoArrSize = arrLength;
 
   //Move to the first value inside the parameter array
   arg = uduino.next();
@@ -343,7 +336,7 @@ void InitAnalog() {
         // int pinM = uduino.charToInt(arg);
 
         pinMode(pin, INPUT);
-        analogInputArray[i] = pin;
+        aIoArr[i] = pin;
       }
 
       arg = uduino.next();
@@ -364,20 +357,20 @@ void InitOutput() {
   //Init a new array with the size of our input parameters
   if (arrLength != -1)
   {
-    ledOutputArray = new int[arrLength];
-    ledOutputArraySize = arrLength;
+    ledArr = new int[arrLength];
+    ledArrSize = arrLength;
   }
 
   //Move to the first value inside the parameter array
   arg = uduino.next();
 
-  if (ledOutputArraySize > 0) {
+  if (ledArrSize > 0) {
     for (int i = startingIndex; i < startingIndex + numOfPinsInMessage; i++) {
       if (arg != NULL) {
         int pin = uduino.charToInt(arg);
 
         pinMode(pin, OUTPUT);
-        ledOutputArray[i] = pin;
+        ledArr[i] = pin;
       }
 
       arg = uduino.next();
@@ -402,8 +395,11 @@ void PrintObjectScan()
 
   int stringLUTindex = uduino.charToInt(arg);
 
-  if(stringLUTindex > 4)
-    return;
+  // if(stringLUTindex > 13)
+  // {
+  //   uduino.println("prt_finished");
+  //   return;
+  // }
 
 
   //We are now ready for surface properties, but we loop this inside the printing process.
@@ -422,50 +418,47 @@ void PrintObjectScan()
   printer.println(dateTime);
   PrintBoldLine("OBJ_TYPE:");
   printer.println(printer_lines[stringLUTindex][0]);
-  PrintBoldLine("OBJ_DIST:");
-  printer.println("0.37m");
-  printer.doubleHeightOn();
-  PrintBoldLine("DATA LOGS");
-  printer.doubleHeightOff();
-  printer.println(" ");
+  // PrintBoldLine("OBJ_DIST:");
+  // printer.println("0.37m");
+  // printer.doubleHeightOn();
+  // PrintBoldLine("DATA LOGS");
+  // printer.doubleHeightOff();
+  // printer.println(" ");
 
-  if(printer_lines[stringLUTindex][1] == "No data logs")
-  {
-    printer.println("No data logs.");
-  }
-  else
-  {
-    printer.println(printer_lines[stringLUTindex][1]);
-    printer.println(printer_lines[stringLUTindex][2]);
-    printer.println(printer_lines[stringLUTindex][3]);
-    printer.println(printer_lines[stringLUTindex][4]);
-    printer.println(printer_lines[stringLUTindex][5]);
-    printer.println(printer_lines[stringLUTindex][6]);
-  }
+  // if(printer_lines[stringLUTindex][1] == "No data logs")
+  // {
+  //   printer.println("No data logs.");
+  // }
+  // else
+  // {
+  //   printer.println(printer_lines[stringLUTindex][1]);
+  //   printer.println(printer_lines[stringLUTindex][2]);
+  //   printer.println(printer_lines[stringLUTindex][3]);
+  //   printer.println(printer_lines[stringLUTindex][4]);
+  //   printer.println(printer_lines[stringLUTindex][5]);
+  //   printer.println(printer_lines[stringLUTindex][6]);
+  // }
 
-  printer.println(" ");
-  printer.doubleHeightOn();
-  PrintBoldLine("SURFACE READINGS");
-  printer.doubleHeightOff();
-  printer.println(" ");
-  PrintBoldLine("TEMPERATURE:");
-  printer.println(printer_lines[stringLUTindex][9]);
-  PrintBoldLine("RADIATION:");
-  printer.println(printer_lines[stringLUTindex][7]);
-  PrintBoldLine("MAGNETIC FIELD:");
-  printer.println(printer_lines[stringLUTindex][8]);
-  printer.println(" ");
+  // printer.println(" ");
+  // printer.doubleHeightOn();
+  // PrintBoldLine("SURFACE READINGS");
+  // printer.doubleHeightOff();
+  // printer.println(" ");
+  // PrintBoldLine("TEMPERATURE:");
+  // printer.println(printer_lines[stringLUTindex][9]);
+  // PrintBoldLine("RADIATION:");
+  // printer.println(printer_lines[stringLUTindex][7]);
+  // PrintBoldLine("MAGNETIC FIELD:");
+  // printer.println(printer_lines[stringLUTindex][8]);
+  // printer.println(" ");
 
-  printer.println("Scan Complete");
-  printer.println("Hardware Version: 3.40.1f");
-  printer.println("Software version: 1.05a");
-  printer.println("All data contained on this paper");
-  printer.println("is property of Black Isle Space.");
-  printer.println("Unauthorized distribution will");
-  printer.println("be subject to prosecution.");
-  printer.println(" ");
-  printer.println(" ");
-  printer.println(" ");
+  // printer.println("Scan Complete");
+  // printer.println("Hardware Version: 3.40.1f");
+  // printer.println("Software version: 1.05a");
+  // printer.println("All data contained on this paper");
+  // printer.println("is property of Black Isle Space.");
+  // printer.println("Unauthorized distribution will");
+  // printer.println("be subject to prosecution.");
   printer.println(" ");
   printer.println(" ");
   uduino.println("prt_finished");

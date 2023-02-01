@@ -134,9 +134,27 @@ namespace Rover.OS
 
             loadingPhotoMask.transform.localPosition = Vector3.zero;
 
+            string cameraNameStr = "";
+
+            switch(photoToLoad.camMode)
+            {
+                case CameraMode.Cam1:
+                    cameraNameStr = "Wide Angle | Visual Spectrum";
+                    break;
+                case CameraMode.Cam2:
+                    cameraNameStr = "Telephoto | Visual Spectrum";
+                    break;
+                case CameraMode.Cam3:
+                    cameraNameStr = "Wide Angle | Night Vision";
+                    break;
+                case CameraMode.Cam4:
+                    cameraNameStr = "Wide Angle | Thermal Camera";
+                    break;
+            }
+
             photo.texture = photoToLoad.photo;
             photoName.text = photoToLoad.name;
-            cameraName.text = photoToLoad.camMode.ToString();
+            cameraName.text = cameraNameStr;
             gpsCoords.text = photoToLoad.gpsCoords;
 
             if(m_LoadPhotoTimer != null)

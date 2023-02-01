@@ -14,7 +14,7 @@ public class System_MTR : MonoBehaviour
     public static float HorizontalAxis {get {return m_horizontalAxis;}}
     static float m_throttleAxis;
     public static float ThrottleAxis {get {return m_throttleAxis;}}
-    static bool m_brakeActive = true;
+    static bool m_brakeActive = false;
     public static bool IsBrakeActive {get {return m_brakeActive;}}
     public static event Action<bool> EOnBrakeModeChanged;
     int m_brakeLEDpin;

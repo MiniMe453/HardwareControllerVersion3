@@ -39,7 +39,7 @@ public static class RoverOperatingSystem
         ThreeWaySwitch.EOnCurrentSelectionChanged += OnNewControlModeSelected;
 
         OnNewControlModeSelected(ThreeWaySwitch.CurrentValue);
-        SetRoverControlMode(RoverControlMode.RVR);
+        OnRVRButtonPressed(0);
 
         LEDManager.SetLEDMode(new int[] {m_readyLedPin, m_transmitLedPin}, new int[] {1,0});
     }

@@ -215,7 +215,7 @@ namespace Rover.Systems
             if(RoverOperatingSystem.RoverControlMode != RoverControlMode.CAM)
                 return;
 
-            Vector3 newRot = Vector3.right * turnSpeed * -m_verticalAxis;
+            Vector3 newRot = Vector3.right * turnSpeed * m_verticalAxis;
 
             float eulerX = (xAxisParent.localRotation * Quaternion.Euler(newRot)).eulerAngles.x;
 

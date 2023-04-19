@@ -127,7 +127,7 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
         if(Mathf.Abs(m_verticalAxis) > 0)
             m_cursorConnectedToRover = false;
 
-        m_currentMoveDir = new Vector2(m_verticalAxis, m_horizontalAxis);
+        m_currentMoveDir = new Vector2(-m_verticalAxis, m_horizontalAxis);
     }
 
     void OnHorizontalAxis(float value, int pin)
@@ -143,7 +143,7 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
         if(Mathf.Abs(m_horizontalAxis) > 0)
             m_cursorConnectedToRover = false;
 
-        m_currentMoveDir = new Vector2(m_verticalAxis, m_horizontalAxis);
+        m_currentMoveDir = new Vector2(-m_verticalAxis, m_horizontalAxis);
     }
 
     void NavigateUp(InputAction.CallbackContext context)

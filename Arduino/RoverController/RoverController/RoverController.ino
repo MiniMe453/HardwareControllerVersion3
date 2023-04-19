@@ -15,7 +15,7 @@ LiquidCrystal lcd(3, 4, 5, 6, 7, 8);
 TM1637 tm1(18, 19);
 TM1637 tm2(16, 17);
 Adafruit_Thermal printer(&Serial3);
-Encoder rotaryEnc(20, 21);
+Encoder rotaryEnc(21, 20);
 
 int* dIoArr = 0;
 int* dIoRdArr = 0;

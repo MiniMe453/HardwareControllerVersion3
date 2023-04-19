@@ -163,7 +163,7 @@ public class System_ObjectScanner : MonoBehaviour
 
         if(!m_messageBox && m_scanObject)
         {
-            m_messageBox = UIManager.ShowMessageBox("OBJECT IN RANGE", Color.white, -1f);
+            m_messageBox = UIManager.ShowMessageBox("SCANNABLE OBJECT IN RANGE", Color.white, -1f);
         }
     }
 }

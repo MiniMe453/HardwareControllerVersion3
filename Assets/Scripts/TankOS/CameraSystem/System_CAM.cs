@@ -50,6 +50,19 @@ namespace Rover.Systems
 
         void OnDatabaseInit()
         {
+
+            if (InputTypeManager.UseKeyboardInput)
+                AssignKeyboardEvents();
+            else
+                AssignArduinoEvents();
+
+            System_MTR.EOnBrakeModeChanged += CheckBrakeState;
+
+            SelectNewCameraMode(CameraMode.Cam1);
+        }
+
+        void AssignArduinoEvents()
+        {
             m_ledPins = new int[]{
                 ArduinoInputDatabase.GetOutputIndexFromName("CAM 1 led pin"),
                 ArduinoInputDatabase.GetOutputIndexFromName("cam 2 led pin"),
@@ -65,19 +78,16 @@ namespace Rover.Systems
             ArduinoInputDatabase.GetInputFromName("CAM 4 Button").EOnButtonPressed += OnCam4ButtonPressed;
             ArduinoInputDatabase.GetInputFromName("CAM Take Photo Button").EOnButtonPressed += OnTakePhotoButtonPressed;
             ArduinoInputDatabase.GetInputFromName("Joystick Y").EOnValueChanged += OnVerticalAxis;
+        }
 
-            #region Keyboard Action Subscription
+        void AssignKeyboardEvents()
+        {
             InputTypeManager.InputActions["Cam1"].performed += OnCam1ButtonPressed;
             InputTypeManager.InputActions["Cam2"].performed += OnCam2ButtonPressed;
             InputTypeManager.InputActions["Cam3"].performed += OnCam3ButtonPressed;
             InputTypeManager.InputActions["Cam4"].performed += OnCam4ButtonPressed;
             InputTypeManager.InputActions["TakePhoto"].performed += OnTakePhotoButtonPressed;
-
-            #endregion
-
-            System_MTR.EOnBrakeModeChanged += CheckBrakeState;
-
-            SelectNewCameraMode(CameraMode.Cam1);
+            KeyboardAxisManager.EOnYAxis += (val) => { m_verticalAxis = val; };
         }
 
         void OnRoverControlModeChanged(RoverControlMode newMode)
@@ -197,16 +207,6 @@ namespace Rover.Systems
         void OnTakePhotoButtonPressed(InputAction.CallbackContext context)
         {
             OnTakePhotoButtonPressed(-1);
-        }
-
-        void OnVerticalAxisKeyboardUp(InputAction.CallbackContext context)
-        {
-
-        }
-
-        void OnVerticalAxisKeyboardDown(InputAction.CallbackContext context)
-        {
-
         }
 
         void OnVerticalAxis(float value, int pin)

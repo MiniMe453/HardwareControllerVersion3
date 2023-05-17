@@ -46,15 +46,31 @@ public class System_MTR : MonoBehaviour
 
     void OnDatabaseInit()
     {
-        ArduinoInputDatabase.GetInputFromName("Joystick X").EOnValueChanged += OnHorizontalAxis;
-        ArduinoInputDatabase.GetInputFromName("Push Potentiometer").EOnValueChanged += OnThrottleAxis;
-        ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonPressed += OnBrakeSwitchPressed;
-        ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonReleased += OnBrakeSwitchPressed;
+        if (InputTypeManager.UseKeyboardInput)
+            AssignKeyboardEvents();
+        else
+            AssignArduinoEvents();
+
         RoverOperatingSystem.EOnRoverControlModeChanged += OnRoverControlModeChanged;
         RoverOperatingSystem.EOnOSModeChanged += OnOSModeChanged;
 
         m_brakeLEDpin = ArduinoInputDatabase.GetOutputIndexFromName("brake light led");
         Timer.Register(0.25f, () => OnRoverVelocityUpdate(), isLooped: true);
+    }
+
+    void AssignKeyboardEvents()
+    {
+        KeyboardAxisManager.EOnXAxis += (val) => { m_horizontalAxis = val; };
+        KeyboardAxisManager.EOnThrottleAxis += (val) => { m_throttleAxis = val; };
+        InputTypeManager.InputActions["Brake"].performed += (x) => { OnBrakeSwitchPressed(-1); };
+    }
+
+    void AssignArduinoEvents()
+    {
+        ArduinoInputDatabase.GetInputFromName("Joystick X").EOnValueChanged += OnHorizontalAxis;
+        ArduinoInputDatabase.GetInputFromName("Push Potentiometer").EOnValueChanged += OnThrottleAxis;
+        ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonPressed += OnBrakeSwitchPressed;
+        ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonReleased += OnBrakeSwitchPressed;
     }
 
     void OnHorizontalAxis(float value, int pin)

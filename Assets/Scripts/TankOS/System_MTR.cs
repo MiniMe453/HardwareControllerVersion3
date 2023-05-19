@@ -63,6 +63,7 @@ public class System_MTR : MonoBehaviour
         KeyboardAxisManager.EOnXAxis += (val) => { m_horizontalAxis = val; };
         KeyboardAxisManager.EOnThrottleAxis += (val) => { m_throttleAxis = val; };
         InputTypeManager.InputActions["Brake"].performed += (x) => { OnBrakeSwitchPressed(-1); };
+        OnBrakeSwitchPressed(-1);
     }
 
     void AssignArduinoEvents()

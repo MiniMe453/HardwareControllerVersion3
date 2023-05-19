@@ -31,21 +31,36 @@ public static class RoverOperatingSystem
     }
 
     private static void OnInputDatabasedInit()
-    {//Transmit LED ReadyTransmit LED
+    {
+
+        if (InputTypeManager.UseKeyboardInput)
+            AssignKeyboardInputs();
+        else
+            AssignArduinoInputs();
+
+        OnNewControlModeSelected(ThreeWaySwitch.CurrentValue);
+        OnRVRButtonPressed(0);
+
+
+    }
+
+    static void AssignArduinoInputs()
+    {
         ArduinoInputDatabase.GetInputFromName("RVR Button").EOnButtonPressed += OnRVRButtonPressed;
         ArduinoInputDatabase.GetInputFromName("CAM Button").EOnButtonPressed += OnCAMButtonPressed;
         m_transmitLedPin = ArduinoInputDatabase.GetOutputIndexFromName("Transmit LED");
         m_readyLedPin = ArduinoInputDatabase.GetOutputIndexFromName("ReadyTransmit LED");
         ThreeWaySwitch.EOnCurrentSelectionChanged += OnNewControlModeSelected;
+        LEDManager.SetLEDMode(new int[] { m_readyLedPin, m_transmitLedPin }, new int[] { 1, 0 });
+    }
 
+    static void AssignKeyboardInputs()
+    {
         InputTypeManager.InputActions["CtrlRvrMode"].performed += (context) => { OnNewControlModeSelected(0); };
         InputTypeManager.InputActions["CtrlCmpMode"].performed += (context) => { OnNewControlModeSelected(1); };
         InputTypeManager.InputActions["CtrlMapMode"].performed += (context) => { OnNewControlModeSelected(2); };
-
-        OnNewControlModeSelected(ThreeWaySwitch.CurrentValue);
-        OnRVRButtonPressed(0);
-
-        LEDManager.SetLEDMode(new int[] { m_readyLedPin, m_transmitLedPin }, new int[] { 1, 0 });
+        InputTypeManager.InputActions["RVRMode"].performed += (context) => { SetRoverControlMode(RoverControlMode.RVR); };
+        InputTypeManager.InputActions["CAMMode"].performed += (context) => { SetRoverControlMode(RoverControlMode.CAM); };
     }
 
     public static void SetRoverControlMode(RoverControlMode newMode)
@@ -56,6 +71,14 @@ public static class RoverOperatingSystem
         m_roverControlMode = newMode;
 
         EOnRoverControlModeChanged?.Invoke(newMode);
+
+        if (OSMode != OSMode.Rover)
+            return;
+
+        if (AppDatabase.CurrentlyLoadedApp != null)
+        {
+            AppDatabase.CloseApp(AppDatabase.CurrentlyLoadedApp.AppID);
+        }
     }
 
     static void OnRVRButtonPressed(int pin)
@@ -65,14 +88,6 @@ public static class RoverOperatingSystem
         int[] ledPinIndex = new int[] { ArduinoInputDatabase.GetOutputIndexFromName("rvr button led"), ArduinoInputDatabase.GetOutputIndexFromName("cam led button") };
         int[] ledPinValues = new int[] { 1, 0 };
         LEDManager.SetLEDMode(ledPinIndex, ledPinValues);
-
-        if (OSMode != OSMode.Rover)
-            return;
-
-        if (AppDatabase.CurrentlyLoadedApp != null)
-        {
-            AppDatabase.CloseApp(AppDatabase.CurrentlyLoadedApp.AppID);
-        }
     }
 
     static void OnCAMButtonPressed(int pin)
@@ -82,14 +97,6 @@ public static class RoverOperatingSystem
         int[] ledPinIndex = new int[] { ArduinoInputDatabase.GetOutputIndexFromName("rvr button led"), ArduinoInputDatabase.GetOutputIndexFromName("cam led button") };
         int[] ledPinValues = new int[] { 0, 1 };
         LEDManager.SetLEDMode(ledPinIndex, ledPinValues);
-
-        if (OSMode != OSMode.Rover)
-            return;
-
-        if (AppDatabase.CurrentlyLoadedApp != null)
-        {
-            AppDatabase.CloseApp(AppDatabase.CurrentlyLoadedApp.AppID);
-        }
     }
 
     static void OnNewControlModeSelected(int newSelection)

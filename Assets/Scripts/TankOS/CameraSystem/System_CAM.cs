@@ -87,7 +87,7 @@ namespace Rover.Systems
             InputTypeManager.InputActions["Cam3"].performed += OnCam3ButtonPressed;
             InputTypeManager.InputActions["Cam4"].performed += OnCam4ButtonPressed;
             InputTypeManager.InputActions["TakePhoto"].performed += OnTakePhotoButtonPressed;
-            KeyboardAxisManager.EOnYAxis += (val) => { m_verticalAxis = val; };
+            KeyboardAxisManager.EOnYAxis += (val) => { m_verticalAxis = -val; };
         }
 
         void OnRoverControlModeChanged(RoverControlMode newMode)

@@ -69,10 +69,12 @@ public class KeyboardAxisManager : MonoBehaviour
 
     float IncreaseAxisValue(float currVal, float dir)
     {
-        if (Mathf.Abs(currVal) < 1)
-            return currVal + (increaseSpeed * Time.deltaTime * dir);
-        else
+        float newVal = currVal + (increaseSpeed * Time.deltaTime * dir);
+
+        if (Mathf.Abs(newVal) > 1)
             return dir;
+        else
+            return newVal;
 
     }
 }

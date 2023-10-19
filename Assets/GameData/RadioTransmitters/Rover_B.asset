@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rover_B
   m_EditorClassIdentifier: 
   watts: 0.1
-  antennaGain: 0.1
+  antennaGain: 0.05
   frequency: 102.3
   cableLoss: 8.34
   antennaType: 0

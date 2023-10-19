@@ -247,6 +247,18 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
         m_mapMarkers.Add(System_GPS.GPSCoordsToString(System_GPS.WorldPosToGPSCoords(mapCamera.transform.position)));
 
         Vector3 markerPosition = new Vector3(mapCamera.transform.position.x, 0, mapCamera.transform.position.z);
+        Vector3 rayOrig = new Vector3(markerPosition.x, 100, markerPosition.z);
+        Vector3 rayEnd = new Vector3(markerPosition.x, -100, markerPosition.z);
+        RaycastHit hit = new RaycastHit();
+        string[] maskVals = new string[1];
+        maskVals[0] = "Terrain";
+        int lMask = LayerMask.GetMask(maskVals);
+
+        if (Physics.Raycast(rayOrig, Vector3.down, out hit, 200, lMask))
+        {
+            markerPosition.y = hit.point.y;
+            Debug.Log(markerPosition.y);
+        }
 
         Instantiate(mapMarkerWorldObject, markerPosition, Quaternion.identity);
     }

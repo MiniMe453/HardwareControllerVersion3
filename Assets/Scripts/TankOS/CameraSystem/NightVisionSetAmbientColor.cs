@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Rover.Settings;
 using UnityEngine;
 
 public class NightVisionSetAmbientColor : MonoBehaviour
@@ -13,6 +14,6 @@ public class NightVisionSetAmbientColor : MonoBehaviour
 
     void OnDisable()
     {
-        RenderSettings.ambientLight = defaultAmbientColor;
+        RenderSettings.ambientLight = GameSettings.DEFAULT_AMBIENT_COLOR;
     }
 }

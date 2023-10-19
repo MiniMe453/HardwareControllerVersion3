@@ -177,11 +177,11 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   startFadeDistance:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 80
   endFadeDistance:
     overrideState: 1
-    value: 75
+    value: 80
   sensitivityDepth:
     overrideState: 0
     value: 0
@@ -193,7 +193,7 @@ MonoBehaviour:
     value: 0.213
   edgeColor:
     overrideState: 1
-    value: {r: 0.32067516, g: 1, b: 0.21226418, a: 1}
+    value: {r: 0.3160377, g: 1, b: 0.31794465, a: 1}
   edgeExp:
     overrideState: 1
     value: 1
@@ -204,8 +204,12 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   sobelThin:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
+  objectStencil:
+    overrideState: 1
+    value: {fileID: 8400000, guid: c7f824c6be9830c4f87d22fe3f4eb1fb, type: 2}
+    defaultState: 1
   shader: {fileID: 4800000, guid: 3fc4da99283964645b5394387ac90238, type: 3}
 --- !u!114 &4864486953856386584
 MonoBehaviour:

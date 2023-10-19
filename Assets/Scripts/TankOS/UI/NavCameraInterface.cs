@@ -220,10 +220,15 @@ public class NavCameraInterface : MonoBehaviour
        foreach(Struct_RadioScan result in System_RDIO.PrevScanResults)
        {
             GameObject resultGO = Instantiate(mapMarkerPrefab, radioScanTransform);
-            resultGO.GetComponent<TextMeshProUGUI>().text = $" {result.radioType.ToString().PadLeft(3)}  {result.frequency.ToString("000.0")}  {result.strength.ToString().PadLeft(3)}%";
+            resultGO.GetComponent<TextMeshProUGUI>().text = $" {result.radioType.ToString().PadLeft(3)}  {result.frequency.ToString("000.0")}  {result.strength.ToString().PadLeft(3)}";
             resultGO.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
             m_radioScanList.Add(resultGO);
        }
+
+        GameObject InitVal = Instantiate(mapMarkerPrefab, radioScanTransform);
+        InitVal.GetComponent<TextMeshProUGUI>().text = $" {"BND".PadLeft(3)}  {"FREQ".PadLeft(5)}  {"DIR".PadLeft(3)}";
+        InitVal.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+        m_radioScanList.Add(InitVal);
     }
 
     void OnBrakeStateChanged(bool newState)

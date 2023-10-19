@@ -13,6 +13,8 @@ namespace SCPE
         SerializedParameterOverride sensitivityNormals;
         SerializedParameterOverride lumThreshold;
 
+        SerializedParameterOverride objectStencil;
+
         SerializedParameterOverride edgeExp;
         SerializedParameterOverride edgeSize;
 
@@ -49,6 +51,7 @@ namespace SCPE
             startFadeDistance = FindParameterOverride(x => x.startFadeDistance);
             endFadeDistance = FindParameterOverride(x => x.endFadeDistance);
             sobelThin = FindParameterOverride(x => x.sobelThin);
+            objectStencil = FindParameterOverride(x => x.objectStencil);
         }
 
         public override void OnInspectorGUI()
@@ -126,6 +129,9 @@ namespace SCPE
             EditorGUILayout.LabelField("Edge settings");
             PropertyField(edgeColor);
             PropertyField(edgeSize);
+
+            EditorGUILayout.LabelField("Stencil Texture");
+            PropertyField(objectStencil);
             
         }
     }

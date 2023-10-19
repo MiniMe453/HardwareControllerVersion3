@@ -1,3 +1,4 @@
+using UnityEngine;
 
 namespace Rover.Settings
 {
@@ -20,9 +21,10 @@ namespace Rover.Settings
         public const float TERRAIN_MAX = 1200;
         public const float LIDAR_SCAN_RANGE = 20f;
         public const float PHOTO_VIEWER_FPS = 10f;
-        public const int HORIZONTAL_CENTER_VAL = 480;
+        public static int HORIZONTAL_CENTER_VAL = 360;
+        public static int HORIZONTAL_AVG_THRESHOLD = 25;
         public const int VERTICAL_CENTER_VAL = 560;
-        public const float JOYSTICK_DEADZONE = 0.1f;
+        public const float JOYSTICK_DEADZONE = 0.2f;
         public const float RADIO_FREQ_CHART_UPDATE_TIMER = 1f/10f;
         public const float ROLL_DANGER_ZONE = 35f;
         public const float PITCH_DANGER_ZONE = 35f;
@@ -30,6 +32,8 @@ namespace Rover.Settings
         public const float MAG_MAX_VALUE = 50f;
         public const float RAD_MAX_VALUE = 0.01f;
         public const float TEMP_MAX_VALUE = 20f;
+
+        public static Color DEFAULT_AMBIENT_COLOR = new Color(0.6352941f,0.4392157f,0.3647059f);
     }
 }
 

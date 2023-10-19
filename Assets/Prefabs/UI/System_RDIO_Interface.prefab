@@ -2882,7 +2882,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BAND   FREQ   STR
+  m_text: BAND   FREQ   DIR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7b9b3c093ca530244a6937aac7696e8d, type: 2}
   m_sharedMaterial: {fileID: -5772336739553363899, guid: 7b9b3c093ca530244a6937aac7696e8d, type: 2}

@@ -229,7 +229,7 @@ namespace Rover.Systems
             float resModifier = 1f;
 
             if(m_cameraMode == CameraMode.Cam4)
-                resModifier = 0.5f;
+                resModifier = 0.25f;
 
             RenderTexture rt = new RenderTexture((int)((float)GameSettings.GAME_RES_X * resModifier), (int)((float)GameSettings.GAME_RES_Y * resModifier), 24);
             selectedCamera.targetTexture = rt;

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class InputTypeManager : MonoBehaviour
 {
-    private static bool m_useKeyboardInput = true;
+    private static bool m_useKeyboardInput = false;
     public static bool UseKeyboardInput { get { return m_useKeyboardInput; } }
     public GameInitializer gameInitializer => GetComponent<GameInitializer>();
     private static InputActionAsset m_InputActions;

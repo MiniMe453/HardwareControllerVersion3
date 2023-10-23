@@ -1,0 +1,114 @@
+{
+    "name": "KeyboardControlScheme",
+    "maps": [
+        {
+            "name": "RoverContoller",
+            "id": "6184c08e-3792-4b45-9ada-5c0d91d7688c",
+            "actions": [
+                {
+                    "name": "Cam1",
+                    "type": "Button",
+                    "id": "fccf7aa4-d553-4106-b86e-33651d3b6c8f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cam2",
+                    "type": "Button",
+                    "id": "fbfb7787-09e9-45c3-be80-f8cc8683f5bf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cam3",
+                    "type": "Button",
+                    "id": "2efa6e0b-b6b6-433c-bb7c-0ed0f3ac59c6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cam4",
+                    "type": "Button",
+                    "id": "961c7994-fcb8-43b4-80ea-82f37ae8882c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TakePhoto",
+                    "type": "Button",
+                    "id": "19715388-7857-454a-83fe-240b95dd64a0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e2fd4d0c-b83a-4da0-ba92-71c14bdca520",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cam1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88c0cc5c-b222-4662-8b5b-7672c99b9164",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cam2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "96a67739-4d68-4ac6-b2cb-69fc1d296de0",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cam3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "727488d4-04a8-432c-9dbf-6f93ce4b6898",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cam4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a8c6c1f6-53cf-4b22-8976-4b9b54104c6c",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TakePhoto",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

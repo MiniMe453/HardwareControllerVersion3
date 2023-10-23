@@ -158,6 +158,7 @@ Shader "Hidden/SC Post Effects/LUT"
 
 	float4 FragSingle(Varyings input) : SV_Target
 	{
+		UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 		float4 depthnormal = tex2D(_CameraDepthNormalsTexture, input.uv);
 		half4 screenColor = tex2D (_CameraGBufferTexture1, input.uv);
 		half4 screenNormals = tex2D(_CameraGBufferTexture2, input.uv);
@@ -179,47 +180,35 @@ Shader "Hidden/SC Post Effects/LUT"
 		depth = depth * _ProjectionParams.z;
 
 		normal = normal = mul((float3x3)_viewToWorld, normal);
-		
-		return normal.g;
+		float3 lightDir = _WorldSpaceLightPos0.rgb;
 
-		float3 color = lerp(float3(1,1,1), normal, alpha);
-
-		float slopeAlpha;
-
-		if(color.g < 0.9)
-			slopeAlpha = 1;
-		else
-			slopeAlpha = 0;
-
-		color = lerp(color, float3(1,0,0), slopeAlpha);
-
-
-
-		return float4(color, 1);
-		
-		// UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
-
-		// half4 screenColor = tex2D (_CameraGBufferTexture1, input.uv);
-		// half4 screenNormals = tex2D(_CameraGBufferTexture2, input.uv);
+		float3 lightGradient = max(0,dot(normal,lightDir));
+		//return float4(lightGradient.rgb, 1);
+		//return normal.g;
 
 		// // float2 pCoord = ;
 		// // float2 uv = (pCoord+0.5) * _MainTex_TexelSize.xy;
 
-		// float sampleVal;
+		float plantThermalGradient;
 
-		// if(screenColor.a < 0.9)
-		// 	sampleVal = screenColor.a + 0.1;
-		// else
-		// 	sampleVal = 0.99;
+		if(screenColor.a < 0.9)
+			plantThermalGradient = screenColor.a + 0.1;
+		else
+			plantThermalGradient = 0.99;
 
-		// float2 sampleUV = float2(sampleVal, 0);
+		float thermalValue = (((lightGradient.g*lightGradient.g*lightGradient.g)*0.1+0.01) + (plantThermalGradient * plantThermalGradient));
 
-		// float3 color = max(0, dot(screenNormals, float3(0,-1,0)));
+		thermalValue = lerp(thermalValue, 0.02, 1-alpha);
+		
+		//float2 sampleUV = float2(plantThermalGradient, 0);
+		float2 sampleUV = float2(thermalValue, 0);
 
-		// float4 thermalCol = _LUT_Near.Sample(sampler_LUT_Near, sampleUV);
-		// thermalCol *= ((1 - screenNormals.g) + 0.8); 
+		float3 color = max(0, dot(screenNormals, float3(0,-1,0)));
 
-		// return thermalCol;
+		float4 thermalCol = _LUT_Near.Sample(sampler_LUT_Near, sampleUV);
+		thermalCol *= ((1 - screenNormals.g) + 0.8); 
+
+		return thermalCol;
 		//return tex2D (_CameraGBufferTexture1, input.uv);
 		//return gbuffer1;
 	}

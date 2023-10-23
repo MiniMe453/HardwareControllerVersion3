@@ -226,13 +226,18 @@ namespace Rover.Systems
 
             selectedCamera.gameObject.SetActive(true);
 
-            RenderTexture rt = new RenderTexture(GameSettings.GAME_RES_X, GameSettings.GAME_RES_Y, 24);
+            float resModifier = 1f;
+
+            if(m_cameraMode == CameraMode.Cam4)
+                resModifier = 0.5f;
+
+            RenderTexture rt = new RenderTexture((int)((float)GameSettings.GAME_RES_X * resModifier), (int)((float)GameSettings.GAME_RES_Y * resModifier), 24);
             selectedCamera.targetTexture = rt;
-            Texture2D cameraPhoto = new Texture2D(GameSettings.GAME_RES_X, GameSettings.GAME_RES_Y, TextureFormat.RGB24, false);
+            Texture2D cameraPhoto = new Texture2D((int)((float)GameSettings.GAME_RES_X * resModifier), (int)((float)GameSettings.GAME_RES_Y * resModifier), TextureFormat.RGB24, false);
             selectedCamera.Render();
             RenderTexture.active = rt;
 
-            cameraPhoto.ReadPixels(new Rect(0, 0, GameSettings.GAME_RES_X, GameSettings.GAME_RES_Y), 0, 0);
+            cameraPhoto.ReadPixels(new Rect(0, 0, (int)((float)GameSettings.GAME_RES_X * resModifier), (int)((float)GameSettings.GAME_RES_Y * resModifier)), 0, 0);
             cameraPhoto.Apply();
 
             string photoName = $"{m_cameraMode.ToString()}_{TimeManager.ToStringMissionTimeClk(TimeManager.GetCurrentDateTime(), "_")}_{m_screenshotCount.ToString("000")}.bmp";

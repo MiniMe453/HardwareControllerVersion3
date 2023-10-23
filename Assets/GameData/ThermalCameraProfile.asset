@@ -27,7 +27,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7969232a53c3c2148a7764600324f3ae, type: 3}
   m_Name: TubeDistortion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -68,7 +68,7 @@ MonoBehaviour:
     value: 1
   lutNear:
     overrideState: 1
-    value: {fileID: 2800000, guid: 4699f9acd7093eb42a3df1391ace6704, type: 3}
+    value: {fileID: 2800000, guid: 05c025c7bbb6901468020c57f838770d, type: 3}
     defaultState: 1
   lutFar:
     overrideState: 0

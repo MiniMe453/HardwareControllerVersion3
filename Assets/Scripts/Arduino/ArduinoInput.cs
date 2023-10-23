@@ -174,8 +174,6 @@ namespace Rover.Arduino
 
     public static class ArduinoInputDatabase
     {
-        private static InputActionAsset m_InputActions;
-        public static InputActionAsset InputActions { get { return m_InputActions; } }
         private static List<ArduinoInput> m_arduinoInputs = new List<ArduinoInput>();
         public static List<ArduinoInput> ArduinoInputs { get { return m_arduinoInputs; } }
         private static ArduinoInputActionMap m_InputActionMap;
@@ -207,12 +205,7 @@ namespace Rover.Arduino
         {
             UduinoManager.Instance.OnBoardConnected += OnBoardConnected;
             m_InputActionMap = Resources.Load<ArduinoInputActionMap>("RoverInputActions");
-            m_InputActions = Resources.Load<InputActionAsset>("KeyboardActionAsset");
-            Debug.LogError(m_InputActionMap);
             SceneManager.sceneLoaded += OnSceneLoaded;
-
-            if (!usingArduino)
-                EOnDatabasedInitialized?.Invoke();
         }
 
         static void OnSceneLoaded(Scene loadedScene, LoadSceneMode mode)
@@ -220,7 +213,7 @@ namespace Rover.Arduino
             if (!m_databaseInitialized)
                 return;
 
-            Timer.Register(0.1f, () => { EOnDatabasedInitialized?.Invoke(); Debug.LogError("InputDatabase initialized"); });
+            Timer.Register(0.1f, () => { GameInitializer.EOnGameInitialized?.Invoke(); Debug.LogError("InputDatabase initialized"); });
         }
 
         private static void OnBoardConnected(UduinoDevice device)
@@ -340,7 +333,7 @@ namespace Rover.Arduino
             threeWaySwitch = new ThreeWaySwitch();
             sendSetupMessagesTimer.Cancel();
 
-            EOnDatabasedInitialized?.Invoke();
+            GameInitializer.EOnGameInitialized?.Invoke();
             m_databaseInitialized = true;
         }
 

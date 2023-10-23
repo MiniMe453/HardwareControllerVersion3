@@ -44,7 +44,7 @@ namespace Rover.Systems
         private MessageBox m_brakeWarningMessageBox;
         void OnEnable()
         {
-            ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
+            GameInitializer.EOnGameInitialized += OnDatabaseInit;
             RoverOperatingSystem.EOnRoverControlModeChanged += OnRoverControlModeChanged;
         }
 
@@ -67,11 +67,11 @@ namespace Rover.Systems
             ArduinoInputDatabase.GetInputFromName("Joystick Y").EOnValueChanged += OnVerticalAxis;
 
             #region Keyboard Action Subscription
-            ArduinoInputDatabase.InputActions["Cam1"].performed += OnCam1ButtonPressed;
-            ArduinoInputDatabase.InputActions["Cam2"].performed += OnCam2ButtonPressed;
-            ArduinoInputDatabase.InputActions["Cam3"].performed += OnCam3ButtonPressed;
-            ArduinoInputDatabase.InputActions["Cam4"].performed += OnCam4ButtonPressed;
-            ArduinoInputDatabase.InputActions["TakePhoto"].performed += OnTakePhotoButtonPressed;
+            InputTypeManager.InputActions["Cam1"].performed += OnCam1ButtonPressed;
+            InputTypeManager.InputActions["Cam2"].performed += OnCam2ButtonPressed;
+            InputTypeManager.InputActions["Cam3"].performed += OnCam3ButtonPressed;
+            InputTypeManager.InputActions["Cam4"].performed += OnCam4ButtonPressed;
+            InputTypeManager.InputActions["TakePhoto"].performed += OnTakePhotoButtonPressed;
 
             #endregion
 
@@ -197,6 +197,16 @@ namespace Rover.Systems
         void OnTakePhotoButtonPressed(InputAction.CallbackContext context)
         {
             OnTakePhotoButtonPressed(-1);
+        }
+
+        void OnVerticalAxisKeyboardUp(InputAction.CallbackContext context)
+        {
+
+        }
+
+        void OnVerticalAxisKeyboardDown(InputAction.CallbackContext context)
+        {
+
         }
 
         void OnVerticalAxis(float value, int pin)

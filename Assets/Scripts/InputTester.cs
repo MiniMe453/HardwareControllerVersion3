@@ -36,7 +36,7 @@ public class InputTester : MonoBehaviour
     int warningLightIndex = 0;
     void OnEnable()
     {
-        ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
+        GameInitializer.EOnGameInitialized += OnDatabaseInit;
     }
 
     void OnDatabaseInit()
@@ -93,14 +93,14 @@ public class InputTester : MonoBehaviour
         Timer.Register(0.9f, () => SendTestWriteTM(), isLooped: true);
         Timer.Register(0.8f, () => CycleWarningLights(), isLooped: true);
 
-//        Debug.LogError(PrintStartLedPin);
+        //        Debug.LogError(PrintStartLedPin);
     }
 
     void OnThreeWaySwitchChanged(int newSelection)
     {
         string text = "";
 
-        switch(newSelection)
+        switch (newSelection)
         {
             case 0:
                 text = $"{newSelection}: MODE 1";
@@ -120,14 +120,14 @@ public class InputTester : MonoBehaviour
     {
         warningLightIndex++;
 
-        if(warningLightIndex == warningLightIndexes.Length)
+        if (warningLightIndex == warningLightIndexes.Length)
             warningLightIndex = 0;
 
         int[] values = new int[warningLightIndexes.Length];
         values[warningLightIndex] = 1;
 
-        values[warningLightIndexes.Length - 1] = warningLightIndex % 2 == 0? 0 : 1;
-        values[warningLightIndexes.Length - 2] = warningLightIndex % 2 == 0? 1 : 0;
+        values[warningLightIndexes.Length - 1] = warningLightIndex % 2 == 0 ? 0 : 1;
+        values[warningLightIndexes.Length - 2] = warningLightIndex % 2 == 0 ? 1 : 0;
 
         LEDManager.SetLEDMode(warningLightIndexes, values);
     }
@@ -136,16 +136,16 @@ public class InputTester : MonoBehaviour
     {
         object[] displayData = new object[5];
 
-        if(LCDCounter % 2 == 0)
+        if (LCDCounter % 2 == 0)
         {
             displayData[4] = "0";
         }
-        else 
+        else
         {
             displayData[4] = "1";
         }
 
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             displayData[i] = (4096 - LCDCounter).ToString("0000")[i];
         }
@@ -177,7 +177,7 @@ public class InputTester : MonoBehaviour
         lcdData[0] = System.DateTime.Now.ToLongTimeString().Split(' ')[0];
         LCDCounter++;
 
-        if(LCDCounter > 4096)
+        if (LCDCounter > 4096)
             LCDCounter = 0;
 
         lcdData[1] = LCDCounter.ToString("0000");
@@ -189,10 +189,10 @@ public class InputTester : MonoBehaviour
     {
         currentRadioLight++;
 
-        if(currentRadioLight == 3)
+        if (currentRadioLight == 3)
             currentRadioLight = 0;
 
-        LEDManager.SetLEDMode(new int[] {station1LightPin, station2LightPin, station3LightPin}, new int[] {
+        LEDManager.SetLEDMode(new int[] { station1LightPin, station2LightPin, station3LightPin }, new int[] {
             Convert.ToInt32(currentRadioLight == 0), Convert.ToInt32(currentRadioLight == 1), Convert.ToInt32(currentRadioLight == 2)
         });
 
@@ -209,7 +209,7 @@ public class InputTester : MonoBehaviour
 
         displayData[4] = "0";
 
-        for(int i = 0; i< 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             displayData[i] = rotaryCountInt.ToString("0000")[i];
         }
@@ -227,12 +227,12 @@ public class InputTester : MonoBehaviour
     {
         ToggleLEDState(cam2ledPin);
     }
-    
+
     void OnCam3Pressed(int pin)
     {
         ToggleLEDState(cam3ledPin);
     }
-    
+
     void OnCam4Pressed(int pin)
     {
         ToggleLEDState(cam4ledPin);
@@ -240,7 +240,7 @@ public class InputTester : MonoBehaviour
 
     void ToggleLEDState(int ledPin)
     {
-        if(LEDManager.GetLEDState(ledPin))
+        if (LEDManager.GetLEDState(ledPin))
         {
             LEDManager.SetLEDMode(ledPin, 0);
         }
@@ -267,7 +267,7 @@ public class InputTester : MonoBehaviour
 
     void TakePhotoButtonRelease(int pin)
     {
-        TakePhotoButton.text = "RELEASED";  
+        TakePhotoButton.text = "RELEASED";
     }
 
     void PushPotienometerChanged(float value, int pin)

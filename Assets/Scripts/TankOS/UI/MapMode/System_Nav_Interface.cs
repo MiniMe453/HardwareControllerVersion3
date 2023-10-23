@@ -35,7 +35,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
     public GameObject mapMarkerTransformEntry;
     public GameObject mapMarkerWorldObject;
     private static List<string> m_mapMarkers = new List<string>();
-    public static List<string> MapMarkers {get {return m_mapMarkers;}}
+    public static List<string> MapMarkers { get { return m_mapMarkers; } }
 
     private MessageBox m_brakeWarningBox;
     private float m_horizontalAxis;
@@ -47,12 +47,12 @@ public class System_Nav_Interface : MonoBehaviourApplication
 
     protected override void Init()
     {
-        applicationInputs.AddAction("goup", binding:"<Keyboard>/upArrow");
-        applicationInputs.AddAction("godown", binding:"<Keyboard>/downArrow");
-        applicationInputs.AddAction("goleft", binding:"<Keyboard>/leftArrow");
-        applicationInputs.AddAction("goright", binding:"<Keyboard>/rightArrow");
-        applicationInputs.AddAction("resetLoc", binding:"<Keyboard>/r");
-        applicationInputs.AddAction("markLoc", binding:"<Keyboard>/m");
+        applicationInputs.AddAction("goup", binding: "<Keyboard>/upArrow");
+        applicationInputs.AddAction("godown", binding: "<Keyboard>/downArrow");
+        applicationInputs.AddAction("goleft", binding: "<Keyboard>/leftArrow");
+        applicationInputs.AddAction("goright", binding: "<Keyboard>/rightArrow");
+        applicationInputs.AddAction("resetLoc", binding: "<Keyboard>/r");
+        applicationInputs.AddAction("markLoc", binding: "<Keyboard>/m");
 
 
         applicationInputs["goup"].performed += NavigateUp;
@@ -70,7 +70,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
 
         System_MTR.EOnBrakeModeChanged += OnBrakeStateChanged;
 
-        ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
+        GameInitializer.EOnGameInitialized += OnDatabaseInit;
 
         //AppDatabase.LoadApp(AppID);
     }
@@ -83,7 +83,7 @@ public class System_Nav_Interface : MonoBehaviourApplication
 
     void OnGameReset()
     {
-        for(int i = 0; i < mapMarkerTransform.childCount; i++)
+        for (int i = 0; i < mapMarkerTransform.childCount; i++)
         {
             DestroyImmediate(mapMarkerTransform.GetChild(0));
         }
@@ -101,30 +101,30 @@ public class System_Nav_Interface : MonoBehaviourApplication
     }
 
     protected override void OnAppQuit()
-    {   
+    {
         UIManager.RemoveFromViewport(canvas);
         mapCamera.enableRendering = false;
     }
 
 
-//we want the user to be able to control the rover while in the map mode. 
-/**
+    //we want the user to be able to control the rover while in the map mode. 
+    /**
 to do this, the map can only be controlled by the joystick whenever the brake is active. if the brake is not active
 then we will auto attach the camera to the rover and allow the user to control the rover.
 
 it's not the cleanest solution, but i can't figure out anything else. for other solutions, two joysticks would be needed.
-**/
+    **/
     void OnVerticalAxis(float value, int pin)
     {
-        if(!System_MTR.IsBrakeActive && System_MTR.RoverVelocity > 0f)
+        if (!System_MTR.IsBrakeActive && System_MTR.RoverVelocity > 0f)
             return;
 
         m_verticalAxis = (value - GameSettings.VERTICAL_CENTER_VAL) / GameSettings.VERTICAL_CENTER_VAL;
 
-        if(Mathf.Abs(m_verticalAxis) < GameSettings.JOYSTICK_DEADZONE)
+        if (Mathf.Abs(m_verticalAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_verticalAxis = 0;
 
-        if(Mathf.Abs(m_verticalAxis) > 0)
+        if (Mathf.Abs(m_verticalAxis) > 0)
             m_cursorConnectedToRover = false;
 
         m_currentMoveDir = new Vector2(-m_verticalAxis, m_horizontalAxis);
@@ -132,15 +132,15 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void OnHorizontalAxis(float value, int pin)
     {
-        if(!System_MTR.IsBrakeActive  && System_MTR.RoverVelocity > 0f)
+        if (!System_MTR.IsBrakeActive && System_MTR.RoverVelocity > 0f)
             return;
 
-        m_horizontalAxis = (value - GameSettings.HORIZONTAL_CENTER_VAL)/GameSettings.HORIZONTAL_CENTER_VAL;
+        m_horizontalAxis = (value - GameSettings.HORIZONTAL_CENTER_VAL) / GameSettings.HORIZONTAL_CENTER_VAL;
 
-        if(Mathf.Abs(m_horizontalAxis) < GameSettings.JOYSTICK_DEADZONE)
+        if (Mathf.Abs(m_horizontalAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_horizontalAxis = 0;
 
-        if(Mathf.Abs(m_horizontalAxis) > 0)
+        if (Mathf.Abs(m_horizontalAxis) > 0)
             m_cursorConnectedToRover = false;
 
         m_currentMoveDir = new Vector2(-m_verticalAxis, m_horizontalAxis);
@@ -148,13 +148,13 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void NavigateUp(InputAction.CallbackContext context)
     {
-        if(!System_MTR.IsBrakeActive)
+        if (!System_MTR.IsBrakeActive)
             return;
 
         m_cursorConnectedToRover = false;
         ShowBrakeWarningMessage();
 
-        if(context.performed)
+        if (context.performed)
             m_currentMoveDir.x = 1f;
         else if (context.canceled)
             m_currentMoveDir.x = 0f;
@@ -162,13 +162,13 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void NavigateDown(InputAction.CallbackContext context)
     {
-        if(!System_MTR.IsBrakeActive)
+        if (!System_MTR.IsBrakeActive)
             return;
 
         m_cursorConnectedToRover = false;
         ShowBrakeWarningMessage();
 
-        if(context.performed)
+        if (context.performed)
             m_currentMoveDir.x = -1f;
         else if (context.canceled)
             m_currentMoveDir.x = 0f;
@@ -176,13 +176,13 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void NavigateLeft(InputAction.CallbackContext context)
     {
-        if(!System_MTR.IsBrakeActive)
+        if (!System_MTR.IsBrakeActive)
             return;
 
         m_cursorConnectedToRover = false;
         ShowBrakeWarningMessage();
 
-        if(context.performed)
+        if (context.performed)
             m_currentMoveDir.y = -1f;
         else if (context.canceled)
             m_currentMoveDir.y = 0f;
@@ -190,13 +190,13 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void NavigateRight(InputAction.CallbackContext context)
     {
-        if(!System_MTR.IsBrakeActive)
+        if (!System_MTR.IsBrakeActive)
             return;
 
         m_cursorConnectedToRover = false;
         ShowBrakeWarningMessage();
 
-        if(context.performed)
+        if (context.performed)
             m_currentMoveDir.y = 1f;
         else if (context.canceled)
             m_currentMoveDir.y = 0f;
@@ -205,7 +205,7 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
     void ShowBrakeWarningMessage()
     {
         return;
-        
+
         // if(System_MTR.IsBrakeActive)
         //     return;
 
@@ -214,24 +214,24 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void OnBrakeStateChanged(bool newState)
     {
-        roverBrakeText.color = newState? Color.black : Color.gray;
+        roverBrakeText.color = newState ? Color.black : Color.gray;
 
-        if(!newState)
+        if (!newState)
         {
             m_cursorConnectedToRover = true;
             return;
         }
 
 
-        if(m_brakeWarningBox != null)
+        if (m_brakeWarningBox != null)
         {
             m_brakeWarningBox.HideMessageBox();
             m_brakeWarningBox = null;
             return;
         }
 
-        if(m_cursorConnectedToRover)
-            return;            
+        if (m_cursorConnectedToRover)
+            return;
     }
 
     void ResetMapCameraPos(InputAction.CallbackContext context)
@@ -265,17 +265,17 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
     void Update()
     {
-        if(!AppIsLoaded)
+        if (!AppIsLoaded)
             return;
 
-        if(System_MTR.RoverVelocity > 0f)
+        if (System_MTR.RoverVelocity > 0f)
             mapCamera.transform.position = new Vector3(System_GPS.WorldSpacePos.x, mapCamera.transform.position.y, System_GPS.WorldSpacePos.z);
         else
             mapCamera.transform.position += new Vector3(m_currentMoveDir.y, 0, m_currentMoveDir.x) * cameraMoveSpeed * Time.deltaTime;
 
         RaycastHit hit;
 
-        if(Physics.Raycast(mapCamera.transform.position, Vector3.down, out hit, 1000f, LayerMask.GetMask(new string[] {"Terrain"})))
+        if (Physics.Raycast(mapCamera.transform.position, Vector3.down, out hit, 1000f, LayerMask.GetMask(new string[] { "Terrain" })))
         {
             cursorElevationText.text = System_GPS.ElevationAtWorldPos(hit.point).ToString("00.0") + "m";
         }

@@ -16,8 +16,8 @@ public class SoundManager : MonoBehaviour
 
     void OnEnable()
     {
-        ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
-        
+        GameInitializer.EOnGameInitialized += OnDatabaseInit;
+
         WorldSoundsMixer.SetFloat("Volume", -80f);
         RadioStaticMixer.SetFloat("Volume", -80f);
         RadioStationMixer.SetFloat("Volume", -80f);
@@ -37,19 +37,19 @@ public class SoundManager : MonoBehaviour
         Debug.LogError("Button pressed");
         m_isMicOn = !m_isMicOn;
 
-        WorldSoundsMixer.SetFloat("Volume", m_isMicOn? 0f : -80f);
-        RadioStaticMixer.SetFloat("Volume", m_isMicOn? -80f : 0f);
-        RadioStationMixer.SetFloat("Volume", m_isMicOn? -80f : 0f);
+        WorldSoundsMixer.SetFloat("Volume", m_isMicOn ? 0f : -80f);
+        RadioStaticMixer.SetFloat("Volume", m_isMicOn ? -80f : 0f);
+        RadioStationMixer.SetFloat("Volume", m_isMicOn ? -80f : 0f);
 
-        LEDManager.SetLEDMode(m_micLedPin, m_isMicOn? 1 : 0);
+        LEDManager.SetLEDMode(m_micLedPin, m_isMicOn ? 1 : 0);
     }
 
     void OnMuteButtonPressed(int pin)
     {
         m_isMuted = !m_isMuted;
 
-        WorldSoundsMixer.SetFloat("Volume", m_isMuted? -80f : (m_isMicOn? 0f : -80f));
-        RadioStaticMixer.SetFloat("Volume", m_isMuted? -80f : (m_isMicOn? -80f : 0f));
-        RadioStationMixer.SetFloat("Volume",m_isMuted? -80f : ( m_isMicOn? -80f : 0f));
+        WorldSoundsMixer.SetFloat("Volume", m_isMuted ? -80f : (m_isMicOn ? 0f : -80f));
+        RadioStaticMixer.SetFloat("Volume", m_isMuted ? -80f : (m_isMicOn ? -80f : 0f));
+        RadioStationMixer.SetFloat("Volume", m_isMuted ? -80f : (m_isMicOn ? -80f : 0f));
     }
 }

@@ -31,7 +31,7 @@ public class System_WARN : MonoBehaviour
 
     void OnEnable()
     {
-        ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
+        GameInitializer.EOnGameInitialized += OnDatabaseInit;
 
     }
 
@@ -63,7 +63,7 @@ public class System_WARN : MonoBehaviour
 
     void CheckRoverSensors()
     {
-        if(!Uduino.UduinoManager.Instance.isConnected())
+        if (!Uduino.UduinoManager.Instance.isConnected())
             return;
 
         CheckAngle();
@@ -77,14 +77,14 @@ public class System_WARN : MonoBehaviour
     {
         float magVal = MagneticSim.ReadMagneticFromLocation(transform.position);
 
-        if(magVal > GameSettings.MAG_MAX_VALUE && !m_magWarningShown)
+        if (magVal > GameSettings.MAG_MAX_VALUE && !m_magWarningShown)
         {
             m_magWarningShown = true;
 
-            if(m_currentMessageBox)
+            if (m_currentMessageBox)
             {
                 m_currentMessageBox.HideMessageBox();
-                m_currentMessageBox = null;    
+                m_currentMessageBox = null;
             }
 
             m_currentMessageBox = UIManager.ShowMessageBox("WRNG: ABNORMAL MAGNETIC FIELDS", Color.red, 2f);
@@ -101,9 +101,9 @@ public class System_WARN : MonoBehaviour
     {
         float tempVal = TemperatureSim.ReadTemperatureFromLocation(transform.position);
 
-        if(tempVal > GameSettings.TEMP_MAX_VALUE && !LEDManager.GetLEDState(tempWarnPin))
+        if (tempVal > GameSettings.TEMP_MAX_VALUE && !LEDManager.GetLEDState(tempWarnPin))
         {
-            if(!m_currentMessageBox)
+            if (!m_currentMessageBox)
             {
                 m_currentMessageBox = UIManager.ShowMessageBox("WRNG: ABNORMAL TEMPERATURE", Color.red, 2f);
             }
@@ -116,16 +116,16 @@ public class System_WARN : MonoBehaviour
             LEDManager.SetLEDMode(tempWarnPin, 0);
             EOnTemperatureWarningLight?.Invoke(false);
         }
-        
+
     }
 
     void CheckRadiation()
     {
         float radVal = RadiationSim.ReadRadiationFromLocation(transform.position);
 
-        if(radVal > GameSettings.RAD_MAX_VALUE && !LEDManager.GetLEDState(radWarnPin))
+        if (radVal > GameSettings.RAD_MAX_VALUE && !LEDManager.GetLEDState(radWarnPin))
         {
-            if(!m_currentMessageBox)
+            if (!m_currentMessageBox)
             {
                 m_currentMessageBox = UIManager.ShowMessageBox("WRNG: ABNORMAL RADIATION", Color.red, 2f);
             }
@@ -142,22 +142,22 @@ public class System_WARN : MonoBehaviour
 
     void CheckAngle()
     {
-        if((Mathf.Abs(SystemPitchRoll.Pitch) > GameSettings.PITCH_DANGER_ZONE || Mathf.Abs(SystemPitchRoll.Roll) > GameSettings.ROLL_DANGER_ZONE) && !LEDManager.GetLEDState(anglWarnPin))
-        { 
+        if ((Mathf.Abs(SystemPitchRoll.Pitch) > GameSettings.PITCH_DANGER_ZONE || Mathf.Abs(SystemPitchRoll.Roll) > GameSettings.ROLL_DANGER_ZONE) && !LEDManager.GetLEDState(anglWarnPin))
+        {
             LEDManager.SetLEDMode(anglWarnPin, 1);
             m_angleMessageBox = UIManager.ShowMessageBox("WRNG: HIGH PITCH OR ROLL", Color.red, -1f);
-            EOnAngleWarningLight?.Invoke(true);    
+            EOnAngleWarningLight?.Invoke(true);
         }
-        else if((Mathf.Abs(SystemPitchRoll.Pitch) < GameSettings.PITCH_DANGER_ZONE && Mathf.Abs(SystemPitchRoll.Roll) < GameSettings.ROLL_DANGER_ZONE) && LEDManager.GetLEDState(anglWarnPin))
-        {    
+        else if ((Mathf.Abs(SystemPitchRoll.Pitch) < GameSettings.PITCH_DANGER_ZONE && Mathf.Abs(SystemPitchRoll.Roll) < GameSettings.ROLL_DANGER_ZONE) && LEDManager.GetLEDState(anglWarnPin))
+        {
             LEDManager.SetLEDMode(anglWarnPin, 0);
             EOnAngleWarningLight?.Invoke(false);
         }
 
-            if(m_angleMessageBox)
-            {
-                m_angleMessageBox.HideMessageBox();
-            }
+        if (m_angleMessageBox)
+        {
+            m_angleMessageBox.HideMessageBox();
+        }
     }
 
     void CheckRoverProximity()
@@ -165,21 +165,21 @@ public class System_WARN : MonoBehaviour
         float angle = 0f;
         bool sensorActivated = false;
 
-        Collider[] objectsInSphere = Physics.OverlapSphere(transform.position, GameSettings.PROXIMITY_CHECK_RADIUS, ~LayerMask.GetMask(new string[] {"Terrain", "Rover"}));
+        Collider[] objectsInSphere = Physics.OverlapSphere(transform.position, GameSettings.PROXIMITY_CHECK_RADIUS, ~LayerMask.GetMask(new string[] { "Terrain", "Rover" }));
 
         if (objectsInSphere.Length == 0)
         {
             ResetProximitySensorPins();
             return;
         }
-        
+
         sensorActivated = true;
 
         foreach (Collider obj in objectsInSphere)
         {
             angle = Vector3.SignedAngle(transform.forward, (obj.transform.position - transform.position).normalized, Vector3.up);
 
-            if ((angle <= -135f || angle >= 135f ) && m_ledPinStates[0] != 1)
+            if ((angle <= -135f || angle >= 135f) && m_ledPinStates[0] != 1)
                 SetLEDPinStates(0, 1);
             if (angle >= 45f && angle <= 135f && m_ledPinStates[1] != 1)
                 SetLEDPinStates(1, 1);
@@ -198,27 +198,27 @@ public class System_WARN : MonoBehaviour
 
     void ResetProximitySensorPins()
     {
-        if(!m_stateModified)
+        if (!m_stateModified)
             return;
 
         m_stateModified = false;
         m_prevQuadrant = -1;
         m_ledPinStates = new int[] { 0, 0, 0, 0 };
-        LEDManager.SetLEDMode(m_ledPins, m_ledPinStates); 
+        LEDManager.SetLEDMode(m_ledPins, m_ledPinStates);
         EOnProximitySensorModified?.Invoke(-1);
     }
 
     private void SetLEDPinStates(int index, int value)
     {
-        if(index != m_prevQuadrant)
+        if (index != m_prevQuadrant)
         {
-            for(int i = 0;i < m_ledPinStates.Length;i++)
+            for (int i = 0; i < m_ledPinStates.Length; i++)
             {
-                m_ledPinStates[i] = i == index? 1 : 0;
+                m_ledPinStates[i] = i == index ? 1 : 0;
             }
 
             m_prevQuadrant = index;
-            m_stateModified = true;  
+            m_stateModified = true;
 
             EOnProximitySensorModified?.Invoke(index);
         }

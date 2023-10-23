@@ -11,11 +11,11 @@ public class System_MTR : MonoBehaviour
 {
     Rigidbody m_rigidbody => GetComponent<Rigidbody>();
     static float m_horizontalAxis;
-    public static float HorizontalAxis {get {return m_horizontalAxis;}}
+    public static float HorizontalAxis { get { return m_horizontalAxis; } }
     static float m_throttleAxis;
-    public static float ThrottleAxis {get {return m_throttleAxis;}}
+    public static float ThrottleAxis { get { return m_throttleAxis; } }
     static bool m_brakeActive = false;
-    public static bool IsBrakeActive {get {return m_brakeActive;}}
+    public static bool IsBrakeActive { get { return m_brakeActive; } }
     public static event Action<bool> EOnBrakeModeChanged;
     int m_brakeLEDpin;
 
@@ -23,7 +23,7 @@ public class System_MTR : MonoBehaviour
     public float speed;
     public float maxSpeed = 1f;
 
-//Public variables for other scripts
+    //Public variables for other scripts
     public static float RoverVelocity;
     public static event Action<float> EOnRoverVelocityUpdate;
 
@@ -39,7 +39,7 @@ public class System_MTR : MonoBehaviour
 
     void OnEnable()
     {
-        ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
+        GameInitializer.EOnGameInitialized += OnDatabaseInit;
 
         m_originalTransform = transform;
     }
@@ -59,9 +59,9 @@ public class System_MTR : MonoBehaviour
 
     void OnHorizontalAxis(float value, int pin)
     {
-        m_horizontalAxis = (value - GameSettings.HORIZONTAL_CENTER_VAL)/GameSettings.HORIZONTAL_CENTER_VAL;
+        m_horizontalAxis = (value - GameSettings.HORIZONTAL_CENTER_VAL) / GameSettings.HORIZONTAL_CENTER_VAL;
 
-        if(Mathf.Abs(m_horizontalAxis) < GameSettings.JOYSTICK_DEADZONE)
+        if (Mathf.Abs(m_horizontalAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_horizontalAxis = 0;
         
         m_horizontalAxis = Math.Clamp(m_horizontalAxis, -1, 1);
@@ -69,9 +69,9 @@ public class System_MTR : MonoBehaviour
 
     void OnThrottleAxis(float value, int pin)
     {
-        m_throttleAxis = (value - 512)/((value - 512 > 0)? 1024 : 512);
+        m_throttleAxis = (value - 512) / ((value - 512 > 0) ? 1024 : 512);
 
-        if(Mathf.Abs(m_throttleAxis) < GameSettings.JOYSTICK_DEADZONE)
+        if (Mathf.Abs(m_throttleAxis) < GameSettings.JOYSTICK_DEADZONE)
             m_throttleAxis = 0;
     }
 
@@ -80,7 +80,7 @@ public class System_MTR : MonoBehaviour
         m_brakeActive = !m_brakeActive;
 
 
-        LEDManager.SetLEDMode(m_brakeLEDpin, m_brakeActive? 1 : 0);
+        LEDManager.SetLEDMode(m_brakeLEDpin, m_brakeActive ? 1 : 0);
 
         EOnBrakeModeChanged?.Invoke(m_brakeActive);
     }
@@ -95,7 +95,7 @@ public class System_MTR : MonoBehaviour
 
     void OnRoverControlModeChanged(RoverControlMode newMode)
     {
-        switch(newMode)
+        switch (newMode)
         {
             case RoverControlMode.CAM:
                 navCamera.SetActive(false);
@@ -108,31 +108,31 @@ public class System_MTR : MonoBehaviour
 
     void OnOSModeChanged(OSMode newMode)
     {
-        if(newMode == OSMode.Rover)
+        if (newMode == OSMode.Rover)
             RoverOperatingSystem.SetUserControl(true);
     }
 
     void Update()
     {
-        if(RoverOperatingSystem.OSMode == OSMode.Computer)
+        if (RoverOperatingSystem.OSMode == OSMode.Computer)
             return;
 
-        if(RoverOperatingSystem.OSMode == OSMode.Map && (m_brakeActive || RoverVelocity == 0f))
+        if (RoverOperatingSystem.OSMode == OSMode.Map && (m_brakeActive || RoverVelocity == 0f))
             return;
 
-        if(Mathf.Abs(SystemPitchRoll.Pitch) > 90 || Mathf.Abs(SystemPitchRoll.Roll) > 90)
+        if (Mathf.Abs(SystemPitchRoll.Pitch) > 90 || Mathf.Abs(SystemPitchRoll.Roll) > 90)
             return;
 
         Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis * Time.deltaTime);
-            m_rigidbody.MoveRotation(wantedRotation);
-        
-        if(RoverOperatingSystem.RoverControlMode != RoverControlMode.RVR)
+        m_rigidbody.MoveRotation(wantedRotation);
+
+        if (RoverOperatingSystem.RoverControlMode != RoverControlMode.RVR)
             return;
 
-        Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_throttleAxis * (m_brakeActive? 0f : 1f) * Time.deltaTime);
+        Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_throttleAxis * (m_brakeActive ? 0f : 1f) * Time.deltaTime);
         m_rigidbody.MovePosition(wantedPosition);
 
-        motorSoundEffect.volume =  Mathf.Clamp01((Mathf.Abs(m_throttleAxis) + Mathf.Abs(m_horizontalAxis)) * (m_brakeActive? 0f: 1f));
+        motorSoundEffect.volume = Mathf.Clamp01((Mathf.Abs(m_throttleAxis) + Mathf.Abs(m_horizontalAxis)) * (m_brakeActive ? 0f : 1f));
 
         // if(m_offroadShakeInstance == null)
         // {
@@ -146,7 +146,7 @@ public class System_MTR : MonoBehaviour
 
     void OnRoverVelocityUpdate()
     {
-        RoverVelocity = maxSpeed * (m_throttleAxis * -1f) * (m_brakeActive? 0f : 1f) * 10f;
+        RoverVelocity = maxSpeed * (m_throttleAxis * -1f) * (m_brakeActive ? 0f : 1f) * 10f;
         EOnRoverVelocityUpdate?.Invoke(RoverVelocity);
     }
 }

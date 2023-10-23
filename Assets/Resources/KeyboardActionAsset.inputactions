@@ -1,5 +1,5 @@
 {
-    "name": "KeyboardControlScheme",
+    "name": "KeyboardActionAsset",
     "maps": [
         {
             "name": "RoverContoller",
@@ -45,6 +45,33 @@
                     "name": "TakePhoto",
                     "type": "Button",
                     "id": "19715388-7857-454a-83fe-240b95dd64a0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CtrlRvrMode",
+                    "type": "Button",
+                    "id": "0e89fbdf-9528-4722-813c-d9af62ae6e4c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CtrlCmpMode",
+                    "type": "Button",
+                    "id": "e409ddc3-12f9-4851-8762-0bc458f54eab",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CtrlMapMode",
+                    "type": "Button",
+                    "id": "ebdbce3d-0bd5-4d6f-b863-8a6fdc1af0f6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -104,6 +131,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "TakePhoto",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e68db69-015e-4e46-8e15-339571242cce",
+                    "path": "<Keyboard>/8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CtrlRvrMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83e57454-5a0b-419d-b607-2eb346f41930",
+                    "path": "<Keyboard>/9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CtrlCmpMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e4e3e957-fbea-485a-915b-dafa1fcde7be",
+                    "path": "<Keyboard>/0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CtrlMapMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

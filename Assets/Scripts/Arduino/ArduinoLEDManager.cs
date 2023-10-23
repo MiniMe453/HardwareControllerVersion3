@@ -53,6 +53,12 @@ namespace Rover.Arduino
             if (applicationQuitting)
                 return;
 
+            if (!UduinoManager.Instance.isConnected())
+            {
+                Debug.LogWarning("LED Manager: Arduino board is not connected!");
+                return;
+            }
+
             m_ledPinStates[pinIndex] = value;
 
             m_pinStatesUpdated = true;
@@ -65,8 +71,10 @@ namespace Rover.Arduino
                 return;
 
             if (!UduinoManager.Instance.isConnected())
-                Debug.LogWarning("Arduino board is not connected!");
-            return;
+            {
+                Debug.LogWarning("LED Manager: Arduino board is not connected!");
+                return;
+            }
 
             if (pinIndexes.Length != values.Length)
             {

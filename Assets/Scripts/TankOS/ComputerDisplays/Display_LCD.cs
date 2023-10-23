@@ -9,19 +9,20 @@ public class Display_LCD : MonoBehaviour
 {
     void OnEnable()
     {
-        ArduinoInputDatabase.EOnDatabasedInitialized += OnDatabaseInit;
+        GameInitializer.EOnGameInitialized += OnDatabaseInit;
     }
 
     void OnDatabaseInit()
     {
-        TimeManager.EOnDateTimeUpdated += OnDateTimeUpdated;
+        if (UduinoManager.Instance.isConnected())
+            TimeManager.EOnDateTimeUpdated += OnDateTimeUpdated;
     }
 
     void OnDateTimeUpdated(DateTimeStruct newDateTime)
     {
-        if(ArduinoPrinterManager.Instance.IsPrinting)
+        if (ArduinoPrinterManager.Instance.IsPrinting)
             return;
-            
+
         object[] data = new object[2];
 
         data[0] = TimeManager.ToStringMissionTimeLong(newDateTime);

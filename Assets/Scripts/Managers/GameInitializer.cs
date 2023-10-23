@@ -7,15 +7,24 @@ using System;
 
 public class GameInitializer : MonoBehaviour
 {
-    void Awake()
+    public static Action EOnGameInitialized;
+
+    public void InitializeGame(bool usingKeyboard)
     {
         Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-        ArduinoInputDatabase.InitializeDatabase();
-        
-        // QualitySettings.vSyncCount = 0;  // VSync must be disabled
-        // Application.targetFrameRate = 30;
 
         RoverOperatingSystem.InitOS();
+
+        if (!usingKeyboard)
+        {
+            ArduinoInputDatabase.InitializeDatabase();
+            return;
+        }
+
+
+        EOnGameInitialized?.Invoke();
+        // QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        // Application.targetFrameRate = 30;
     }
 
 }

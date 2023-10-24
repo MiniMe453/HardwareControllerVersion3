@@ -99,14 +99,14 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   hsvMode:
-    overrideState: 0
+    overrideState: 1
     value: 0
   levels:
     overrideState: 1
     value: 16
   hue:
-    overrideState: 0
-    value: 256
+    overrideState: 1
+    value: 34
   saturation:
     overrideState: 0
     value: 256
@@ -185,10 +185,10 @@ MonoBehaviour:
     value: 0
   postExposure:
     overrideState: 0
-    value: 0
+    value: 1
   contrast:
     overrideState: 1
-    value: 28
+    value: 58
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -217,14 +217,14 @@ MonoBehaviour:
     overrideState: 0
     value: 100
   lift:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 1, y: 1, z: 1, w: 5.7533443e-11}
   gamma:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 1, y: 1, z: 1, w: 0.35521236}
   gain:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 1, y: 1, z: 1, w: -1}
   masterCurve:
     overrideState: 0
     value:
@@ -1549,7 +1549,7 @@ MonoBehaviour:
     value: 0
   fogEndDistance:
     overrideState: 1
-    value: 500
+    value: 492.21
   colorSource:
     overrideState: 1
     value: 2
@@ -1579,7 +1579,7 @@ MonoBehaviour:
     overrideState: 0
     value: 1
   skyboxInfluence:
-    overrideState: 0
+    overrideState: 1
     value: 1
   enableDirectionalLight:
     overrideState: 1
@@ -1603,14 +1603,14 @@ MonoBehaviour:
     overrideState: 1
     value: 0.8
   heightFog:
-    overrideState: 0
+    overrideState: 1
     value: 1
   height:
-    overrideState: 0
+    overrideState: 1
     value: 10
   heightDensity:
-    overrideState: 0
-    value: 0.75
+    overrideState: 1
+    value: 0.134
   heightFogNoise:
     overrideState: 0
     value: 0
@@ -1629,10 +1629,10 @@ MonoBehaviour:
     value: 2
   lightScattering:
     overrideState: 0
-    value: 0
+    value: 1
   scatterIntensity:
     overrideState: 0
-    value: 10
+    value: 91.54
   scatterThreshold:
     overrideState: 0
     value: 1
@@ -1641,7 +1641,7 @@ MonoBehaviour:
     value: 10
   scatterSoftKnee:
     overrideState: 0
-    value: 0.5
+    value: 0.678
   shader: {fileID: 4800000, guid: fd6092137f2e92140aac060040cc91f6, type: 3}
 --- !u!114 &7936758774668626200
 MonoBehaviour:

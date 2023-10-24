@@ -156,7 +156,7 @@ MonoBehaviour:
     value: 0
   contrast:
     overrideState: 1
-    value: 28
+    value: 58
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -191,8 +191,8 @@ MonoBehaviour:
     overrideState: 0
     value: {x: 1, y: 1, z: 1, w: 0}
   gain:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 1, y: 1, z: 1, w: -1}
   masterCurve:
     overrideState: 0
     value:
@@ -1577,8 +1577,8 @@ MonoBehaviour:
     overrideState: 0
     value: 10
   heightDensity:
-    overrideState: 0
-    value: 0.75
+    overrideState: 1
+    value: 0.134
   heightFogNoise:
     overrideState: 0
     value: 0

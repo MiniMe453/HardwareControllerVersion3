@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/StartupScene.unity
     guid: acf455d1f9920a84280d671324437056
   - enabled: 1
-    path: Assets/Scenes/Mars_scene.unity
+    path: Assets/Scenes/GameScene.unity
     guid: a63e9e46ee270c44aabcd8111bfacd95
   - enabled: 0
     path: Assets/Scenes/PersistentLevel.unity

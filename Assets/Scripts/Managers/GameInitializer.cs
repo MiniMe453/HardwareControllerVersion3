@@ -21,8 +21,9 @@ public class GameInitializer : MonoBehaviour
             return;
         }
 
-
         EOnGameInitialized?.Invoke();
+
+        InputTypeManager.InputActions.Enable();
         // QualitySettings.vSyncCount = 0;  // VSync must be disabled
         // Application.targetFrameRate = 30;
     }

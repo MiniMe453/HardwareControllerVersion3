@@ -32,6 +32,7 @@ namespace Rover.Settings
         public const float MAG_MAX_VALUE = 50f;
         public const float RAD_MAX_VALUE = 0.01f;
         public const float TEMP_MAX_VALUE = 20f;
+        public const float TIRE_TRACK_DISTANCE = 0.25f;
 
         public static Color DEFAULT_AMBIENT_COLOR = new Color(0.6352941f,0.4392157f,0.3647059f);
     }

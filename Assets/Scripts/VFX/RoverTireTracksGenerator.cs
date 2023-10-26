@@ -6,13 +6,14 @@ using Dreamteck.Splines.Editor;
 
 public class RoverTireTracksGenerator : MonoBehaviour
 {
-    public SplineComputer spline;
+    public SplineComputer spline => GetComponent<SplineComputer>();
     // Start is called before the first frame update
+    public SplineUser splineMesh => GetComponent<SplineUser>();
     private Vector3 lastPointPos;
     public float distanceBeforeNewSpline = 2f;
     public Transform refTransform;
 
-    private SplinePoint[] tireTrackPoints = new SplinePoint[25];
+    private SplinePoint[] tireTrackPoints = new SplinePoint[100];
     private List<SplinePoint> points = new List<SplinePoint>();
     void Start()
     {
@@ -26,11 +27,17 @@ public class RoverTireTracksGenerator : MonoBehaviour
         }
 
         spline.SetPoints(tireTrackPoints);
+
+        if(!splineMesh.enabled)
+            splineMesh.enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!splineMesh.enabled)
+            splineMesh.enabled = true;
+
         if(Vector3.Distance(lastPointPos, refTransform.position) < distanceBeforeNewSpline)
             return;
 

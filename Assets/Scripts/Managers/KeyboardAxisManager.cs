@@ -31,7 +31,7 @@ public class KeyboardAxisManager : MonoBehaviour
 
     void OnGameInitialized()
     {
-
+        
     }
 
     void OnYAxisInput(InputAction.CallbackContext context)

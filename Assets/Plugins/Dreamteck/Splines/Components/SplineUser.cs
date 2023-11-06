@@ -664,7 +664,7 @@ namespace Dreamteck.Splines {
         private void GetSamples()
         {
             getSamples = false;
-            if (spline == null)
+            if (spline == null || _sampleCollection.samples.Length == 0)
             {
                 _sampleCollection.samples = new SplineSample[0];
                 _sampleCount = 0;

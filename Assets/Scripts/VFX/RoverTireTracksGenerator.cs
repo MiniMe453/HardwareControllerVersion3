@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Dreamteck.Splines;
-using Dreamteck.Splines.Editor;
 
 public class RoverTireTracksGenerator : MonoBehaviour
 {
@@ -55,7 +54,6 @@ public class RoverTireTracksGenerator : MonoBehaviour
             newSplinePoint.size = 1f;
             newSplinePoint.color = Color.white;
             tireTrackPoints[i] = newSplinePoint;
-            Debug.Log(newSplinePoint.position);
         }
 
         spline.SetPoints(tireTrackPoints);

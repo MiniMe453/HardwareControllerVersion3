@@ -27,7 +27,7 @@ SubShader {
 	Tags {
 		"SplatCount" = "4"
 		"Queue" = "Geometry-100"
-		"RenderType" = "Opaque"
+		"RenderType" = "Cutout"
 	}
 CGPROGRAM
 #pragma surface surf BlinnPhong vertex:vert
@@ -96,6 +96,7 @@ void surf (Input IN, inout SurfaceOutput o) {
 					tex2D(_Splat2,IN.uv_Splat2), 
 					splat_control.b) * tex2D(_ColorTex, IN.uv_Mask).rgb * _Color * tex2D(_SandColorTex, IN.uv_Splat0/5).rgb;
 
+	
 	fixed4 nrm;
 	nrm  = splat_control.r * tex2D (_Normal0, IN.uv_Splat0);
 	nrm += splat_control.g * tex2D (_Normal1, IN.worldPos.xy/10);

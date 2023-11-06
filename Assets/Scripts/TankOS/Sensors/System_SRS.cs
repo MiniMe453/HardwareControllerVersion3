@@ -17,6 +17,7 @@ public class System_SRS : MonoBehaviour
     private static float m_maxTemp = -62f;
     private static float m_minTemp = -62f;
     private static List<float> m_avgTempList = new List<float>(20);
+    private static float[] m_newavgTempList = new float[10];
     private static float m_avgTemp;
 
     //Radiation
@@ -36,26 +37,37 @@ public class System_SRS : MonoBehaviour
         m_readTimer = Timer.Register(0.25f, () => ReadSensors(), isLooped: true);
     }
 
-    void ReadSensors()
+    void Update()
     {
         ReadTemperature();
-        ReadMagnetic();
-        ReadRadiation();
 
+    }
+
+    void ReadSensors()
+    {
+        // ReadMagnetic();
+        // ReadRadiation();
         EOnSensorsUpdated?.Invoke();
     }
 
     void ReadTemperature()
     {
         m_temperature = TemperatureSim.ReadTemperatureFromLocation(transform.position);
-        m_avgTempList.Add(m_temperature);
+        // m_avgTempList.Add(m_temperature);
 
-        if(m_avgTempList.Count > m_avgListLength)
+        // if(m_avgTempList.Count > m_avgListLength)
+        // {
+        //     m_avgTempList.RemoveAt(0);
+        // }
+
+        for(int i = m_newavgTempList.Length - 1; i > 1; i--)
         {
-            m_avgTempList.RemoveAt(0);
+            m_newavgTempList[i] = m_newavgTempList[i - 1];
         }
 
-        m_avgTemp = Queryable.Average(m_avgTempList.AsQueryable());
+        m_newavgTempList[0] = m_temperature;
+
+        m_avgTemp = AverageTemperatre();
 
         if(m_temperature > m_maxTemp)
             m_maxTemp = m_temperature;
@@ -72,5 +84,17 @@ public class System_SRS : MonoBehaviour
     void ReadMagnetic()
     {
         m_currentMag = MagneticSim.ReadMagneticFromLocation(transform.position);
+    }
+
+    float AverageTemperatre()
+    {
+        float avgTemp = 0;
+
+        for(int i = 0; i < m_newavgTempList.Length; i++)
+        {
+            avgTemp += m_newavgTempList[i];
+        }
+
+        return avgTemp/10f;
     }
 }

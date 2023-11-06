@@ -12,6 +12,7 @@ public class GameInitializer : MonoBehaviour
     public void InitializeGame(bool usingKeyboard)
     {
         Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        Screen.SetResolution(800, 600, FullScreenMode.FullScreenWindow);
 
         RoverOperatingSystem.InitOS();
 
@@ -23,7 +24,7 @@ public class GameInitializer : MonoBehaviour
 
         EOnGameInitialized?.Invoke();
 
-        InputTypeManager.InputActions.Enable();
+        RoverInputManager.InputActions.Enable();
         // QualitySettings.vSyncCount = 0;  // VSync must be disabled
         // Application.targetFrameRate = 30;
     }

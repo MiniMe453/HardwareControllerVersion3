@@ -7,7 +7,7 @@ using System;
 using UnityTimer;
 using Rover.Settings;
 
-public class System_MTR : MonoBehaviour
+public class System_MTR : MonoBehaviour, IInputTypes
 {
     Rigidbody m_rigidbody => GetComponent<Rigidbody>();
     static float m_horizontalAxis;
@@ -46,7 +46,7 @@ public class System_MTR : MonoBehaviour
 
     void OnDatabaseInit()
     {
-        if (InputTypeManager.UseKeyboardInput)
+        if (RoverInputManager.UseKeyboardInput)
             AssignKeyboardEvents();
         else
             AssignArduinoEvents();
@@ -58,15 +58,15 @@ public class System_MTR : MonoBehaviour
         Timer.Register(0.25f, () => OnRoverVelocityUpdate(), isLooped: true);
     }
 
-    void AssignKeyboardEvents()
+    public void AssignKeyboardEvents()
     {
         KeyboardAxisManager.EOnXAxis += (val) => { m_horizontalAxis = val; };
         KeyboardAxisManager.EOnThrottleAxis += (val) => { m_throttleAxis = val; };
-        InputTypeManager.InputActions["Brake"].performed += (x) => { OnBrakeSwitchPressed(-1); };
+        RoverInputManager.InputActions["Brake"].performed += (x) => { OnBrakeSwitchPressed(-1); };
         OnBrakeSwitchPressed(-1);
     }
 
-    void AssignArduinoEvents()
+    public void AssignArduinoEvents()
     {
         ArduinoInputDatabase.GetInputFromName("Joystick X").EOnValueChanged += OnHorizontalAxis;
         ArduinoInputDatabase.GetInputFromName("Push Potentiometer").EOnValueChanged += OnThrottleAxis;

@@ -7,7 +7,7 @@ using Uduino;
 using Rover.Interface;
 using Rover.DateTime;
 
-public class System_RDIO : MonoBehaviour
+public class System_RDIO : MonoBehaviour, IInputTypes
 {
     public static System_RDIO Instance;
     private static RadioReceiverData m_receiverData;
@@ -34,6 +34,16 @@ public class System_RDIO : MonoBehaviour
 
     void OnDatabaseInit()
     {
+        if(RoverInputManager.UseKeyboardInput)
+            AssignKeyboardEvents();
+        else
+            AssignArduinoEvents();
+
+        OnRadioButtonPressed(0);
+    }
+
+    public void AssignArduinoEvents()
+    {
         ArduinoInputDatabase.GetInputFromName("Rotary Encoder Counter").EOnValueChanged += OnRadioEncoderValueChanged;
         ArduinoInputDatabase.GetInputFromName("Rotary Encoder Button").EOnButtonPressed += OnRadioButtonPressed;
         m_radioLEDPinIndexes = new int[] {
@@ -42,7 +52,12 @@ public class System_RDIO : MonoBehaviour
             ArduinoInputDatabase.GetOutputIndexFromName("Radio LED 3")
         };
 
-        OnRadioButtonPressed(0);
+    }
+
+    public void AssignKeyboardEvents()
+    {
+        RoverInputManager.InputActions["RadioChannel"].performed += (x) => {OnRadioButtonPressed(-1);};
+        KeyboardAxisManager.EOnRadioAxis += (val) => {OnRadioEncoderValueChanged(val * 1024f, -1);};
     }
 
 

@@ -52,7 +52,7 @@ namespace Rover.Arduino
             m_canHoldButton = false;
             m_holdDuration = 0;
 
-            Debug.Log("Input created " + m_inputName);
+            // Debug.Log("Input created " + m_inputName);
         }
 
         public void CheckInputValue()

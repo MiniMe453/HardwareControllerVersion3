@@ -22,7 +22,7 @@ namespace Rover.Systems
         public string gpsCoords;
         public Texture2D photo;
     }
-    public class System_CAM : MonoBehaviour
+    public class System_CAM : MonoBehaviour, IInputTypes
     {
         private static CameraMode m_cameraMode = CameraMode.Cam4;
         public static CameraMode SelectedCameraMode { get { return m_cameraMode; } }
@@ -51,7 +51,7 @@ namespace Rover.Systems
         void OnDatabaseInit()
         {
 
-            if (InputTypeManager.UseKeyboardInput)
+            if (RoverInputManager.UseKeyboardInput)
                 AssignKeyboardEvents();
             else
                 AssignArduinoEvents();
@@ -61,7 +61,7 @@ namespace Rover.Systems
             SelectNewCameraMode(CameraMode.Cam1);
         }
 
-        void AssignArduinoEvents()
+        public void AssignArduinoEvents()
         {
             m_ledPins = new int[]{
                 ArduinoInputDatabase.GetOutputIndexFromName("CAM 1 led pin"),
@@ -80,13 +80,13 @@ namespace Rover.Systems
             ArduinoInputDatabase.GetInputFromName("Joystick Y").EOnValueChanged += OnVerticalAxis;
         }
 
-        void AssignKeyboardEvents()
+        public void AssignKeyboardEvents()
         {
-            InputTypeManager.InputActions["Cam1"].performed += OnCam1ButtonPressed;
-            InputTypeManager.InputActions["Cam2"].performed += OnCam2ButtonPressed;
-            InputTypeManager.InputActions["Cam3"].performed += OnCam3ButtonPressed;
-            InputTypeManager.InputActions["Cam4"].performed += OnCam4ButtonPressed;
-            InputTypeManager.InputActions["TakePhoto"].performed += OnTakePhotoButtonPressed;
+            RoverInputManager.InputActions["Cam1"].performed += OnCam1ButtonPressed;
+            RoverInputManager.InputActions["Cam2"].performed += OnCam2ButtonPressed;
+            RoverInputManager.InputActions["Cam3"].performed += OnCam3ButtonPressed;
+            RoverInputManager.InputActions["Cam4"].performed += OnCam4ButtonPressed;
+            RoverInputManager.InputActions["TakePhoto"].performed += OnTakePhotoButtonPressed;
             KeyboardAxisManager.EOnYAxis += (val) => { m_verticalAxis = -val; };
         }
 
@@ -148,7 +148,7 @@ namespace Rover.Systems
 
             EOnNewCameraSelected?.Invoke(m_cameraMode);
 
-            Debug.Log("Selected Rover Camera is now " + m_cameraMode);
+            // Debug.Log("Selected Rover Camera is now " + m_cameraMode);
         }
 
         void OnCam1ButtonPressed(int pin)
@@ -173,7 +173,6 @@ namespace Rover.Systems
 
         void OnCam1ButtonPressed(InputAction.CallbackContext context)
         {
-            Debug.Log("Cam 1 button pressed!");
             SelectNewCameraMode(CameraMode.Cam1);
         }
 
@@ -242,11 +241,13 @@ namespace Rover.Systems
 
             string photoName = $"{m_cameraMode.ToString()}_{TimeManager.ToStringMissionTimeClk(TimeManager.GetCurrentDateTime(), "_")}_{m_screenshotCount.ToString("000")}.bmp";
 
-            Struct_CameraPhoto photoMetadata = new Struct_CameraPhoto();
-            photoMetadata.name = photoName;
-            photoMetadata.photo = cameraPhoto;
-            photoMetadata.camMode = SelectedCameraMode;
-            photoMetadata.gpsCoords = System_GPS.GPSCoordsToString(System_GPS.WorldPosToGPSCoords(transform.position));
+            Struct_CameraPhoto photoMetadata = new Struct_CameraPhoto
+            {
+                name = photoName,
+                photo = cameraPhoto,
+                camMode = SelectedCameraMode,
+                gpsCoords = System_GPS.GPSCoordsToString(System_GPS.WorldPosToGPSCoords(transform.position))
+            };
 
             m_photos.Add(photoMetadata);
 

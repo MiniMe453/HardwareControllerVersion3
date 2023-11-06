@@ -33,10 +33,10 @@ public static class RoverOperatingSystem
     private static void OnInputDatabasedInit()
     {
 
-        if (InputTypeManager.UseKeyboardInput)
-            AssignKeyboardInputs();
+        if (RoverInputManager.UseKeyboardInput)
+            AssignKeyboardEvents();
         else
-            AssignArduinoInputs();
+            AssignArduinoEvents();
 
         OnNewControlModeSelected(ThreeWaySwitch.CurrentValue);
         OnRVRButtonPressed(0);
@@ -44,7 +44,7 @@ public static class RoverOperatingSystem
 
     }
 
-    static void AssignArduinoInputs()
+    static void AssignArduinoEvents()
     {
         ArduinoInputDatabase.GetInputFromName("RVR Button").EOnButtonPressed += OnRVRButtonPressed;
         ArduinoInputDatabase.GetInputFromName("CAM Button").EOnButtonPressed += OnCAMButtonPressed;
@@ -54,13 +54,13 @@ public static class RoverOperatingSystem
         LEDManager.SetLEDMode(new int[] { m_readyLedPin, m_transmitLedPin }, new int[] { 1, 0 });
     }
 
-    static void AssignKeyboardInputs()
+    static void AssignKeyboardEvents()
     {
-        InputTypeManager.InputActions["CtrlRvrMode"].performed += (context) => { OnNewControlModeSelected(0); };
-        InputTypeManager.InputActions["CtrlCmpMode"].performed += (context) => { OnNewControlModeSelected(1); };
-        InputTypeManager.InputActions["CtrlMapMode"].performed += (context) => { OnNewControlModeSelected(2); };
-        InputTypeManager.InputActions["RVRMode"].performed += (context) => { SetRoverControlMode(RoverControlMode.RVR); };
-        InputTypeManager.InputActions["CAMMode"].performed += (context) => { SetRoverControlMode(RoverControlMode.CAM); };
+        RoverInputManager.InputActions["CtrlRvrMode"].performed += (context) => { OnNewControlModeSelected(0); };
+        RoverInputManager.InputActions["CtrlCmpMode"].performed += (context) => { OnNewControlModeSelected(1); };
+        RoverInputManager.InputActions["CtrlMapMode"].performed += (context) => { OnNewControlModeSelected(2); };
+        RoverInputManager.InputActions["RVRMode"].performed += (context) => { SetRoverControlMode(RoverControlMode.RVR); };
+        RoverInputManager.InputActions["CAMMode"].performed += (context) => { SetRoverControlMode(RoverControlMode.CAM); };
     }
 
     public static void SetRoverControlMode(RoverControlMode newMode)

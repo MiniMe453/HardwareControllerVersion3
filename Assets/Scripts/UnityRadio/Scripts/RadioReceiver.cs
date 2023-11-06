@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -34,6 +35,9 @@ public class RadioReceiver : MonoBehaviour
 
     private float currentUpdateTime;
     private float updateStep = 0.05f;
+    private int numRadiosPerStep = 2;
+    private int currentStepCount = 0;
+    private int maxStepCounts = 0;
     private Command RADIO_SCAN;
 
     void Start()
@@ -55,6 +59,10 @@ public class RadioReceiver : MonoBehaviour
         {
             transmitter.SetSignalStrength(0);
         }
+
+        maxStepCounts = (int)Mathf.Ceil((float)m_RadioManager.RadioTransmitters.Count/(float)numRadiosPerStep);
+        // Debug.Log(m_RadioManager.RadioTransmitters.Count);
+        // Debug.Log(maxStepCounts);
     }
     void Update()
     {
@@ -65,43 +73,49 @@ public class RadioReceiver : MonoBehaviour
         }
 
         currentUpdateTime += Time.deltaTime;
-        if (currentUpdateTime >= updateStep)
+        if (currentUpdateTime < updateStep)
+            return;
+
+        bool setStaticVolume = true;
+
+        currentUpdateTime = 0f;
+
+        for(int i = currentStepCount * numRadiosPerStep; i < (currentStepCount * numRadiosPerStep) + numRadiosPerStep; i++)
         {
-            bool setStaticVolume = true;
+            RadioTransmitter transmitter = m_RadioManager.RadioTransmitters[i];
+            float signalVolume = CalculateSignalVolume(transmitter);
 
-            currentUpdateTime = 0f;
-
-            foreach (RadioTransmitter transmitter in m_RadioManager.RadioTransmitters)
+            if (signalVolume != 0f)
             {
-                float signalVolume = CalculateSignalVolume(transmitter);
-
-                if (signalVolume != 0f)
-                {
-                    setStaticVolume = false;
-                    // signalVolume = CalculateObstructions(signalVolume, transmitter);
-                    // signalVolume *= CalculateRecieverAngle(transmitter);
-                    staticAudio.volume = 1 - signalVolume;
-                    receiverData.signalStrength = signalVolume;
-                    transmitter.SetSignalStrength(signalVolume);
-                    ChartAudioSignalValues.UpdateClipLoundess(signalVolume);
-                    System_RDIO.SetSignalStrength(signalVolume);
-                    continue;
-                }
-
-                if (setStaticVolume && transmitter.SignalStrength != 0f)
-                {
-                    transmitter.SetSignalStrength(0);
-                }
+                setStaticVolume = false;
+                // signalVolume = CalculateObstructions(signalVolume, transmitter);
+                // signalVolume *= CalculateRecieverAngle(transmitter);
+                staticAudio.volume = 1 - signalVolume;
+                receiverData.signalStrength = signalVolume;
+                transmitter.SetSignalStrength(signalVolume);
+                ChartAudioSignalValues.UpdateClipLoundess(signalVolume);
+                System_RDIO.SetSignalStrength(signalVolume);
+                continue;
             }
 
-            if (setStaticVolume)
+            if (setStaticVolume && transmitter.SignalStrength != 0f)
             {
-                staticAudio.volume = 1;
-                receiverData.signalStrength = 0;
-                ChartAudioSignalValues.UpdateClipLoundess(0);
-                System_RDIO.SetSignalStrength(0);
+                transmitter.SetSignalStrength(0);
             }
         }
+
+        if (setStaticVolume)
+        {
+            staticAudio.volume = 1;
+            receiverData.signalStrength = 0;
+            ChartAudioSignalValues.UpdateClipLoundess(0);
+            System_RDIO.SetSignalStrength(0);
+        }
+
+        currentStepCount++;
+
+        if(currentStepCount == maxStepCounts)
+            currentStepCount = 0;
     }
 
     void OnDrawGizmos()

@@ -116,14 +116,6 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 		half4 original = SCREEN_COLOR(UV);
 		
 		float4 depthnormal = tex2D(_CameraDepthNormalsTexture, input.uv);
-		float4 stencilTexture = SAMPLE_TEXTURE2D(_ObjectsStencil, Repeat, input.uv);
-
-		float stencilAlpha;
-
-		if(stencilTexture.r > 0)
-			stencilAlpha = 1;
-		else
-			stencilAlpha = 0;
 
 		//decode depthnormal
 		float3 normal;
@@ -150,7 +142,7 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 		else
 			slopeAlpha = 0;
 
-		slopeAlpha = slopeAlpha * (1-stencilAlpha) * (1 - skyMask);
+		slopeAlpha = slopeAlpha * (1 - skyMask);
 
 		float2 texelSize = _EdgeSize * _MainTex_TexelSize.xy;
 
@@ -224,11 +216,11 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 
 		float edgeFinal = max(edgeSobel, edgeLum / 1.5);
 		float4 completedEdgeValue = float4(lerp(originalLum.rgb, edgeColorLum.rgb, edgeFinal).rgb, originalLum.a);
-		completedEdgeValue += ((stencilAlpha * 0.5) + (slopeAlpha * 0.25));
+		//completedEdgeValue += ((stencilAlpha * 0.5) + (slopeAlpha * 0.25));
 
 		float4 stencilColor;
 
-		stencilColor = lerp(float4(0,1,0,1), float4(1,0,0,1), stencilAlpha);
+		stencilColor = float4(0,1,0,1);
 		stencilColor = lerp(float4(1,0.9,0.1,1), stencilColor, 1 - slopeAlpha);
 
 

@@ -75,7 +75,7 @@ public class System_WARN : MonoBehaviour
 
     void CheckMagnetic()
     {
-        float magVal = MagneticSim.ReadMagneticFromLocation(transform.position);
+        float magVal = System_SRS.Magnetic;
 
         if (magVal > GameSettings.MAG_MAX_VALUE && !m_magWarningShown)
         {
@@ -99,7 +99,7 @@ public class System_WARN : MonoBehaviour
 
     void CheckTemperature()
     {
-        float tempVal = TemperatureSim.ReadTemperatureFromLocation(transform.position);
+        float tempVal = System_SRS.Temperature;
 
         if (tempVal > GameSettings.TEMP_MAX_VALUE && !LEDManager.GetLEDState(tempWarnPin))
         {
@@ -121,7 +121,7 @@ public class System_WARN : MonoBehaviour
 
     void CheckRadiation()
     {
-        float radVal = RadiationSim.ReadRadiationFromLocation(transform.position);
+        float radVal = System_SRS.Radiation;
 
         if (radVal > GameSettings.RAD_MAX_VALUE && !LEDManager.GetLEDState(radWarnPin))
         {

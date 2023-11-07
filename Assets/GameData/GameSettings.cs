@@ -33,10 +33,15 @@ namespace Rover.Settings
         public const float RAD_MAX_VALUE = 0.01f;
         public const float TEMP_MAX_VALUE = 20f;
         public const float TIRE_TRACK_DISTANCE = 0.25f;
+        public const float SIMULATION_NODE_RADIUS = 150f;
+        public const int SIMULATION_NODE_ARRAY_SIZE = 25;
+        public const float BACKGROUND_TEMP = -62f;
 
         public static Color DEFAULT_AMBIENT_COLOR = new Color(0.6352941f,0.4392157f,0.3647059f);
     }
 }
+
+public enum Simulations {Temperature, Magnetic, Radiation, EMF}
 
 namespace Rover.Can
 {

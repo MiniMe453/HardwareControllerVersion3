@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TemperatureMonobehaviour : MonoBehaviour
 {
-    public float Temperature;
-    private TemperatureSimNode temperatureSimNode;
-    void OnEnable()
-    {
-        temperatureSimNode = new TemperatureSimNode(Temperature, transform.position);
-    }
+    // public float Temperature;
+    // private TemperatureSimNode temperatureSimNode;
+    // void OnEnable()
+    // {
+    //     temperatureSimNode = new TemperatureSimNode(Temperature, transform.position);
+    // }
 }

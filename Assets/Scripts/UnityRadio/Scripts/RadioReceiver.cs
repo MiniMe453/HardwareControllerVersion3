@@ -125,7 +125,6 @@ public class RadioReceiver : MonoBehaviour
             foreach (RadioTransmitter transmitter in m_RadioManager.RadioTransmitters)
             {
                 Gizmos.DrawWireSphere(transmitter.GetTransmitterLocation(), CalculateCoverage(transmitter));
-                Debug.Log(CalculateCoverage(transmitter));
             }
         }
     }

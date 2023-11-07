@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityTimer;
 using System;
 using System.Linq;
+using Rover.Settings;
 
 public class System_SRS : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class System_SRS : MonoBehaviour
     private int m_avgListLength = 20;
     
     //Temperature
+    private static SimulationManager m_temperatureSim = new SimulationManager(GameSettings.BACKGROUND_TEMP - 0.5f, GameSettings.BACKGROUND_TEMP + 0.5f);
+    public static SimulationManager TemperatureSim {get {return m_temperatureSim;}}
     private static float m_temperature;
     public static float Temperature { get {return m_temperature;}}
     private static float m_maxTemp = -62f;
@@ -39,12 +42,13 @@ public class System_SRS : MonoBehaviour
 
     void Update()
     {
-        ReadTemperature();
+
 
     }
 
     void ReadSensors()
     {
+        ReadTemperature();
         // ReadMagnetic();
         // ReadRadiation();
         EOnSensorsUpdated?.Invoke();
@@ -52,7 +56,7 @@ public class System_SRS : MonoBehaviour
 
     void ReadTemperature()
     {
-        m_temperature = TemperatureSim.ReadTemperatureFromLocation(transform.position);
+        m_temperature = TemperatureSim.ReadSimulationValue(transform.position);
         // m_avgTempList.Add(m_temperature);
 
         // if(m_avgTempList.Count > m_avgListLength)
@@ -96,5 +100,37 @@ public class System_SRS : MonoBehaviour
         }
 
         return avgTemp/10f;
+    }
+
+    public static void AddNode(SimulationNodeMonobehaviour newNode)
+    {
+        switch(newNode.simluationType)
+        {
+            case Simulations.Temperature:
+                TemperatureSim.AddNode(newNode);
+                break;
+            case Simulations.Magnetic:
+                break;
+            case Simulations.Radiation:
+                break;
+            case Simulations.EMF:
+                break;
+        }
+    }
+
+    public static void RemoveNode(SimulationNodeMonobehaviour oldNode)
+    {
+        switch(oldNode.simluationType)
+        {
+            case Simulations.Temperature:
+                TemperatureSim.RemoveNode(oldNode);
+                break;
+            case Simulations.Magnetic:
+                break;
+            case Simulations.Radiation:
+                break;
+            case Simulations.EMF:
+                break;
+        }
     }
 }

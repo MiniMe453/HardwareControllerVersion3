@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5463659924713744704}
-  - component: {fileID: 4105220100416329831}
+  - component: {fileID: 3791864749395183599}
+  - component: {fileID: 5835764688724968186}
   m_Layer: 0
   m_Name: TemperatureNode
   m_TagString: Untagged
@@ -32,7 +33,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4105220100416329831
+--- !u!135 &3791864749395183599
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004487340030600555}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5835764688724968186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +55,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8004487340030600555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7038bbfde4e0e44188739474c794798, type: 3}
+  m_Script: {fileID: 11500000, guid: 2add90f7a095fcf4b8e92e401b6b9117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Temperature: 15
+  nodeValue: -30
+  simluationType: 0

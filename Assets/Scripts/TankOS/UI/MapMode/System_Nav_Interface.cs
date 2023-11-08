@@ -8,9 +8,11 @@ using UnityEngine.InputSystem;
 using Rover.Interface;
 using Rover.Settings;
 using Rover.Arduino;
+using System;
 
 public class System_Nav_Interface : MonoBehaviourApplication
 {
+    public static event Action<Vector3> EOnMapMarkerAdded;
     public RenderCameraToTexture mapCamera;
     private Vector2 m_currentMoveDir;
     public Canvas canvas;
@@ -248,8 +250,7 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
 
         Vector3 markerPosition = new Vector3(mapCamera.transform.position.x, 0, mapCamera.transform.position.z);
         Vector3 rayOrig = new Vector3(markerPosition.x, 100, markerPosition.z);
-        Vector3 rayEnd = new Vector3(markerPosition.x, -100, markerPosition.z);
-        RaycastHit hit = new RaycastHit();
+        RaycastHit hit;
         string[] maskVals = new string[1];
         maskVals[0] = "Terrain";
         int lMask = LayerMask.GetMask(maskVals);
@@ -257,10 +258,10 @@ it's not the cleanest solution, but i can't figure out anything else. for other 
         if (Physics.Raycast(rayOrig, Vector3.down, out hit, 200, lMask))
         {
             markerPosition.y = hit.point.y;
-            Debug.Log(markerPosition.y);
         }
 
         Instantiate(mapMarkerWorldObject, markerPosition, Quaternion.identity);
+        EOnMapMarkerAdded?.Invoke(markerPosition);
     }
 
     void Update()

@@ -30,6 +30,8 @@ public class NavCameraInterface : MonoBehaviour
     public TextMeshProUGUI elevationText;
     public TextMeshProUGUI gpsCoordsText;
     public RectTransform compassTransform;
+    public RectTransform compassStaticTransform;
+    public GameObject mapMarkerIconPrefab;
 
     [Header("Radio Variables")] 
     public TextMeshProUGUI frequencyText;
@@ -70,6 +72,8 @@ public class NavCameraInterface : MonoBehaviour
         System_WARN.EOnTemperatureWarningLight += OnTemperatureWarning;
         System_WARN.EOnMagWarningLight += OnMagneticWarning;
         System_WARN.EOnProximitySensorModified += OnProximityWarning;
+
+        System_Nav_Interface.EOnMapMarkerAdded += OnMapMarkerAddedToWorld;
 
         RoverOperatingSystem.EOnArduinoInputStateChanged += OnArduinoInputChanged;
         TimeManager.EOnDateTimeUpdated += OnNewDateTime;
@@ -266,12 +270,12 @@ public class NavCameraInterface : MonoBehaviour
         rollText.text = "ROLL: " + (SystemPitchRoll.Roll.ToString("0.0")).PadLeft(6);
 
         pitchImageTransform.anchoredPosition = new Vector2(0,SystemPitchRoll.Pitch * 3f);
-        pitchText.text = "PTCH: " + (SystemPitchRoll.Pitch.ToString("0.0")).PadLeft(6);
+        pitchText.text = "PTCH: " + SystemPitchRoll.Pitch.ToString("0.0").PadLeft(6);
 
         headingText.text = "HDNG: " + System_GPS.Heading.ToString("0.0").PadLeft(6);
         elevationText.text = "ELV: " + System_GPS.Elevation.ToString("0.0").PadLeft(5) + "m";
 
-        Vector3 newCompassPos = new Vector3((System_GPS.Heading/360f) * 537f, 0,0);
+        Vector3 newCompassPos = new Vector3(System_GPS.Heading/360f * 537f, 0,0);
         compassTransform.anchoredPosition = newCompassPos;
 
         speedText.text = "SPD: " + System_MTR.RoverVelocity.ToString("0.0").PadLeft(4) + "m/s";
@@ -280,5 +284,12 @@ public class NavCameraInterface : MonoBehaviour
         gpsCoordsText.text = System_GPS.GPSCoordsToString(System_GPS.GPSCoordinates);
 
         freqStrengthText.text = System_RDIO.SignalStrength.ToString().PadLeft(3) + "%";
+    }
+
+    private void OnMapMarkerAddedToWorld(Vector3 markerLocation)
+    {
+        GameObject obj = Instantiate(mapMarkerIconPrefab, compassStaticTransform);
+        UpdateMapMarkerCompass updateMapMarker = obj.GetComponent<UpdateMapMarkerCompass>();
+        updateMapMarker.SetMarkerData(markerLocation);
     }
 }

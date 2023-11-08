@@ -43,6 +43,8 @@ namespace Rover.Settings
 
 public enum Simulations {Temperature, Magnetic, Radiation, EMF}
 
+public enum CrewMembers {Kenneth_Williams, Connie_Hoskins, Shirley_Thompson, Thomas_Anderson, Ron_Davis, Lillie_Nunez}
+
 namespace Rover.Can
 {
     public static class CanIDs

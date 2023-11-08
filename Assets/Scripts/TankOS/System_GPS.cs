@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rover.Settings;
+using Unity.VisualScripting;
 
 public class System_GPS : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class System_GPS : MonoBehaviour
     public static float Elevation {get {return m_elevation;}}
     private static Vector3 m_worldSpacePos;
     public static Vector3 WorldSpacePos {get{return m_worldSpacePos;}}
+
     
     void Update()
     {

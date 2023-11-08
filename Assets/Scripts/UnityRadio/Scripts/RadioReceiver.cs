@@ -66,6 +66,10 @@ public class RadioReceiver : MonoBehaviour
     }
     void Update()
     {
+        return;
+
+        if(m_RadioManager.RadioTransmitters.Count == 0)
+            return;
 
         if (receiverData.AntennaType != antennaType)
         {

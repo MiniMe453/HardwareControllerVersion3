@@ -6,6 +6,7 @@ using Rover.DateTime;
 using Rover.Interface;
 using System;
 using Kit;
+using UnityEngine.InputSystem;
 
 public struct Struct_ObjectScan
 {
@@ -30,7 +31,7 @@ public struct SurfaceProperty
     public float materialDensity;
 }
 public enum SurfaceTypes { Strontium, Tungsten, Iron, Aluminum, Lead, Carbon, Radium, Cobalt, Sulfur, Copper, Titanium, Potassium, Sodium, Unknown }
-public class System_ObjectScanner : MonoBehaviour
+public class System_ObjectScanner : MonoBehaviour, IInputTypes
 {
     public float objectScanCheckDistance = 5f;
     public float objectScanRadius = 1f;
@@ -47,7 +48,20 @@ public class System_ObjectScanner : MonoBehaviour
 
     void OnDatabaseInit()
     {
+        if(RoverInputManager.UseKeyboardInput)
+            AssignKeyboardEvents();
+        else
+            AssignArduinoEvents();
+    }
+
+    public void AssignArduinoEvents()
+    {
         ArduinoInputDatabase.GetInputFromName("LIDAR Button").EOnButtonPressed += OnScanButtonPressed;
+    }
+
+    public void AssignKeyboardEvents()
+    {
+        RoverInputManager.InputActions["LIDAR Button"].performed += OnScanButtonPressed;
     }
 
     void OnScanButtonPressed(int pin)
@@ -64,6 +78,11 @@ public class System_ObjectScanner : MonoBehaviour
         ClearScanObject();
 
         ArduinoPrinterManager.Instance.PrintObjectScan(objectScan);
+    }
+
+    void OnScanButtonPressed(InputAction.CallbackContext context)
+    {
+        OnScanButtonPressed(-1);
     }
 
     void ClearScanObject()

@@ -41,7 +41,7 @@ namespace SCPE
 
             sheet.properties.SetVector("_SobelParams", new Vector4((settings.sobelThin) ? 1 : 0, 0, 0, 0));
 
-            context.command.BlitFullscreenTriangle(context.source, context.destination, sheet, (int)settings.mode.value);
+            context.command.BlitFullscreenTriangle(context.source, context.destination, sheet, 0);
         }
 
         public override DepthTextureMode GetCameraFlags()

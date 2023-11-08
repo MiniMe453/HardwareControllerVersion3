@@ -8,6 +8,9 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 	//Camera depth textures
 
 	//Parameters
+	sampler2D _CameraGBufferTexture1;
+	sampler2D _CameraGBufferTexture0;
+	sampler2D _CameraGBufferTexture2;
 	uniform half4 _Sensitivity;
 	uniform half _BackgroundFade;
 	uniform float _EdgeSize;
@@ -46,74 +49,15 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 		return isSameNormal * isSameDepth;
 	}
 
-	half4 fragDNormals(Varyings input) : SV_Target
-	{
-		UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
-
-		half4 original = SCREEN_COLOR(UV);
-
-		half4 center = SAMPLE_DEPTH_NORMALS(UV);
-		//return center;
-		half4 sample1 = SAMPLE_DEPTH_NORMALS(UV + float2(-_MainTex_TexelSize.x, -_MainTex_TexelSize.y) * _EdgeSize);
-		half4 sample2 = SAMPLE_DEPTH_NORMALS(UV + float2(+_MainTex_TexelSize.x, -_MainTex_TexelSize.y) * _EdgeSize);
-
-		// encoded normal
-		half2 centerNormal = center.xy;
-		// decoded depth
-		float centerDepth = DecodeFloatRG(center.zw);
-
-		half edge = 1;
-		edge *= IsSame(centerNormal, centerDepth, sample1);
-		edge *= IsSame(centerNormal, centerDepth, sample2);
-		edge = 1 - edge;
-
-		//Edges only
-		original = lerp(original, float4(1, 1, 1, 1), _BackgroundFade);
-
-		//Opacity
-		float3 edgeColor = lerp(original.rgb, _EdgeColor.rgb, _EdgeOpacity * LinearDepthFade(centerDepth, _FadeParams.x, _FadeParams.y, _FadeParams.z, _FadeParams.w));
-		edgeColor = saturate(edgeColor);
-
-		return float4(lerp(original.rgb, edgeColor.rgb, edge).rgb, original.a);
-
-	}
-
-	half4 fragRobert(Varyings input) : SV_Target
-	{
-		UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
-
-		half4 original = SCREEN_COLOR(UV);
-
-		half4 sample1 = SAMPLE_DEPTH_NORMALS(UV + _MainTex_TexelSize.xy * half2(1, 1) * _EdgeSize);
-		half4 sample2 = SAMPLE_DEPTH_NORMALS(UV + _MainTex_TexelSize.xy * half2(-1, -1) * _EdgeSize);
-		half4 sample3 = SAMPLE_DEPTH_NORMALS(UV + _MainTex_TexelSize.xy * half2(-1, 1) * _EdgeSize);
-		half4 sample4 = SAMPLE_DEPTH_NORMALS(UV + _MainTex_TexelSize.xy * half2(1, -1) * _EdgeSize);
-
-		float centerDepth = DecodeFloatRG(sample1.zw);
-
-		half edge = 1.0;
-
-		edge *= IsSame(sample1.xy, DecodeFloatRG(sample1.zw), sample2);
-		edge *= IsSame(sample3.xy, DecodeFloatRG(sample3.zw), sample4);
-
-		edge = 1 - edge;
-
-		//Edges only
-		original = lerp(original, float4(1, 1, 1, 1), _BackgroundFade);
-
-		//Opacity
-		float3 edgeColor = lerp(original.rgb, _EdgeColor.rgb, _EdgeOpacity * LinearDepthFade(centerDepth, _FadeParams.x, _FadeParams.y, _FadeParams.z, _FadeParams.w));
-
-		//return original;
-		return float4(lerp(original.rgb, edgeColor.rgb, edge).rgb, original.a);
-	}
-
 	float4 fragSobel(Varyings input) : SV_Target
 	{
-		UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+//		UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
 		// inspired by borderlands implementation of popular "sobel filter"
 		half4 original = SCREEN_COLOR(UV);
+		half4 screenColor = tex2D (_CameraGBufferTexture0, input.uv);
+		//half4 screenNormals = tex2D(_CameraGBufferTexture2, input.uv);
+		//return screenNormals;
 		
 		float4 depthnormal = tex2D(_CameraDepthNormalsTexture, input.uv);
 
@@ -221,44 +165,16 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 		float4 stencilColor;
 
 		stencilColor = float4(0,1,0,1);
-		stencilColor = lerp(float4(1,0.9,0.1,1), stencilColor, 1 - slopeAlpha);
+//		stencilColor = lerp(float4(1,0.9,0.1,1), stencilColor, 1 - slopeAlpha);
 
 
-		float4 dataColor = stencilColor * completedEdgeValue;
+		float4 dataColor = (stencilColor * completedEdgeValue) + screenColor;
+		//float4 dataColor = completedEdgeValue + screenColor;
 
 
 
 		//return float4(lerp(original.rgb, edgeColor.rgb, edge).rgb, original.a);
 		return dataColor;
-	}
-
-	float4 fragLum(Varyings input) : SV_Target
-	{
-		UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
-
-		float4 original = SCREEN_COLOR(UV);
-
-		float centerDepth = LINEAR_DEPTH(SAMPLE_DEPTH(UV));
-
-		half3 p1 = original.rgb;
-		half3 p2 = ScreenColor(UV + float2(-_MainTex_TexelSize.x, -_MainTex_TexelSize.y) * _EdgeSize).rgb;
-		half3 p3 = ScreenColor(UV + float2(+_MainTex_TexelSize.x, -_MainTex_TexelSize.y) * _EdgeSize).rgb;
-
-		half3 diff = p1 * 2 - p2 - p3;
-		half edgeLum = dot(diff, diff);
-		edgeLum = step(edgeLum, _Threshold);
-
-		edgeLum = 1 - edgeLum;
-
-		//Edges only
-		float4 originalLum = lerp(original, float4(0, 0, 0, 1), _BackgroundFade);
-
-		//Opacity
-		float3 edgeColorLum = lerp(originalLum.rgb, _EdgeColor.rgb, _EdgeOpacity * LinearDepthFade(centerDepth, _FadeParams.x, _FadeParams.y, _FadeParams.z, _FadeParams.w));
-		edgeColorLum = saturate(edgeColorLum);
-
-		//return original;
-		return float4(lerp(originalLum.rgb, edgeColorLum.rgb, edgeLum).rgb, originalLum.a);
 	}
 
 	ENDHLSL
@@ -267,39 +183,11 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 	{
 		ZTest Always Cull Off ZWrite Off
 		
-		Pass
-		{
-			Name "Edge Detection: Depth Normals"
-			
-			HLSLPROGRAM
-			#pragma multi_compile_local _ _RECONSTRUCT_NORMAL
-			#pragma multi_compile_vertex _ _USE_DRAW_PROCEDURAL
-			#pragma exclude_renderers gles
-			
-			#ifndef URP 
-			#undef _RECONSTRUCT_NORMAL
-			#endif
-			
-			#pragma vertex Vert
-			#pragma fragment fragDNormals
-			ENDHLSL
-		}
-		Pass
-		{
-			Name "Edge Detection: Cross Depth Normals"
-			
-			HLSLPROGRAM
-			#pragma multi_compile_local _ _RECONSTRUCT_NORMAL
-			#pragma multi_compile_vertex _ _USE_DRAW_PROCEDURAL
-			#pragma exclude_renderers gles
-			
-			#ifndef URP 
-			#undef _RECONSTRUCT_NORMAL
-			#endif
-			#pragma vertex Vert
-			#pragma fragment fragRobert
-			ENDHLSL
-		}
+		CGINCLUDE
+		#include "UnityCG.cginc"
+
+		ENDCG
+
 		Pass
 		{
 			Name "Edge Detection: Sobel"
@@ -310,18 +198,6 @@ Shader "Hidden/SC Post Effects/Edge Detection" {
 			
 			#pragma vertex Vert
 			#pragma fragment fragSobel
-			ENDHLSL
-		}
-		Pass
-		{
-			Name "Edge Detection: Luminance"
-			
-			HLSLPROGRAM
-			#pragma multi_compile_vertex _ _USE_DRAW_PROCEDURAL
-			#pragma exclude_renderers gles
-			
-			#pragma vertex Vert
-			#pragma fragment fragLum
 			ENDHLSL
 		}
 	}

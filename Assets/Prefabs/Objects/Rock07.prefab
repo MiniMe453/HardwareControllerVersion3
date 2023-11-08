@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 961481066400423085, guid: 7195647302814fc45aca0fed4705e7ff, type: 3}
     - target: {fileID: 3611042442913951924, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_Name
-      value: Rock06
+      value: Rock07
       objectReference: {fileID: 0}
     - target: {fileID: 3611042442913951927, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
       propertyPath: m_RootOrder
@@ -149,7 +149,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3476924e1d7e02c47b844e84d47cf0d3, type: 2}
+  - {fileID: 2100000, guid: b4a43aa5b763bd04bbc9a9d4f1214ab8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

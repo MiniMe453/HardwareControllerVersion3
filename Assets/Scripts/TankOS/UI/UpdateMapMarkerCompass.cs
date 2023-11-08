@@ -33,7 +33,9 @@ public class UpdateMapMarkerCompass : MonoBehaviour
         if(sign < 0)
             m_heading = 360 - Mathf.Abs(m_heading);
 
-        Vector3 newCompassPos = new Vector3(m_heading/360f * scaleFactor, 0,0);   
+        float m_heading01 = 1 - Mathf.Clamp01(m_heading/360f);
+
+        Vector3 newCompassPos = new Vector3(m_heading01 * 537f + 537f/2, -10f,0);   
         markerTransform.anchoredPosition = newCompassPos;
     }
 }

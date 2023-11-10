@@ -275,7 +275,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3611042442913951924, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}
   m_PrefabInstance: {fileID: 7869221882605739747}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8467866849873268706
+--- !u!114 &8305132431373367731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -284,10 +284,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6857267422866222679}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 112f7bf8cfd7ca34e91ff8e8a8956fcc, type: 3}
+  m_Script: {fileID: 11500000, guid: 2add90f7a095fcf4b8e92e401b6b9117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Magnetic: 35
+  Temperature: 100
+  simType: 0
 --- !u!4 &6857267423165510123 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3611042442613190408, guid: e6f27ff2cb31d6840bdba00ec8e945c5, type: 3}

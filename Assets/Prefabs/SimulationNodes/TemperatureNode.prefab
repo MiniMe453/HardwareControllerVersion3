@@ -58,5 +58,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2add90f7a095fcf4b8e92e401b6b9117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeValue: -30
-  simluationType: 0
+  Temperature: 10
+  simType: 0

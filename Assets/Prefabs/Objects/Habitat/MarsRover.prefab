@@ -2001,8 +2001,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6638774547617972912}
-  - component: {fileID: 8492097928736876541}
-  - component: {fileID: 2571277980226849480}
+  - component: {fileID: 4686943940839376055}
   m_Layer: 0
   m_Name: Sensors
   m_TagString: Untagged
@@ -2025,7 +2024,7 @@ Transform:
   m_Father: {fileID: 6857267422866222676}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8492097928736876541
+--- !u!114 &4686943940839376055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2034,23 +2033,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5613403622321181100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 112f7bf8cfd7ca34e91ff8e8a8956fcc, type: 3}
+  m_Script: {fileID: 11500000, guid: 2add90f7a095fcf4b8e92e401b6b9117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Magnetic: 100
---- !u!114 &2571277980226849480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5613403622321181100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56431e1ed12f3a145ad9779567138d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radiationValue: 0.0025
+  Temperature: 15
+  simType: 0
 --- !u!1 &5748282345075793081
 GameObject:
   m_ObjectHideFlags: 0

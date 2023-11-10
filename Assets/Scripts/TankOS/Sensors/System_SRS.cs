@@ -13,8 +13,6 @@ public class System_SRS : MonoBehaviour
     private int m_avgListLength = 20;
     
     //Temperature
-    private static SimulationManager m_temperatureSim = new SimulationManager(GameSettings.BACKGROUND_TEMP - 0.5f, GameSettings.BACKGROUND_TEMP + 0.5f);
-    public static SimulationManager TemperatureSim {get {return m_temperatureSim;}}
     private static float m_temperature;
     public static float Temperature { get {return m_temperature;}}
     private static float m_maxTemp = -62f;
@@ -37,7 +35,7 @@ public class System_SRS : MonoBehaviour
 
     void OnEnable()
     {
-        m_readTimer = Timer.Register(0.25f, () => ReadSensors(), isLooped: true);
+        m_readTimer = Timer.Register(0.5f, () => ReadSensors(), isLooped: true);
     }
 
     void Update()
@@ -56,7 +54,7 @@ public class System_SRS : MonoBehaviour
 
     void ReadTemperature()
     {
-        m_temperature = TemperatureSim.ReadSimulationValue(transform.position);
+        m_temperature = SimulationSystemsManager.TemperatureSim.ReadSimulationValue(transform.position);
         // m_avgTempList.Add(m_temperature);
 
         // if(m_avgTempList.Count > m_avgListLength)
@@ -82,12 +80,12 @@ public class System_SRS : MonoBehaviour
 
     void ReadRadiation()
     {
-        m_currentRad = RadiationSim.ReadRadiationFromLocation(transform.position);
+        m_currentRad = SimulationSystemsManager.RadiationSim.ReadSimulationValue(transform.position);
     }
 
     void ReadMagnetic()
     {
-        m_currentMag = MagneticSim.ReadMagneticFromLocation(transform.position);
+        m_currentMag = SimulationSystemsManager.MagneticSim.ReadSimulationValue(transform.position);
     }
 
     float AverageTemperatre()
@@ -100,37 +98,5 @@ public class System_SRS : MonoBehaviour
         }
 
         return avgTemp/10f;
-    }
-
-    public static void AddNode(SimulationNodeMonobehaviour newNode)
-    {
-        switch(newNode.simluationType)
-        {
-            case Simulations.Temperature:
-                TemperatureSim.AddNode(newNode);
-                break;
-            case Simulations.Magnetic:
-                break;
-            case Simulations.Radiation:
-                break;
-            case Simulations.EMF:
-                break;
-        }
-    }
-
-    public static void RemoveNode(SimulationNodeMonobehaviour oldNode)
-    {
-        switch(oldNode.simluationType)
-        {
-            case Simulations.Temperature:
-                TemperatureSim.RemoveNode(oldNode);
-                break;
-            case Simulations.Magnetic:
-                break;
-            case Simulations.Radiation:
-                break;
-            case Simulations.EMF:
-                break;
-        }
     }
 }

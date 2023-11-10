@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using Rover.OS;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityTimer;
 
 public class System_Data_Interface : MonoBehaviourApplication
 {
     public Canvas canvas;
+    public DataLogEntryPage dataLogEntryPage;
     public UIDataLogEntryTemplate[] dataLogEntryTemplates;
     private int m_currentPageIdx;
     private int m_maxNumPages;
     private int m_numEntriesPerPage = 13;
     private int m_selectedDataLogIdx = 0;
+    private bool m_canOpenDataLog = false;
+    private bool m_isDataLogLoaded = false;
     protected override void Init()
     {
         applicationInputs.AddAction("goup", binding:"<Keyboard>/upArrow");
@@ -26,6 +30,7 @@ public class System_Data_Interface : MonoBehaviourApplication
         applicationInputs["pageBackward"].performed += PageBackward;
         applicationInputs["openLog"].performed += OpenDataLog;
     }
+
     protected override void OnAppLoaded()
     {
         UIManager.AddToViewport(canvas, 100);
@@ -34,11 +39,28 @@ public class System_Data_Interface : MonoBehaviourApplication
         m_currentPageIdx = 0;
 
         RefreshDataLogsList();
+
+        Timer.Register(0.1f, () => {m_canOpenDataLog = true;});
     }
 
     protected override void OnAppQuit()
     {
         UIManager.RemoveFromViewport(canvas);
+        dataLogEntryPage.HideEntryPage();
+        m_canOpenDataLog = false;
+    }
+
+    protected override void Action_Quit(InputAction.CallbackContext context)
+    {
+        if(m_isDataLogLoaded)
+        {
+            dataLogEntryPage.HideEntryPage();
+            m_isDataLogLoaded = false;
+        }
+        else
+        {
+            base.Action_Quit(context);
+        }
     }
 
     private void RefreshDataLogsList()
@@ -58,7 +80,6 @@ public class System_Data_Interface : MonoBehaviourApplication
             {
                 dataLogEntryTemplates[i].SetVisible();
             }
-            
 
             dataLogEntryTemplates[i].SetData(System_DATA.DataLogs[i]);
         }
@@ -69,6 +90,9 @@ public class System_Data_Interface : MonoBehaviourApplication
 
     private void NavigateUp(InputAction.CallbackContext context)
     {
+        if(m_isDataLogLoaded)
+            return;
+
         if(m_selectedDataLogIdx - 1 < 0)
         {
             return;
@@ -82,7 +106,10 @@ public class System_Data_Interface : MonoBehaviourApplication
     }
 
     private void NavigateDown(InputAction.CallbackContext context)
-    {
+    {   
+        if(m_isDataLogLoaded)
+            return;
+
         if(m_selectedDataLogIdx + 1 >= m_numEntriesPerPage || m_selectedDataLogIdx + 1 >= System_DATA.DataLogs.Count)
         {
             return;
@@ -97,6 +124,12 @@ public class System_Data_Interface : MonoBehaviourApplication
 
     private void PageForward(InputAction.CallbackContext context)
     {
+        if(m_isDataLogLoaded)
+        {
+            dataLogEntryPage.PageForward();
+            return;
+        }
+
         m_currentPageIdx++;
 
         if(m_currentPageIdx == m_maxNumPages)
@@ -110,7 +143,13 @@ public class System_Data_Interface : MonoBehaviourApplication
 
     private void PageBackward(InputAction.CallbackContext context)
     {
-        m_currentPageIdx++;
+        if(m_isDataLogLoaded)
+        {
+            dataLogEntryPage.PageBackward();
+            return;
+        }
+
+        m_currentPageIdx--;
 
         if(m_currentPageIdx < 0)
         {
@@ -123,9 +162,17 @@ public class System_Data_Interface : MonoBehaviourApplication
 
     private void OpenDataLog(InputAction.CallbackContext context)
     {
+        if(!m_canOpenDataLog || m_isDataLogLoaded)    
+            return;
+
+        if(System_DATA.DataLogs.Count == 0)
+            return;
+
         DataLog dataLog = dataLogEntryTemplates[m_selectedDataLogIdx].DataLog;
 
-        Debug.Log(dataLog.entries[0].subject);
+        dataLogEntryPage.SetText(dataLog);
+        dataLogEntryPage.ShowEntryPage();
+        m_isDataLogLoaded = true;
     }
 }
 

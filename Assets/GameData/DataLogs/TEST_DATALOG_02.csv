@@ -1,0 +1,8 @@
+DataLogMarker|1.00||
+DATA LOG NAME HERE|||
+Thomas_Anderson|||
+07/29/1985|||
+RVR_HAB_A2|||
+ENTRY 01 DATE|15:18|ENTRY 01 SUBJECT|ENTRY 01 Body Text
+ENTRY 02 DATE|08:19|ENTRY 02 SUBJECT|ENTRY 02 Body Text
+ENTRY 03 DATE|10:49|ENTRY 03 SUBJECT|This is a test text with a new line.&&I have a feeling It won’t work very well.&&Maybe this works better with a marker for new lines

@@ -53,23 +53,23 @@ namespace Rover.OS
 
         }
 
-        public void LoadApp()
+        public virtual void LoadApp()
         {
             m_prevOSState = RoverOperatingSystem.OSMode;
             //OperatingSystem.SetOSState(OSState.Application);
             applicationInputs.Enable();
-            m_appIsLoaded = true;
             EOnAppLoaded?.Invoke();
             OnAppLoaded();
+            m_appIsLoaded = true;
         }
 
-        public void QuitApp()
+        public virtual void QuitApp()
         {
             //RoverOperatingSystem.SetOSMode(m_prevOSState);
             applicationInputs.Disable();
-            m_appIsLoaded = false;
             EOnAppUnloaded?.Invoke();
             OnAppQuit();
+            m_appIsLoaded = false;
         }
 
         protected virtual void OnAppLoaded()
@@ -87,7 +87,7 @@ namespace Rover.OS
             AppDatabase.LoadApp(AppID);
         }
 
-        protected void Action_Quit(InputAction.CallbackContext context)
+        protected virtual void Action_Quit(InputAction.CallbackContext context)
         {
             AppDatabase.CloseApp(AppID);
         }

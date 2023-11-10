@@ -27,7 +27,7 @@ public class UIDataLogEntryTemplate : MonoBehaviour
         subjectText.text = (log.hasBeenRead? "" : "*") + log.dataLogName;
         authorText.text = log.AuthorAsString;
         dateUpdated.text = log.dateUpdated;
-        size.text = (log.entries.Length * 16).ToString() + "kb";
+        size.text = (log.entries.Count * 16).ToString() + "kb";
     }
 
     public void Highlight()

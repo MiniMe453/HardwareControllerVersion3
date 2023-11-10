@@ -22,7 +22,7 @@ public class DataLog : ScriptableObject
     public string dataLogName;
     public string dateUpdated;
     [SerializeField] private CrewMembers author;
-    public CrewMembers Author {get{return author;}}
+    public CrewMembers Author {get{return author;}set{author = value;}}
     public string AuthorAsString {get {
         string authorName = "";
         
@@ -51,5 +51,5 @@ public class DataLog : ScriptableObject
         return authorName;
     }}
     public bool hasBeenRead = false;
-    public DataLogEntry[] entries;
+    public List<DataLogEntry> entries = new List<DataLogEntry>();
 }

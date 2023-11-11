@@ -8,6 +8,7 @@ using System.Linq;
 
 public class DataLogImporter : AssetPostprocessor
 {
+    static int columns = 5;
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
     {
         foreach (string assetPath in importedAssets)
@@ -75,32 +76,41 @@ public class DataLogImporter : AssetPostprocessor
     static void SetDataLogAssetData(DataLog asset, string[] data)
     {
         bool importWithErrors = false;
-        int numOfRows = data.Length/4;
+        int numOfRows = data.Length/columns;
 
         float corruptionChance = 0;
         bool floatParseSuccesful = float.TryParse(data[1], out corruptionChance);
         corruptionChance = floatParseSuccesful? corruptionChance : GameSettings.DEFAULT_CORRUPTION_CHANCE;
 
-        asset.dataLogName = CorruptString(data[4*1], corruptionChance);
+        asset.dataLogName = CorruptString(data[columns*1], corruptionChance);
         
         CrewMembers crewMember;
-        Enum.TryParse(data[4*2], out crewMember);
+        Enum.TryParse(data[columns*2], out crewMember);
         asset.Author = crewMember;
 
-        asset.dateUpdated = data[4*3];
-        asset.entries.Clear();
+        asset.dateUpdated = data[columns*3];
+        // asset.entries.Clear();
 
-        asset.dataPortID = data[4*4];
+        asset.dataPortID = data[columns*4];
 
         for(int i = 5; i < numOfRows; i++)
         {
             DataLogEntry newEntry = new DataLogEntry();
 
-            newEntry.date = data[i * 4];
-            newEntry.time = data[i * 4 + 1];
-            newEntry.subject = CorruptString(data[i * 4 + 2], corruptionChance);
+            int idx = asset.entries.FindIndex((x) => x.date + x.time == data[i * columns] + data[i * columns + 1]);
+
+            if(idx != -1)
+            {
+                UpdateExistingEntry(i, idx, data, corruptionChance, asset);
+                continue;
+            }
+
+            newEntry.date = data[i * columns];
+            newEntry.time = data[i * columns + 1];
+            newEntry.subject = CorruptString(data[i * columns + 2], corruptionChance);
             
-            string bodyText = data[i * 4 + 3];
+            string bodyText = data[i * columns + 3];
+            string imageText = data[i * columns + 4];
             
             if(bodyText == "")
             {
@@ -113,7 +123,12 @@ public class DataLogImporter : AssetPostprocessor
             bodyText = bodyText.Replace('�', '\'');
             bodyText = CorruptString(bodyText, corruptionChance);
 
+            imageText = imageText.Replace('&','\n');
+            imageText = imageText.Replace('�', '\'');
+            imageText = CorruptString(imageText, corruptionChance);
+
             newEntry.textEntry = bodyText;
+            newEntry.imageTitle = imageText;
 
             asset.entries.Add(newEntry);
         }
@@ -122,6 +137,7 @@ public class DataLogImporter : AssetPostprocessor
         {
             Debug.Log("Scriptable object was updated, but there were some errors. Please check the error log.");
         }
+        Debug.Log("If you removed any entries, check the data asset. Updating on removed entries doesn't exist yet :P");
     }
 
     static string CorruptString(string str, float corruptionChance)
@@ -140,5 +156,36 @@ public class DataLogImporter : AssetPostprocessor
         }
 
         return newString.ToString();
+    }
+
+    static void UpdateExistingEntry(int columnIdx, int entryIdx, string[] data, float corruptionChance, DataLog dataLog)
+    {
+        DataLogEntry newEntry = new DataLogEntry
+        {
+            image = dataLog.entries[entryIdx].image,
+            date = data[columnIdx * columns],
+            time = data[columnIdx * columns + 1]
+        };
+
+        string bodyText = data[columnIdx * columns + 3];
+        string imageText = data[columnIdx * columns + 4];
+            
+        if(bodyText == "")
+        {
+            Debug.LogError($"Entry {dataLog.dataLogName} has no body text! Maybe it needs to have an image assigned to it.");
+        }
+
+        bodyText = bodyText.Replace('&','\n');
+        bodyText = bodyText.Replace('�', '\'');
+        bodyText = CorruptString(bodyText, corruptionChance);
+
+        imageText = imageText.Replace('&','\n');
+        imageText = imageText.Replace('�', '\'');
+        imageText = CorruptString(imageText, corruptionChance);
+
+        newEntry.textEntry = bodyText;
+        newEntry.imageTitle = imageText;
+
+        dataLog.entries[entryIdx] = newEntry;
     }
 }

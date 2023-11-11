@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DataLogEntryPage : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class DataLogEntryPage : MonoBehaviour
     public TextMeshProUGUI bodyText;
     public TextMeshProUGUI dataLogName;
     public TextMeshProUGUI pageNumber;
+    public GameObject imagePageParent;
+    public Image dataLogImage;
+    public TextMeshProUGUI imageText;
     public Canvas canvas;
     private DataLog m_dataLog;
     private int m_maxNumPages;
@@ -69,8 +73,20 @@ public class DataLogEntryPage : MonoBehaviour
 
         subjectText.text = entry.subject;
         dateText.text = $"{entry.date} : {entry.time}";
-        bodyText.text = entry.textEntry;
         pageNumber.text = $"LOG# {(m_currentPageIdx + 1).ToString("000")}/{m_maxNumPages.ToString("000")}";
+
+
+        if(bodyText.text == "")
+        {
+            dataLogImage.sprite = entry.image;
+            imageText.text = entry.imageTitle;
+            imagePageParent.SetActive(true);
+        }
+        else
+        {
+            bodyText.text = entry.textEntry;
+            imagePageParent.SetActive(true);
+        }
     }
     
 }

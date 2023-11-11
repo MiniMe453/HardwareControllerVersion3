@@ -11,7 +11,7 @@ public struct DataLogEntry
     public string time;
     [TextArea(15,20)]
     public string textEntry;
-    public Texture2D image;
+    public Sprite image;
     public string imageTitle;
 }
 

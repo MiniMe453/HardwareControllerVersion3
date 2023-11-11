@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e625a078a62cb4a8dc89de2d1740e0, type: 3}
+  m_Name: IMAGE_DATALOG_TEST
+  m_EditorClassIdentifier: 
+  dataPortID: RVR_HAB_A3
+  dataLogName: I>/)e} fro& Ma#s
+  dateUpdated: 03/18/1985
+  author: 0
+  hasBeenRead: 0
+  entries:
+  - subject: 
+    date: 02/01/85
+    time: 15:18
+    textEntry: 
+    image: {fileID: 21300000, guid: 66d07fcb338642f429cc62390192fba4, type: 3}
+    imageTitle: Ou^ <irst e(@& im*ge on t[& surfa^e of M-<<! I c/n ha{_== beli)ve
+      I'm actual#y (er{[
+  - subject: 
+    date: 02/10/85
+    time: 08:19
+    textEntry: I d+d*'t think I w:uld a/%u=lly get >om<si(k, but he+e I a%. I:'s
+      re>-l_ ^_+d t( co{< to terms with ^he fac( I'l% <}ver r>@urn :o E[&th.
+    image: {fileID: 0}
+    imageTitle: "\r"
+  - subject: 
+    date: 02/24/85
+    time: 10:49
+    textEntry: 
+    image: {fileID: 21300000, guid: f3bbb11c0a1823a4f866fa02114a6fbb, type: 3}
+    imageTitle: "H+skin% -as -^en getting i%to phot%gra/)y a($ s(t>/ the -@ipod while
+      we were r$)ax)ng @ne a/$=r:o$n. I ca*'t wait *> see what other s(uf: s<e comes
+      up wit$.\r"
+  - subject: 
+    date: 03/31/85
+    time: 12:14
+    textEntry: 'Hos^@ns is pregnant /nd it''s my b{}@. I su@}ose so_ethin$ lik< this
+      was to }_ expec+ed, but w%at d^$ -> e-@e^t. That @= #o}l( $/ +ont/nt wi)h loo>i*g
+      a@ eac# o-*/< _o+ yea-s an: never t%uching or get{in@ c{os$. What -n #bsurd
+      @hought!
+
+
+      In :the{ new, we {%u:d the metall({ struct##e tha/ w/&^ s>)n
+      fro( s$a=e. /oo_s su[er in*eresting a(d I''m {ookin= @or#ard to g:tting a @<oser
+      loo:. T+i- c/^}d )^ -h} proof of <if& @e''ve alway/ -ante%!!'
+    image: {fileID: 0}
+    imageTitle: "\r"

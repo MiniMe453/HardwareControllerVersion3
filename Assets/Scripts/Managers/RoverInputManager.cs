@@ -11,10 +11,21 @@ public class RoverInputManager : MonoBehaviour
     public GameInitializer gameInitializer => GetComponent<GameInitializer>();
     private static InputActionAsset m_InputActions;
     public static InputActionAsset InputActions { get { return m_InputActions; } }
+    public static InputAction YAxis;
+    public static InputAction XAxis;
+    public static InputAction ThrottleAxis;
+    public static InputAction RadioAxis;
 
     void Start()
     {
         m_InputActions = Resources.Load<InputActionAsset>("KeyboardActionAsset");
+        RadioAxis = RoverInputManager.InputActions["RadioAxis"];
+        YAxis = RoverInputManager.InputActions["YAxis"];
+        XAxis = RoverInputManager.InputActions["XAxis"];
+        ThrottleAxis = RoverInputManager.InputActions["ThrottleAxis"];
+
+
+
         gameInitializer.InitializeGame(m_useKeyboardInput);
     }
 }

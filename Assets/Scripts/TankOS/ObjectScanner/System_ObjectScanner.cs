@@ -66,6 +66,9 @@ public class System_ObjectScanner : MonoBehaviour, IInputTypes
 
     void OnScanButtonPressed(int pin)
     {
+        if(CommandConsoleMain.IsConsoleVisible)
+            return;
+
         if (!m_scanObject)
         {
             CheckForScannabaleObjects();

@@ -46,6 +46,7 @@ namespace Rover.Systems
         {
             GameInitializer.EOnGameInitialized += OnDatabaseInit;
             RoverOperatingSystem.EOnRoverControlModeChanged += OnRoverControlModeChanged;
+            RoverOperatingSystem.EOnOSModeChanged += OnOSModeChanged;
         }
 
         void OnDatabaseInit()
@@ -107,6 +108,20 @@ namespace Rover.Systems
                 case RoverControlMode.CAM:
                     mainPhotoCamera.SetActive(true);
                     CheckBrakeState(System_MTR.IsBrakeActive);
+                    break;
+            }
+        }
+
+        void OnOSModeChanged(OSMode newMode)
+        {
+            switch(newMode)
+            {
+                case OSMode.Rover:
+
+                    break;
+                case OSMode.Computer:
+                    break;
+                case OSMode.Map:
                     break;
             }
         }
@@ -193,6 +208,9 @@ namespace Rover.Systems
 
         void OnTakePhotoButtonPressed(int pin)
         {
+            if(CommandConsoleMain.IsConsoleVisible)
+                return;
+
             if (Mathf.Abs(System_MTR.RoverVelocity) > 0.01f && RoverOperatingSystem.RoverControlMode != RoverControlMode.CAM)
             {
                 UIManager.ShowMessageBox("STOP THE ROVER", Color.red, 1f);
@@ -205,6 +223,9 @@ namespace Rover.Systems
 
         void OnTakePhotoButtonPressed(InputAction.CallbackContext context)
         {
+            if(CommandConsoleMain.IsConsoleVisible)
+                return;
+
             OnTakePhotoButtonPressed(-1);
         }
 

@@ -77,16 +77,20 @@ public class System_RDIO : MonoBehaviour, IInputTypes
 
         strFreq = strFreq.Replace('.', strFreq[4]).Remove(4);
 
-        object[] data = new object[5];
-        data[4] = 0;
-
-        for (int i = 0; i < 4; i++)
-        {
-            data[i] = Int32.Parse(strFreq[i].ToString());
-        }
-
-        UduinoManager.Instance.sendCommand("writeTM1", data);
         EOnRadioFrequencyUpdated?.Invoke(ReceiverData.Frequency);
+
+        if(!RoverInputManager.UseKeyboardInput)
+        {
+            object[] data = new object[5];
+            data[4] = 0;
+
+            for (int i = 0; i < 4; i++)
+            {
+                data[i] = Int32.Parse(strFreq[i].ToString());
+            }
+
+            UduinoManager.Instance.sendCommand("writeTM1", data);
+        }
     }
 
     void OnRadioButtonPressed(int pin)

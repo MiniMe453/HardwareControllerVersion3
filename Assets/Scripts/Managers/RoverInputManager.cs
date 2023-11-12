@@ -15,6 +15,7 @@ public class RoverInputManager : MonoBehaviour
     public static InputAction XAxis;
     public static InputAction ThrottleAxis;
     public static InputAction RadioAxis;
+    public AudioSource audioSource;
 
     void Start()
     {
@@ -27,5 +28,18 @@ public class RoverInputManager : MonoBehaviour
 
 
         gameInitializer.InitializeGame(m_useKeyboardInput);
+
+        foreach(InputAction action in RoverInputManager.InputActions)
+        {
+            action.performed += PlaySoundOnPress;
+        }
+    }
+
+    void PlaySoundOnPress(InputAction.CallbackContext context)
+    {
+        if(CommandConsoleMain.IsConsoleVisible)
+            return;
+
+        audioSource.Play();
     }
 }

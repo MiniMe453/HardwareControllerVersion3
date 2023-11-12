@@ -667,6 +667,8 @@ MonoBehaviour:
     m_Actions: []
     m_Bindings: []
   canvas: {fileID: 4309523140903054246}
+  dataLogEntryPage: {fileID: 0}
+  pageNumberText: {fileID: 7462772454817965004}
   dataLogEntryTemplates:
   - {fileID: 8674051032751653000}
   - {fileID: 3413625555424547872}

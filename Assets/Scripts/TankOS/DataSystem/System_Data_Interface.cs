@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Rover.OS;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityTimer;
@@ -9,6 +10,7 @@ public class System_Data_Interface : MonoBehaviourApplication
 {
     public Canvas canvas;
     public DataLogEntryPage dataLogEntryPage;
+    public TextMeshProUGUI pageNumberText;
     public UIDataLogEntryTemplate[] dataLogEntryTemplates;
     private int m_currentPageIdx;
     private int m_maxNumPages;
@@ -86,6 +88,7 @@ public class System_Data_Interface : MonoBehaviourApplication
 
         m_selectedDataLogIdx = startIdx;
         dataLogEntryTemplates[m_selectedDataLogIdx].Highlight();
+        pageNumberText.text = $"PAGE {(m_currentPageIdx + 1).ToString("000")}/{m_maxNumPages.ToString("000")}";
     }
 
     private void NavigateUp(InputAction.CallbackContext context)

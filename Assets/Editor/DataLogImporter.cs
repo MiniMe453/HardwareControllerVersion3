@@ -164,7 +164,8 @@ public class DataLogImporter : AssetPostprocessor
         {
             image = dataLog.entries[entryIdx].image,
             date = data[columnIdx * columns],
-            time = data[columnIdx * columns + 1]
+            time = data[columnIdx * columns + 1],
+            subject = CorruptString(data[columnIdx * columns + 2], corruptionChance)
         };
 
         string bodyText = data[columnIdx * columns + 3];

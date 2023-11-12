@@ -11,6 +11,7 @@ public class DataLogEntryPage : MonoBehaviour
     public TextMeshProUGUI bodyText;
     public TextMeshProUGUI dataLogName;
     public TextMeshProUGUI pageNumber;
+    public TextMeshProUGUI authorText;
     public GameObject imagePageParent;
     public Image dataLogImage;
     public TextMeshProUGUI imageText;
@@ -24,6 +25,7 @@ public class DataLogEntryPage : MonoBehaviour
         m_dataLog = dataLog;
 
         dataLogName.text = m_dataLog.dataLogName;
+        authorText.text = m_dataLog.AuthorAsString;
 
         m_currentPageIdx = 0;
         m_maxNumPages = dataLog.entries.Count;
@@ -76,7 +78,7 @@ public class DataLogEntryPage : MonoBehaviour
         pageNumber.text = $"LOG# {(m_currentPageIdx + 1).ToString("000")}/{m_maxNumPages.ToString("000")}";
 
 
-        if(bodyText.text == "")
+        if(entry.textEntry == "")
         {
             dataLogImage.sprite = entry.image;
             imageText.text = entry.imageTitle;
@@ -85,7 +87,7 @@ public class DataLogEntryPage : MonoBehaviour
         else
         {
             bodyText.text = entry.textEntry;
-            imagePageParent.SetActive(true);
+            imagePageParent.SetActive(false);
         }
     }
     

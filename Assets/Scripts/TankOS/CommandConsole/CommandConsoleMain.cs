@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 using Rover.OS;
 using System;
+// using System.Threading;
+using UnityTimer;
 
 public class CommandConsoleMain : MonoBehaviourApplication
 {
@@ -14,6 +16,7 @@ public class CommandConsoleMain : MonoBehaviourApplication
     public RectTransform commandOutputTransform;
     public TextMeshProUGUI commandInputText;
     public TMP_InputField commandInputField;
+    private bool m_isCursorBlinking = false;
     private Command m_clearConsole = new Command(
         "CLR",
         "Clears the console",
@@ -32,17 +35,26 @@ public class CommandConsoleMain : MonoBehaviourApplication
         commandInputField.onValueChanged.AddListener(OnCommandInputFieldUpdated);
         commandInputField.onSubmit.AddListener(OnCommandInputFieldSubmitted);
         commandInputField.resetOnDeActivation = true;
-        commandInputText.text = "> |";
+        commandInputText.text = "> █";
 
         homeScreen.EOnAppLoaded += OnHomeScreenLoaded;
         homeScreen.EOnAppUnloaded += OnHomeScreenRemoved;
+
+        Timer.Register(0.5f, () => {
+            if(!IsConsoleVisible)
+                return;
+            
+            m_isCursorBlinking = !m_isCursorBlinking;
+            //█
+            commandInputText.text = $"> {commandInputField.text.ToUpper()}{(m_isCursorBlinking? "█" : "")}";
+        }, isLooped: true);
         //commandInputField.Select();
 
     }
 
     void Start()
     {
-        commandInputField.ActivateInputField();
+        // commandInputField.ActivateInputField();
     }
 
     void OnDisable()
@@ -67,7 +79,7 @@ public class CommandConsoleMain : MonoBehaviourApplication
 
     void OnCommandInputFieldUpdated(string newValue)
     {
-        commandInputText.text = "> " + newValue.ToUpper() + "|";
+        commandInputText.text = "> " + newValue.ToUpper() + "█";
     }
 
     void OnCommandInputFieldSubmitted(string value)

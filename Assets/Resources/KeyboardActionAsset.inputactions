@@ -348,6 +348,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "ArrowKeys",
+                    "id": "ee96aac7-81d3-4b8f-9e2f-09955a9bc164",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrottleAxis",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "1665782c-f269-48b0-9d05-b3e2ad2b0ab1",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrottleAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "35f055bc-6204-477b-ae9d-8e3cfb7e078c",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrottleAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "23b67d89-76b6-461b-9090-a7c17f984555",
                     "path": "<Keyboard>/b",

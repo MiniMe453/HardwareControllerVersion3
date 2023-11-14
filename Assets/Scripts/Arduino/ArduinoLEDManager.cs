@@ -55,7 +55,7 @@ namespace Rover.Arduino
 
             if (!UduinoManager.Instance.isConnected())
             {
-                Debug.LogWarning("LED Manager: Arduino board is not connected!");
+                Debug.Log("LED Manager: Arduino board is not connected");
                 return;
             }
 

@@ -14,6 +14,10 @@ public class System_MTR : MonoBehaviour, IInputTypes
     public static float HorizontalAxis { get { return m_horizontalAxis; } }
     static float m_throttleAxis;
     public static float ThrottleAxis { get { return m_throttleAxis; } }
+    public static event Action<float> EOnThrottleAxisChanged;
+    private float m_currentSpeed;
+    private float m_accelerationSpeed = 0.5f;
+    private float m_brakeSpeed = 1.5f;
     static bool m_brakeActive = false;
     public static bool IsBrakeActive { get { return m_brakeActive; } }
     public static event Action<bool> EOnBrakeModeChanged;
@@ -25,6 +29,7 @@ public class System_MTR : MonoBehaviour, IInputTypes
 
     //Public variables for other scripts
     public static float RoverVelocity;
+    private static float m_oldRoverVelocity;
     public static event Action<float> EOnRoverVelocityUpdate;
 
     public Shaker mainShaker;
@@ -54,27 +59,30 @@ public class System_MTR : MonoBehaviour, IInputTypes
         RoverOperatingSystem.EOnRoverControlModeChanged += OnRoverControlModeChanged;
         RoverOperatingSystem.EOnOSModeChanged += OnOSModeChanged;
 
-        m_brakeLEDpin = ArduinoInputDatabase.GetOutputIndexFromName("brake light led");
-        Timer.Register(0.25f, () => OnRoverVelocityUpdate(), isLooped: true);
+        EOnThrottleAxisChanged?.Invoke(m_throttleAxis);
+
+        // Timer.Register(0.25f, () => OnRoverVelocityUpdate(), isLooped: true);
     }
 
     public void AssignKeyboardEvents()
     {
-        KeyboardAxisManager.EOnXAxis += (val) => { m_horizontalAxis = val; };
-        KeyboardAxisManager.EOnThrottleAxis += (val) => { m_throttleAxis = val; };
+        KeyboardAxisManager.EOnXAxis += OnHorizontalAxisKeyboard;
+        KeyboardAxisManager.EOnThrottleAxis += OnThrottleAxisKeyboard;
         RoverInputManager.InputActions["Brake"].performed += (x) => { OnBrakeSwitchPressed(-1); };
         OnBrakeSwitchPressed(-1);
     }
 
     public void AssignArduinoEvents()
     {
-        ArduinoInputDatabase.GetInputFromName("Joystick X").EOnValueChanged += OnHorizontalAxis;
-        ArduinoInputDatabase.GetInputFromName("Push Potentiometer").EOnValueChanged += OnThrottleAxis;
+        m_brakeLEDpin = ArduinoInputDatabase.GetOutputIndexFromName("brake light led");
+
+        ArduinoInputDatabase.GetInputFromName("Joystick X").EOnValueChanged += OnHorizontalAxisArduino;
+        ArduinoInputDatabase.GetInputFromName("Push Potentiometer").EOnValueChanged += OnThrottleAxisArduino;
         ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonPressed += OnBrakeSwitchPressed;
         ArduinoInputDatabase.GetInputFromName("Brake Switch").EOnButtonReleased += OnBrakeSwitchPressed;
     }
 
-    void OnHorizontalAxis(float value, int pin)
+    void OnHorizontalAxisArduino(float value, int pin)
     {
         m_horizontalAxis = (value - GameSettings.HORIZONTAL_CENTER_VAL) / GameSettings.HORIZONTAL_CENTER_VAL;
 
@@ -84,7 +92,7 @@ public class System_MTR : MonoBehaviour, IInputTypes
         m_horizontalAxis = Math.Clamp(m_horizontalAxis, -1, 1);
     }
 
-    void OnThrottleAxis(float value, int pin)
+    void OnThrottleAxisArduino(float value, int pin)
     {
         m_throttleAxis = (value - 512) / ((value - 512 > 0) ? 1024 : 512);
 
@@ -92,10 +100,22 @@ public class System_MTR : MonoBehaviour, IInputTypes
             m_throttleAxis = 0;
     }
 
+    void OnHorizontalAxisKeyboard(float value)
+    {
+        m_horizontalAxis = value;
+    }
+
+    void OnThrottleAxisKeyboard(float value)
+    {
+        Debug.Log(value);
+        m_throttleAxis = value;
+
+        EOnThrottleAxisChanged?.Invoke(value);
+    }
+
     void OnBrakeSwitchPressed(int pin)
     {
         m_brakeActive = !m_brakeActive;
-
 
         LEDManager.SetLEDMode(m_brakeLEDpin, m_brakeActive ? 1 : 0);
 
@@ -129,7 +149,7 @@ public class System_MTR : MonoBehaviour, IInputTypes
             RoverOperatingSystem.SetUserControl(true);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (RoverOperatingSystem.OSMode == OSMode.Computer)
             return;
@@ -143,27 +163,29 @@ public class System_MTR : MonoBehaviour, IInputTypes
         Quaternion wantedRotation = transform.rotation * Quaternion.Euler(Vector3.up * turnSpeed * m_horizontalAxis * Time.deltaTime);
         m_rigidbody.MoveRotation(wantedRotation);
 
-        if (RoverOperatingSystem.RoverControlMode != RoverControlMode.RVR)
-            return;
 
-        Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_throttleAxis * (m_brakeActive ? 0f : 1f) * Time.deltaTime);
+        if(!m_brakeActive && RoverOperatingSystem.RoverControlMode == RoverControlMode.RVR)
+            m_currentSpeed += m_accelerationSpeed * Time.deltaTime * m_throttleAxis;
+        else
+            m_currentSpeed -= m_brakeSpeed * Time.deltaTime * Mathf.Sign(m_currentSpeed);
+        
+
+        if(Mathf.Abs(m_currentSpeed) > 1f)
+            m_currentSpeed = m_throttleAxis;
+        else if (Mathf.Abs(m_currentSpeed) < GameSettings.JOYSTICK_DEADZONE / 2f && m_brakeActive)
+            m_currentSpeed = 0f;
+
+        Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_currentSpeed * Time.fixedDeltaTime);
         m_rigidbody.MovePosition(wantedPosition);
 
-        motorSoundEffect.volume = Mathf.Clamp01((Mathf.Abs(m_throttleAxis) + Mathf.Abs(m_horizontalAxis)) * (m_brakeActive ? 0f : 1f));
+        motorSoundEffect.volume = Mathf.Clamp01(Mathf.Abs(m_currentSpeed) + Mathf.Abs(m_horizontalAxis));
 
-        // if(m_offroadShakeInstance == null)
-        // {
-        //     m_offroadShakeInstance = mainShaker.Shake(offRoadShakePreset);
-        //     return;
-        // }
-
-        // m_offroadShakeInstance.StrengthScale = RoverVelocity / maxSpeed;
-        // Debug.LogError(RoverVelocity / maxSpeed);
-    }
-
-    void OnRoverVelocityUpdate()
-    {
-        RoverVelocity = maxSpeed * (m_throttleAxis * -1f) * (m_brakeActive ? 0f : 1f) * 10f;
-        EOnRoverVelocityUpdate?.Invoke(RoverVelocity);
+        RoverVelocity = maxSpeed * (m_currentSpeed * -1f) * 2.5f;
+        
+        if(m_oldRoverVelocity != RoverVelocity)
+        {
+            m_oldRoverVelocity = RoverVelocity;
+            EOnRoverVelocityUpdate?.Invoke(RoverVelocity);
+        }
     }
 }

@@ -26,7 +26,7 @@ public class GameInitializer : MonoBehaviour
 
         RoverInputManager.InputActions.Enable();
         // QualitySettings.vSyncCount = 0;  // VSync must be disabled
-        // Application.targetFrameRate = 30;
+        // Application.targetFrameRate = 60;
     }
 
 }

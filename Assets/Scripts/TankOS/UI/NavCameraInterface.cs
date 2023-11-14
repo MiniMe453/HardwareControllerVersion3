@@ -58,6 +58,9 @@ public class NavCameraInterface : MonoBehaviour
     public TextMeshProUGUI transmitText;
     public TextMeshProUGUI readyText;
 
+    private Timer m_frequencyColorResetTimer;
+    private Timer m_throttleColorResetTimer;
+
     void Awake()
     {
         System_MTR.EOnBrakeModeChanged += OnBrakeStateChanged;
@@ -66,6 +69,7 @@ public class NavCameraInterface : MonoBehaviour
         System_CAM.EOnNewCameraSelected += OnNewCameraSelected;
         RoverOperatingSystem.EOnOSModeChanged += OnRoverOSModeChanged;
         System_SRS.EOnSensorsUpdated += OnSensorsRead;
+        System_MTR.EOnThrottleAxisChanged += OnRoverThrottleAxisChanged;
 
         System_WARN.EOnAngleWarningLight += OnAngleWarning;
         System_WARN.EOnRadiationWarningLight += OnRadiationWarning;
@@ -77,6 +81,8 @@ public class NavCameraInterface : MonoBehaviour
 
         RoverOperatingSystem.EOnArduinoInputStateChanged += OnArduinoInputChanged;
         TimeManager.EOnDateTimeUpdated += OnNewDateTime;
+
+        Timer.Register(0.25f, () => {UpdateRoverInfo();}, isLooped: true);
     }
 
     void OnEnable()
@@ -237,12 +243,24 @@ public class NavCameraInterface : MonoBehaviour
 
     void OnBrakeStateChanged(bool newState)
     {
-        brakeText.color = newState? Color.white : Color.gray;
+        brakeText.color = newState? Color.red : Color.gray;
+        brakeText.text = newState? "BRAKE ENABLED" : "BRAKE DISABLED";
     }
 
     void OnRadioFrequencyChanged(float newFreq)
     {
+        if(m_frequencyColorResetTimer != null)
+            m_frequencyColorResetTimer.Cancel();
+
+        frequencyText.color = Color.red;
         frequencyText.text = (Math.Round(newFreq, 1).ToString()).PadLeft(5);
+
+        m_frequencyColorResetTimer = Timer.Register(0.5f, () => {
+            frequencyText.color = Color.white;
+            m_frequencyColorResetTimer = null;
+            });
+
+        Debug.Log("Frequence changed");
     }
 
     void OnRadioBandChanged(int newBand)
@@ -261,13 +279,45 @@ public class NavCameraInterface : MonoBehaviour
         }
     }
 
+    private void OnMapMarkerAddedToWorld(Vector3 markerLocation)
+    {
+        GameObject obj = Instantiate(mapMarkerIconPrefab, compassStaticTransform);
+        UpdateMapMarkerCompass updateMapMarker = obj.GetComponent<UpdateMapMarkerCompass>();
+        updateMapMarker.SetMarkerData(markerLocation);
+    }
+
+    private void OnRoverThrottleAxisChanged(float value)
+    {
+        if(m_throttleColorResetTimer != null)
+        {
+            m_throttleColorResetTimer.Cancel();
+        }
+
+        throttleText.color = Color.red;
+        throttleText.text = "THRTL:  " + Mathf.CeilToInt(-System_MTR.ThrottleAxis * 100f).ToString().PadLeft(4) + "%";
+
+        m_throttleColorResetTimer = Timer.Register(0.5f, () => {
+            throttleText.color = Color.white;
+            m_throttleColorResetTimer = null;
+        });
+    }
+
     void Update()
+    {
+        if(RoverOperatingSystem.OSMode != OSMode.Rover)
+            return;
+        
+        Vector3 newCompassPos = new Vector3(System_GPS.Heading/360f * 537f, 0,0);
+        compassTransform.anchoredPosition = newCompassPos;
+    }
+
+    private void UpdateRoverInfo()
     {
         if(RoverOperatingSystem.OSMode != OSMode.Rover)
             return;
 
         rollImageTransform.rotation = Quaternion.Euler(new Vector3(0,0,SystemPitchRoll.Roll));
-        rollText.text = "ROLL: " + (SystemPitchRoll.Roll.ToString("0.0")).PadLeft(6);
+        rollText.text = "ROLL: " + SystemPitchRoll.Roll.ToString("0.0").PadLeft(6);
 
         pitchImageTransform.anchoredPosition = new Vector2(0,SystemPitchRoll.Pitch * 3f);
         pitchText.text = "PTCH: " + SystemPitchRoll.Pitch.ToString("0.0").PadLeft(6);
@@ -275,21 +325,10 @@ public class NavCameraInterface : MonoBehaviour
         headingText.text = "HDNG: " + System_GPS.Heading.ToString("0.0").PadLeft(6);
         elevationText.text = "ELV: " + System_GPS.Elevation.ToString("0.0").PadLeft(5) + "m";
 
-        Vector3 newCompassPos = new Vector3(System_GPS.Heading/360f * 537f, 0,0);
-        compassTransform.anchoredPosition = newCompassPos;
-
         speedText.text = "SPD: " + System_MTR.RoverVelocity.ToString("0.0").PadLeft(4) + "m/s";
-        throttleText.text = "THRTL:  " + Mathf.CeilToInt(-System_MTR.ThrottleAxis * 100f).ToString().PadLeft(4) + "%";
 
         gpsCoordsText.text = System_GPS.GPSCoordsToString(System_GPS.GPSCoordinates);
 
         freqStrengthText.text = System_RDIO.SignalStrength.ToString().PadLeft(3) + "%";
-    }
-
-    private void OnMapMarkerAddedToWorld(Vector3 markerLocation)
-    {
-        GameObject obj = Instantiate(mapMarkerIconPrefab, compassStaticTransform);
-        UpdateMapMarkerCompass updateMapMarker = obj.GetComponent<UpdateMapMarkerCompass>();
-        updateMapMarker.SetMarkerData(markerLocation);
     }
 }

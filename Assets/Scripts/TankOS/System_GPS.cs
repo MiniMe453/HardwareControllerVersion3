@@ -15,6 +15,8 @@ public class System_GPS : MonoBehaviour
     public static float Elevation {get {return m_elevation;}}
     private static Vector3 m_worldSpacePos;
     public static Vector3 WorldSpacePos {get{return m_worldSpacePos;}}
+    public static Vector3 m_forwardVector;
+    public static Vector3 RoverForwardVector {get{return m_forwardVector;}}
 
     
     void Update()
@@ -30,6 +32,7 @@ public class System_GPS : MonoBehaviour
 
         m_elevation = ElevationAtWorldPos(transform.position);
         m_worldSpacePos = transform.position;
+        m_forwardVector = transform.forward;
     }
 
     public static Vector2 WorldPosToGPSCoords(Vector3 position)
@@ -48,5 +51,21 @@ public class System_GPS : MonoBehaviour
     public static float ElevationAtWorldPos(Vector3 worldPos)
     {
         return worldPos.y - 13f;
+    }
+
+    public static float GetHeadingToRover(Vector3 worldPos)
+    {
+        Vector3 roverLoc = WorldSpacePos;
+
+        worldPos.y = 0;
+        roverLoc.y = 0;
+        
+        float heading = Vector3.SignedAngle(-(worldPos - roverLoc), new Vector3(0,0,1), Vector3.up);
+        float sign = Mathf.Sign(heading);
+
+        if(sign < 0)
+            heading = 360 - Mathf.Abs(heading);
+
+        return heading;
     }
 }

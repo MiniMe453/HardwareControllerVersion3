@@ -22,18 +22,7 @@ public class UpdateMapMarkerCompass : MonoBehaviour
         if(!m_dataSet)
             return;
 
-        Vector3 roverLoc = System_GPS.WorldSpacePos;
-
-        markerLocation.y = 0;
-        roverLoc.y = 0;
-        
-        m_heading = Vector3.SignedAngle(-Vector3.ProjectOnPlane(markerLocation - roverLoc, Vector3.up), new Vector3(0,0,1), Vector3.up);
-        float sign = Mathf.Sign(m_heading);
-
-        if(sign < 0)
-            m_heading = 360 - Mathf.Abs(m_heading);
-
-        float m_heading01 = 1 - Mathf.Clamp01(m_heading/360f);
+        float m_heading01 = 1 - Mathf.Clamp01(System_GPS.GetHeadingToRover(transform.position)/360f);
 
         Vector3 newCompassPos = new Vector3(m_heading01 * 537f + 537f/2, -10f,0);   
         markerTransform.anchoredPosition = newCompassPos;

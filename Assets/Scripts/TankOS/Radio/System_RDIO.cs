@@ -139,7 +139,7 @@ public class System_RDIO : MonoBehaviour, IInputTypes
 
         CommandConsoleMain.Instance.UpdateConsoleOutput("TIME: " + TimeManager.ToStringMissionTimeLong(TimeManager.dateTime));
         CommandConsoleMain.Instance.UpdateConsoleOutput("================");
-        CommandConsoleMain.Instance.UpdateConsoleOutput("BND   FREQ   DIR");
+        CommandConsoleMain.Instance.UpdateConsoleOutput("BND   FREQ   STR");
         CommandConsoleMain.Instance.UpdateConsoleOutput("----------------");
         yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 2f));
 
@@ -149,7 +149,7 @@ public class System_RDIO : MonoBehaviour, IInputTypes
                 break;
 
             Struct_RadioScan scan = m_prevScanResult[counter];
-            CommandConsoleMain.Instance.UpdateConsoleOutput($"{scan.radioType.ToString().PadRight(3)} | {scan.frequency.ToString("000.0")} | {scan.strength.ToString().PadLeft(3)}");
+            CommandConsoleMain.Instance.UpdateConsoleOutput($"{scan.radioType.ToString().PadRight(3)} | {scan.frequency.ToString("000.0")} | {scan.strength.ToString().PadLeft(2)}%");
 
             yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 2f));
             counter++;

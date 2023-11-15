@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Configuration;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -38,6 +39,7 @@ public class RadioReceiver : MonoBehaviour
     private int numRadiosPerStep = 2;
     private int currentStepCount = 0;
     private int maxStepCounts = 0;
+    private bool setStaticVolume = true;
     private Command RADIO_SCAN;
 
     void Start()
@@ -60,14 +62,10 @@ public class RadioReceiver : MonoBehaviour
             transmitter.SetSignalStrength(0);
         }
 
-        maxStepCounts = (int)Mathf.Ceil((float)m_RadioManager.RadioTransmitters.Count/(float)numRadiosPerStep);
-        // Debug.Log(m_RadioManager.RadioTransmitters.Count);
-        // Debug.Log(maxStepCounts);
+        maxStepCounts = Mathf.CeilToInt((float)m_RadioManager.RadioTransmitters.Count/(float)numRadiosPerStep);
     }
     void Update()
     {
-        return;
-
         if(m_RadioManager.RadioTransmitters.Count == 0)
             return;
 
@@ -77,38 +75,56 @@ public class RadioReceiver : MonoBehaviour
         }
 
         currentUpdateTime += Time.deltaTime;
+
         if (currentUpdateTime < updateStep)
             return;
 
-        bool setStaticVolume = true;
-
         currentUpdateTime = 0f;
+        int startIdx = currentStepCount * numRadiosPerStep;
 
-        for(int i = currentStepCount * numRadiosPerStep; i < (currentStepCount * numRadiosPerStep) + numRadiosPerStep; i++)
+        for(int i = startIdx; i < startIdx + numRadiosPerStep; i++)
         {
+            if(i > m_RadioManager.RadioTransmitters.Count - 1)
+            {
+                break;
+            }
+
             RadioTransmitter transmitter = m_RadioManager.RadioTransmitters[i];
             float signalVolume = CalculateSignalVolume(transmitter);
+            // Debug.Log(signalVolume);
+
+            if(signalVolume == 0f)
+            {
+                if(transmitter.IsAudioSourceEnabled())
+                {
+                    transmitter.SetSignalStrength(0);
+                    transmitter.DisableAudioSource();
+                }
+
+                continue;
+            }
 
             if (signalVolume != 0f)
             {
                 setStaticVolume = false;
                 // signalVolume = CalculateObstructions(signalVolume, transmitter);
                 // signalVolume *= CalculateRecieverAngle(transmitter);
-                staticAudio.volume = 1 - signalVolume;
+                staticAudio.volume = 1-signalVolume;
                 receiverData.signalStrength = signalVolume;
                 transmitter.SetSignalStrength(signalVolume);
                 ChartAudioSignalValues.UpdateClipLoundess(signalVolume);
                 System_RDIO.SetSignalStrength(signalVolume);
-                continue;
-            }
 
-            if (setStaticVolume && transmitter.SignalStrength != 0f)
-            {
-                transmitter.SetSignalStrength(0);
+                if(!transmitter.IsAudioSourceEnabled())
+                    transmitter.EnableAudioSource();
+
+                continue;
             }
         }
 
-        if (setStaticVolume)
+        currentStepCount++;
+
+        if (setStaticVolume && currentStepCount == maxStepCounts)
         {
             staticAudio.volume = 1;
             receiverData.signalStrength = 0;
@@ -116,10 +132,11 @@ public class RadioReceiver : MonoBehaviour
             System_RDIO.SetSignalStrength(0);
         }
 
-        currentStepCount++;
-
         if(currentStepCount == maxStepCounts)
+        {
+            setStaticVolume = true;
             currentStepCount = 0;
+        }
     }
 
     void OnDrawGizmos()
@@ -167,7 +184,7 @@ public class RadioReceiver : MonoBehaviour
 
         //When the signal strength is low, the volume will blend between the signal and static
         //When the signal strength is high, the volume will be weighted towards the main signal (this prevents audio problems)
-        return Mathf.Clamp01(((smoothedVolume * signalStrength) * (1 - signalStrength / 4)) + signalStrength / 4);
+        return Mathf.Clamp01((smoothedVolume * signalStrength * (1 - signalStrength / 4)) + signalStrength / 4);
     }
 
     //Calculate the signal modifier based on how many obstructions are in the way
@@ -212,9 +229,9 @@ public class RadioReceiver : MonoBehaviour
     private float MovingAverageFilter(float[] valueArr)
     {
         float average = 0f;
-        foreach (float n in valueArr)
+        for(int i = 0; i < valueArr.Length; i++)
         {
-            average += n;
+            average += valueArr[i];
         }
 
         return average / valueArr.Length;

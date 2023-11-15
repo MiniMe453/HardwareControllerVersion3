@@ -71,8 +71,25 @@ public class RadioTransmitter : MonoBehaviour
             return;
 
         m_TransmitterSource.volume = signalVolume;
-        m_LowPassFilter.cutoffFrequency = ((signalVolume * signalVolume) * 4) * 2000;
+        m_LowPassFilter.cutoffFrequency = (signalVolume * signalVolume * 4) * 2000;
         SignalStrength = signalVolume;
+    }
+
+    public void DisableAudioSource()
+    {
+        Debug.Log("Audio source disabled");
+        m_TransmitterSource.enabled = false;
+    }
+
+    public void EnableAudioSource()
+    {
+        Debug.Log("Audio source enabled");
+        m_TransmitterSource.enabled = true;
+    }
+
+    public bool IsAudioSourceEnabled()
+    {
+        return m_TransmitterSource.enabled;
     }
 
     public float GetAverageAmplitude()

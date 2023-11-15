@@ -27,7 +27,7 @@ public class UpdateMapMarkerCompass : MonoBehaviour
         markerLocation.y = 0;
         roverLoc.y = 0;
         
-        m_heading = Vector3.SignedAngle(markerLocation - roverLoc, new Vector3(0,0,1), Vector3.up);
+        m_heading = Vector3.SignedAngle(-Vector3.ProjectOnPlane(markerLocation - roverLoc, Vector3.up), new Vector3(0,0,1), Vector3.up);
         float sign = Mathf.Sign(m_heading);
 
         if(sign < 0)

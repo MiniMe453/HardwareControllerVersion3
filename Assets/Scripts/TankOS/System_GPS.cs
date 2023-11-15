@@ -22,7 +22,7 @@ public class System_GPS : MonoBehaviour
         m_gpsCoordX = GameSettings.GPS_COORD_X_MIN + ((gameObject.transform.position.x/GameSettings.TERRAIN_MAX) * (GameSettings.GPS_COORD_X_MAX - GameSettings.GPS_COORD_X_MIN));
         m_gpsCoordY = GameSettings.GPS_COORD_Y_MIN + ((gameObject.transform.position.z/GameSettings.TERRAIN_MAX) * (GameSettings.GPS_COORD_Y_MAX - GameSettings.GPS_COORD_Y_MIN));
 
-        m_heading = Vector3.SignedAngle(transform.forward, new Vector3(0,0,1), Vector3.up);
+        m_heading = Vector3.SignedAngle(-Vector3.ProjectOnPlane(transform.forward, Vector3.up), new Vector3(0,0,1), Vector3.up);
         float sign = Mathf.Sign(m_heading);
 
         if(sign < 0)

@@ -261,17 +261,6 @@ public class RadioReceiver : MonoBehaviour
             scanResult.radioType = transmitter.TransmitterData.radioType;
             scanResult.frequency = transmitter.TransmitterData.frequency;
 
-            float heading = Vector3.SignedAngle((transmitter.transform.position - transform.position), new Vector3(0,0,1), Vector3.up) - 180f;
-            float sign = Mathf.Sign(heading);
-
-            Debug.LogError((transmitter.transform.position.ToString() + "  " + transform.position));
-
-
-            if(sign < 0)
-                heading = 360 - Mathf.Abs(heading);
-
-            scanResult.strength = (int)heading;
-
             radioScanData.Add(scanResult);
         }
 

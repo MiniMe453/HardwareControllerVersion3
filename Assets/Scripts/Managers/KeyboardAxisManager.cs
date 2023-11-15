@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using Unity.VisualScripting;
 public class KeyboardAxisManager : MonoBehaviour
 {
     private static float m_yAxis;
@@ -77,7 +78,7 @@ public class KeyboardAxisManager : MonoBehaviour
             EOnXAxis?.Invoke(m_xAxis);
         }
 
-        if(m_yAxis != m_oldXAxis)
+        if(m_yAxis != m_oldYAxis)
         {
             m_oldYAxis = m_yAxis;
             EOnYAxis?.Invoke(m_yAxis);
@@ -88,12 +89,11 @@ public class KeyboardAxisManager : MonoBehaviour
             m_oldThrottleAxis = m_throttleAxis;
             EOnThrottleAxis?.Invoke(m_throttleAxis);
         }
-        
     }
 
     float ReduceAxisValue(float currVal, float dir, float speed = 1f)
     {
-        if (Math.Abs(currVal) > 0.01)
+        if (Math.Abs(currVal) > 0.025f)
             return currVal - (speed * Time.deltaTime * Mathf.Sign(currVal));
         else
             return 0;

@@ -100,8 +100,6 @@ public class System_RDIO : MonoBehaviour, IInputTypes
         if (m_selectedRadioType > 2)
             m_selectedRadioType = 0;
 
-        Debug.LogError(m_selectedRadioType);
-
         int[] ledValues = new int[3];
 
         for (int i = 0; i < 3; i++)

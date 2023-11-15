@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Uduino;
 using UnityTimer;
+using System.Web.UI;
 
 namespace Rover.Arduino
 {
@@ -12,6 +13,7 @@ namespace Rover.Arduino
         private static object[] m_ledPinStates;
         private static bool m_pinStatesUpdated = false;
         private static bool applicationQuitting = false;
+        private static bool m_isUsingArduino = false;
 
         static LEDManager()
         {
@@ -28,9 +30,7 @@ namespace Rover.Arduino
                 m_ledPinStates[i] = 0;
             }
 
-            //            Debug.LogError(m_ledPinStates.Length);
-
-            //Timer.Register(0.1f, () => SendLEDCommand(), isLooped: true);
+            m_isUsingArduino = true;
         }
 
         private static void SendLEDCommand()
@@ -53,6 +53,9 @@ namespace Rover.Arduino
             if (applicationQuitting)
                 return;
 
+            if (!m_isUsingArduino)
+                return;
+
             if (!UduinoManager.Instance.isConnected())
             {
                 Debug.Log("LED Manager: Arduino board is not connected");
@@ -70,9 +73,12 @@ namespace Rover.Arduino
             if (applicationQuitting)
                 return;
 
+            if(!m_isUsingArduino)
+                return;
+
             if (!UduinoManager.Instance.isConnected())
             {
-                Debug.LogWarning("LED Manager: Arduino board is not connected!");
+                Debug.Log("LED Manager: Arduino board is not connected!");
                 return;
             }
 
@@ -97,6 +103,9 @@ namespace Rover.Arduino
 
         public static bool GetLEDState(int pinIndex)
         {
+            if(!m_isUsingArduino)
+                return true;
+
             return (int)m_ledPinStates[pinIndex] == 1 ? true : false;
         }
     }

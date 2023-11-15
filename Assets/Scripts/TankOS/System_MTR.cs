@@ -107,7 +107,6 @@ public class System_MTR : MonoBehaviour, IInputTypes
 
     void OnThrottleAxisKeyboard(float value)
     {
-        Debug.Log(value);
         m_throttleAxis = value;
 
         EOnThrottleAxisChanged?.Invoke(value);
@@ -170,7 +169,7 @@ public class System_MTR : MonoBehaviour, IInputTypes
             m_currentSpeed -= m_brakeSpeed * Time.deltaTime * Mathf.Sign(m_currentSpeed);
         
 
-        if(Mathf.Abs(m_currentSpeed) > 1f)
+        if(Mathf.Abs(m_currentSpeed) > Mathf.Abs(m_throttleAxis))
             m_currentSpeed = m_throttleAxis;
         else if (Mathf.Abs(m_currentSpeed) < GameSettings.JOYSTICK_DEADZONE / 2f && m_brakeActive)
             m_currentSpeed = 0f;

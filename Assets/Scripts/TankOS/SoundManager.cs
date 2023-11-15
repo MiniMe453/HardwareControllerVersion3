@@ -34,7 +34,6 @@ public class SoundManager : MonoBehaviour
 
     void OnMicButtonPressed(int pin)
     {
-        Debug.LogError("Button pressed");
         m_isMicOn = !m_isMicOn;
 
         WorldSoundsMixer.SetFloat("Volume", m_isMicOn ? 0f : -80f);

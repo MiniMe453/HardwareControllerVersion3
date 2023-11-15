@@ -27,7 +27,6 @@ public class SimulationManager
         m_simulationNodes.Add(newNode);
 
         m_maxStepCount = Mathf.CeilToInt((float)m_simulationNodes.Count/(float)m_numOfNodesPerFrame);
-        Debug.Log(m_maxStepCount);
 
         return true;
     }

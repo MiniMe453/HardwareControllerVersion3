@@ -259,8 +259,6 @@ public class NavCameraInterface : MonoBehaviour
             frequencyText.color = Color.white;
             m_frequencyColorResetTimer = null;
             });
-
-        Debug.Log("Frequence changed");
     }
 
     void OnRadioBandChanged(int newBand)

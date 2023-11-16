@@ -6,6 +6,7 @@ Shader "Terrain/HeightBlend Independent"
     Properties
     {
         _IndepControl ("Splat Map", 2D) = "red" {}
+        [HideInInspector] _TerrainHolesTexture ("Holes Map (RGB)", 2D) = "white" {}
         
         _AlbedoMap0 ("Layer 0 Albedo Map", 2D) = "grey" {}
         _HeightMap0 ("Layer 0 Height Map", 2D) = "grey" {}
@@ -42,13 +43,15 @@ Shader "Terrain/HeightBlend Independent"
     SubShader
     {
         Tags {
-            "RenderType" = "Opaque"
+            "RenderType" = "TransparentCutout"
         }
         LOD 200
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
         #pragma surface surf Standard vertex:SplatmapVert addshadow fullforwardshadows
+
+        #pragma multi_compile_local __ _ALPHATEST_ON
 
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
@@ -60,6 +63,7 @@ Shader "Terrain/HeightBlend Independent"
         sampler2D _AlbedoMap0, _AlbedoMap1, _AlbedoMap2;
         float4 _AlbedoMap0_ST, _AlbedoMap1_ST, _AlbedoMap2_ST;
         sampler2D _HeightMap0, _HeightMap1, _HeightMap2;
+        sampler2D _TerrainHolesTexture;
         UNITY_DECLARE_TEX2D_NOSAMPLER(_DistantMap);
         half _DistMapBlendDistance;
         fixed _DistMapInfluenceMin;
@@ -169,6 +173,9 @@ Shader "Terrain/HeightBlend Independent"
             o.Smoothness = mixedDiffuse.a;
             o.Normal = mixedNormal;
             o.Metallic = mixedMetallic;
+
+            float hole = tex2D(_TerrainHolesTexture, IN.tc.xy).r;
+            clip(hole == 0? -1 : 1);
         }
         ENDCG
     }

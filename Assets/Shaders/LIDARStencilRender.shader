@@ -57,10 +57,10 @@ Shader "Hidden/LIDARStencilRender"
         fixed4 FragmentSelect(Varyings input) : SV_Target
         {
             float4 roughness = tex2D(_CameraGBufferTexture1, input.uv).a;
-            if (roughness < _RoughnessThreashold)
-            {
-                discard;
-            }
+            //if (roughness < _RoughnessThreashold)
+            //{
+             //   discard;
+            //}
             return tex2D(_MainTex, input.uv);
         }
 

@@ -176,6 +176,7 @@ public class System_MTR : MonoBehaviour, IInputTypes
 
         Vector3 wantedPosition = transform.position + (transform.forward * maxSpeed * m_currentSpeed * Time.fixedDeltaTime);
         m_rigidbody.MovePosition(wantedPosition);
+        m_rigidbody.AddForce(-transform.up * 25f);
 
         motorSoundEffect.volume = Mathf.Clamp01(Mathf.Abs(m_currentSpeed) + Mathf.Abs(m_horizontalAxis));
 

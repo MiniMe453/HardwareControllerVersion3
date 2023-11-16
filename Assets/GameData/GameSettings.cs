@@ -40,6 +40,7 @@ namespace Rover.Settings
         public const string ALLOWED_REPLACE_CHARS = "@#$%^&*():_+=-/<>[{}]";
         public static char[] PUNCTUATION = {' ', '.',',','?','!','(',')',':',';','\''};
         public static float DEFAULT_CORRUPTION_CHANCE = 0.75f;
+        public const float NEW_LOCATION_MARKER_DISTANCE = 7.5f;
 
         public static Color DEFAULT_AMBIENT_COLOR = new Color(0.6352941f,0.4392157f,0.3647059f);
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rover.Settings;
-using Unity.VisualScripting;
+using UnityTimer;
 
 public class System_GPS : MonoBehaviour
 {
@@ -17,7 +17,18 @@ public class System_GPS : MonoBehaviour
     public static Vector3 WorldSpacePos {get{return m_worldSpacePos;}}
     public static Vector3 m_forwardVector;
     public static Vector3 RoverForwardVector {get{return m_forwardVector;}}
+    private Timer m_locationHistoryTimer;
+    private Vector3 m_lastPosition;
+    public GameObject locationHistoryMarker;
 
+
+    void Start()
+    {
+        m_lastPosition = transform.position;
+        m_worldSpacePos = transform.position;
+
+        m_locationHistoryTimer = Timer.Register(0.25f, () => {CheckRoverLocationHistory();}, isLooped: true);
+    }
     
     void Update()
     {
@@ -67,5 +78,18 @@ public class System_GPS : MonoBehaviour
             heading = 360 - Mathf.Abs(heading);
 
         return heading;
+    }
+
+    void CheckRoverLocationHistory()
+    {
+        Vector3 roverPos = m_worldSpacePos;
+        roverPos.y = 0;
+
+        if(Vector3.Distance(m_lastPosition, roverPos) < GameSettings.NEW_LOCATION_MARKER_DISTANCE)
+            return;
+
+        m_lastPosition = roverPos;
+
+        Instantiate(locationHistoryMarker, m_worldSpacePos, Quaternion.identity);
     }
 }
